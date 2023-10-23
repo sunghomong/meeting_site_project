@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
-    private String UserId;
+    private String userId;
     private String userName;
     private String userPicture;
     private String picturePath;

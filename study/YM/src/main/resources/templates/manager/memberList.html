@@ -2,32 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>회원 조회 페이지</title>
-    <style>
-        #modalContainer {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.5);
-    }
-
-        #modalContent {
-        text-align : center;
-      position: absolute;
-      background-color: #ffffff;
-      width: 300px;
-      height: 200px;
-      padding: 15px;
-    }
-
-        #modalContainer.hidden {
-      display: none;
-    }
-    </style>
+    <link href="/modalWindow.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>회원 조회 페이지</h1>
@@ -45,22 +20,29 @@
         <td th:text="${member.sign_date}">ENFP</td>
         <td th:text="${member.userAdmin}">0</td>
         <td>
+<<<<<<< HEAD
             <button onclick="editMember('${member.userId}')" style="cursor : pointer;">수정</button>
             <button type="button" id="modalOpenButton" style="cursor : pointer;">삭제</button>
             <input type="hidden" name="userid" value="${member.userid}">
+=======
+            <button th:onclick="|location.href='@{memberEdit(userid=${member.userId})}'|" style="cursor: pointer;">수정
+            </button>
+            <button type="button" th:attr="data-userid=${member.userId}" onclick="deleteMember(this.getAttribute('data-userid'))" style="cursor: pointer;">삭제</button>
+            <input type="hidden" name="userid" value="${member.userId}">
+>>>>>>> 0159ee1ba674e273d64fb5cc57a3a50aba730741
         </td>
     </tr>
 </table>
 
 <div id="modalContainer" class="hidden">
-    <div id="modalContent" style="border-radius: 5px;">
-        <p style="color: red; font-size: 24px; text-align: center;">정말
-            삭제하시겠습니까?</p>
-        <button
-                onclick="location.href='delete/${member.userid}'">네</button>
-        <button id="modalCloseButton">아니요</button>
+    <div id="modalContent">
+        <p style="color: red; font-size: 24px; text-align: center;">정말 삭제하시겠습니까?</p>
+        <button onclick="confirmDelete()">네</button>
+        <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
+        <input type="hidden" id="deleteUserId" name="userid" value="">
     </div>
 </div>
+<<<<<<< HEAD
 <script>
     function editMember(userId) {
         <!-- 수정 페이지로 이동하는 이벤트 -->
@@ -70,22 +52,41 @@
     function deleteMember(userId) {
         <!-- 삭제 기능을 수행하고 돌아오는 로직 -->
         if (confirm('정말로 이 회원을 삭제하시겠습니까?')) {
+=======
+<script type="text/javascript">
+
+    function editMember(event) {
+        // 수정 페이지로 이동하는 이벤트
+        let userId = event.target.parentNode.parentNode.childNodes[1].innerHTML;
+        console.log(userId); // userId 출력 (디버깅용)
+        window.location = 'memberEdit/' + userId;
+    }
+
+    const modal = document.getElementById('modalContainer');
+    const modalCloseButton = document.getElementById('modalCloseButton');
+    const deleteUserId = document.getElementById('deleteUserId');
+
+   function deleteMember(userId) {
+        // 삭제 버튼 클릭 시 모달 열기
+        modal.classList.remove('hidden'); // 모달창 오픈
+        var deleteUserId = document.getElementById('deleteUserId');
+        deleteUserId.value = userId; // 삭제할 아이디 저장
+    }
+
+    function confirmDelete() {
+        // "네" 버튼 클릭 시 삭제 로직 수행
+        var deleteUserId = document.getElementById('deleteUserId');
+        var userId = deleteUserId.value;
+        if (userId) {
+>>>>>>> 0159ee1ba674e273d64fb5cc57a3a50aba730741
             window.location = 'delete/' + userId;
         }
     }
-</script>
-<script type="text/javascript">
-    const modalOpenButton = document.getElementById('modalOpenButton');
-    const modalCloseButton = document.getElementById('modalCloseButton');
-    const modal = document.getElementById('modalContainer');
 
-    modalOpenButton.addEventListener('click', () => {
-      modal.classList.remove('hidden');
-    });
-
-    modalCloseButton.addEventListener('click', () => {
-      modal.classList.add('hidden');
-    });
+    function cancelDelete() {
+        // "아니요" 버튼 클릭 시 모달 닫기
+        modal.classList.add('hidden');
+    }
 </script>
 </body>
 </html>

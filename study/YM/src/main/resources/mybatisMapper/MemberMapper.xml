@@ -29,6 +29,7 @@
         SELECT * FROM member WHERE emailId=#{emailId} AND emailDomain=#{emailDomain}
     </select>
 
+<<<<<<< HEAD
     <update id="profileUpdate" parameterType="ProfileUpdate">
         UPDATE member SET userName=#{userName},
         <if test="userPicture != null">userPicture=#{userPicture},</if>
@@ -51,4 +52,19 @@
 
 
 
+=======
+    <!-- 관리자를 위한 쿼리 문 -->
+    <select id="getMemberList" resultType="member"> <!-- 전체 회원 조회를 위한 SELECT문 (관리자) -->
+        SELECT * FROM member
+    </select>
+    <select id="selectMemberById" resultType="member" parameterType="String"> <!-- 회원 수정을 위한 SELECT문 (관리자) -->
+        SELECT * FROM member WHERE userId=#{userId}
+    </select>
+    <update id="updateMemberAdmin" parameterType="java.util.HashMap"> <!-- 회원 권한 수정 (관리자) -->
+        update member set userAdmin = #{userAdmin} where userId = #{userId}
+    </update>
+    <delete id="deleteMemberById" parameterType="String">
+        DELETE FROM member WHERE userId=#{userId}
+    </delete>
+>>>>>>> 0159ee1ba674e273d64fb5cc57a3a50aba730741
 </mapper>

@@ -7,6 +7,7 @@
 <body>
 <h1>회원 조회 페이지</h1>
 <hr>
+<<<<<<< HEAD
 <table>
     <tr>
         <th>회원 ID</th>
@@ -25,5 +26,37 @@
         </td>
     </tr>
 </table>
+=======
+<form method="post" th:action="@{/manager/memberEdit}" th:object="${member}">
+    <table>
+        <tr>
+            <th>회원 ID</th>
+            <th>닉네임</th>
+            <th>가입 날짜</th>
+            <th>권한</th>
+        </tr>
+        <tr>
+            <td th:text="${member.userId}">
+                1
+            </td>
+            <td th:text="${member.nickName}">홍길동</td>
+            <td th:text="${member.signDate}">가입 날짜</td>
+            <td>
+                <label><input type="radio" name="userAdmin" th:value="1" th:checked="${member.userAdmin == 1}"/> 관리자</label>
+                <label><input type="radio" name="userAdmin" th:value="0" th:checked="${member.userAdmin == 0}"/> 일반 회원</label>
+            </td>
+            <td>
+                <button type="submit" style="cursor: pointer;">
+                    수정
+                    <input type="hidden" name="userId" th:value="${member.userId}" /> <!-- 권한 수정을 위한 데이터 -->
+                </button>
+            </td>
+        </tr>
+        <tr th:unless="${not #lists.isEmpty(member)}">
+            <td colspan="7">등록된 회원의 정보가 없습니다.</td>
+        </tr>
+    </table>
+</form>
+>>>>>>> 0159ee1ba674e273d64fb5cc57a3a50aba730741
 </body>
 </html>
