@@ -1,6 +1,7 @@
 package com.meeting_site_project.YM.service;
 
 import com.meeting_site_project.YM.repository.MybatisRepository;
+import com.meeting_site_project.YM.vo.AskContent;
 import com.meeting_site_project.YM.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class CheckService {
     }
 
 
-
-
+    public List<AskContent> selectAskList() {
+        return mybatisRepository.selectAskList();
+    }
 }

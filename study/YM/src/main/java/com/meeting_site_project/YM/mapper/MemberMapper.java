@@ -1,5 +1,6 @@
 package com.meeting_site_project.YM.mapper;
 
+import com.meeting_site_project.YM.vo.AskContent;
 import com.meeting_site_project.YM.vo.JoinMember;
 import com.meeting_site_project.YM.vo.Member;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,4 +35,8 @@ public interface MemberMapper {
     public void updateMemberAdmin(HashMap<String, Object> parameters);
 
     public void deleteMemberById(String userId);
+
+    public List<AskContent> selectAskList(); // 고객 문의 리스트 전체 조회
+
+    public void insertAsk(AskContent askContent);
 }

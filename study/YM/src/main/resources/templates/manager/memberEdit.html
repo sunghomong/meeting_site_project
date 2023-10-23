@@ -17,9 +17,9 @@
         </tr>
         <tr>
             <td th:text="${member.userId}">
-                1
+                회원 아이디
             </td>
-            <td th:text="${member.nickName}">홍길동</td>
+            <td th:text="${member.nickName}">닉네임</td>
             <td th:text="${member.signDate}">가입 날짜</td>
             <td>
                 <label><input type="radio" name="userAdmin" th:value="1" th:checked="${member.userAdmin == 1}"/> 관리자</label>

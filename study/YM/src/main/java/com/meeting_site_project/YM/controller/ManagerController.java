@@ -83,4 +83,15 @@ public class ManagerController {
 
         return "redirect:/manager/memberList"; // 특정 회원 삭제 후 회원 목록 페이지로 리다이렉트
     }
+
+    @GetMapping("/groupList")
+    public String groupListForm(Model model){ // 모임 리스트를 보여주는 form 으로 이동하는 로직 구현
+
+//        checkService.selectGroupList();
+
+
+//        model.addAttribute("groupList",groupList);
+
+        return "/manager/groupList";
+    }
 }

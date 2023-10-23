@@ -15,10 +15,10 @@
         <th>권한</th>
     </tr>
     <tr th:each="member : ${memberList}">
-        <td th:text="${member.userId}">1</td>
-        <td th:text="${member.nickName}">홍길동</td>
+        <td th:text="${member.userId}">회원 아이디</td>
+        <td th:text="${member.nickName}">닉네임</td>
         <td th:text="${member.signDate}">가입 날짜</td>
-        <td th:text="${member.userAdmin}">0</td>
+        <td th:text="${member.userAdmin}">권한</td>
         <td>
             <button th:onclick="|location.href='@{memberEdit(userid=${member.userId})}'|" style="cursor: pointer;">수정
             </button>

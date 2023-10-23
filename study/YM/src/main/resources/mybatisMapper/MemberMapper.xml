@@ -39,7 +39,15 @@
     <update id="updateMemberAdmin" parameterType="java.util.HashMap"> <!-- 회원 권한 수정 (관리자) -->
         update member set userAdmin = #{userAdmin} where userId = #{userId}
     </update>
-    <delete id="deleteMemberById" parameterType="String">
+    <delete id="deleteMemberById" parameterType="String"> <!--회원 정보 삭제 (관리자)-->
         DELETE FROM member WHERE userId=#{userId}
     </delete>
+
+    <!-- 고객 문의 서비스 -->
+    <select id="selectAskList" resultType="askContent"> <!-- 고객 문의 조회를 위한 SELECT문 -->
+        SELECT * FROM askList
+    </select>
+    <insert id="insertAsk" parameterType="AskContent">
+        INSERT INTO member VALUES (#{askId}, #{userId}, #{subject}, #{content}, sysdate,'미해결',#{attachments},'','')
+    </insert>
 </mapper>

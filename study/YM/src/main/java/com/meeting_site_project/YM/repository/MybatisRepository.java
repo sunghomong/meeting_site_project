@@ -1,6 +1,7 @@
 package com.meeting_site_project.YM.repository;
 
 import com.meeting_site_project.YM.mapper.MemberMapper;
+import com.meeting_site_project.YM.vo.AskContent;
 import com.meeting_site_project.YM.vo.JoinMember;
 import com.meeting_site_project.YM.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,14 @@ public class MybatisRepository implements Repository {
     public void deleteMemberById(String userId) {
         memberMapper.deleteMemberById(userId);
 
+    }
+
+    public List<AskContent> selectAskList() {
+        return memberMapper.selectAskList();
+    }
+
+    public void insertAsk(AskContent askContent) {
+        memberMapper.insertAsk(askContent);
     }
 }
 

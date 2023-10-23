@@ -1,6 +1,7 @@
 package com.meeting_site_project.YM.service;
 
 import com.meeting_site_project.YM.repository.MybatisRepository;
+import com.meeting_site_project.YM.vo.AskContent;
 import com.meeting_site_project.YM.vo.JoinMember;
 import com.meeting_site_project.YM.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,9 @@ public class JoinService {
     // 이메일 아이디와 도메인으로 회원을 조회하는 메서드
     public Member selectByEmail(String emailId, String emailDomain) {
         return mybatisRepository.selectByEmail(emailId, emailDomain);
+    }
+
+    public void insertAsk(AskContent askContent) {
+        mybatisRepository.insertAsk(askContent);
     }
 }
