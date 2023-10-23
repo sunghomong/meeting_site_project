@@ -10,11 +10,11 @@
     </select>
 
     <insert id="insertMember" parameterType="JoinMember">
-        INSERT INTO member VALUES (#{userId}, #{userName}, #{userPicture}, #{userMbti}, #{userPassword}, '', 0, #{birthday}, #{nickName}, #{emailId}, #{emailDomain}, sysdate)
+        INSERT INTO member VALUES (#{userId}, #{userName}, #{userPicture}, #{picturePath} ,#{userMbti}, #{userPassword}, '', 0, #{birthday}, #{nickName}, #{emailId}, #{emailDomain}, sysdate, 0)
     </insert>
 
     <select id="selectByIdPassword" resultType="member" parameterType="String">
-        SELECT * FROM member WHERE userID=#{userId} AND userPassword = #{userPassword}
+        SELECT * FROM member WHERE userId=#{userId} AND userPassword = #{userPassword}
     </select>
 
     <select id="selectById" resultType="member" parameterType="String">
@@ -28,6 +28,26 @@
     <select id="selectByEmail" resultType="member" parameterType="String">
         SELECT * FROM member WHERE emailId=#{emailId} AND emailDomain=#{emailDomain}
     </select>
+
+    <update id="profileUpdate" parameterType="ProfileUpdate">
+        UPDATE member SET userName=#{userName},
+        <if test="userPicture != null">userPicture=#{userPicture},</if>
+        <if test="picturePath != null">picturePath=#{picturePath},</if>
+        userMbti=#{userMbti}, userInfo=#{userInfo}, birthday=#{birthday}, nickName=#{nickName}
+        WHERE userId = #{userId}
+    </update>
+
+    <select id="findId" resultType="member" parameterType="FindId">
+        SELECT * FROM member WHERE userName=#{userName} AND emailId=#{emailId} AND emailDomain=#{emailDomain}
+    </select>
+
+    <select id="findPassword" resultType="member" parameterType="FindId">
+        SELECT * FROM member WHERE userId=#{userId} AND emailId=#{emailId} AND emailDomain=#{emailDomain}
+    </select>
+
+    <update id="changePassword" parameterType="ChangePassword">
+        UPDATE member SET userPassword=#{userPassword} WHERE userId=#{userId}
+    </update>
 
 
 

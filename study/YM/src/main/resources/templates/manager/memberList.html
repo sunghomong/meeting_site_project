@@ -39,19 +39,16 @@
         <th>가입 날짜</th>
         <th>권한</th>
     </tr>
-    <tr th:each="member : ${memberList}">
+    <tr th:each="member : ${members}">
         <td th:text="${member.userId}">1</td>
         <td th:text="${member.nickName}">홍길동</td>
-        <td th:text="${member.signDate}">가입 날짜</td>
+        <td th:text="${member.sign_date}">ENFP</td>
         <td th:text="${member.userAdmin}">0</td>
         <td>
-            <button th:onclick="|location.href='@{memberEdit(userid=${member.userId})}'|" style="cursor: pointer;">수정</button>
+            <button onclick="editMember('${member.userId}')" style="cursor : pointer;">수정</button>
             <button type="button" id="modalOpenButton" style="cursor : pointer;">삭제</button>
-            <input type="hidden" name="userid" value="${member.userId}">
+            <input type="hidden" name="userid" value="${member.userid}">
         </td>
-    </tr>
-    <tr th:unless="${not #lists.isEmpty(memberList)}">
-        <td colspan="7">등록된 회원의 정보가 없습니다.</td>
     </tr>
 </table>
 
@@ -65,13 +62,11 @@
     </div>
 </div>
 <script>
-
-    function editMember(event) {
+    function editMember(userId) {
         <!-- 수정 페이지로 이동하는 이벤트 -->
-        let userId = event.target.parentNode.parentNode.childNodes[1].innerHTML;
-        console.log(userId); // userId 출력 (디버깅용)
-        window.location = 'memberEdit/' + userId;
+        window.location = 'edit/' + userId;
     }
+
     function deleteMember(userId) {
         <!-- 삭제 기능을 수행하고 돌아오는 로직 -->
         if (confirm('정말로 이 회원을 삭제하시겠습니까?')) {

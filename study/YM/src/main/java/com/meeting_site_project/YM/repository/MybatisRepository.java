@@ -1,11 +1,8 @@
 package com.meeting_site_project.YM.repository;
 
 import com.meeting_site_project.YM.mapper.MemberMapper;
-import com.meeting_site_project.YM.vo.JoinMember;
-import com.meeting_site_project.YM.vo.Member;
+import com.meeting_site_project.YM.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 @org.springframework.stereotype.Repository
 public class MybatisRepository implements Repository {
@@ -32,17 +29,6 @@ public class MybatisRepository implements Repository {
         return memberMapper.selectById(userId);
     }
 
-<<<<<<< HEAD
-    public List<Member> getMemberList() { // 전체 회원 조회를 위한 (관리자)
-        return memberMapper.getMemberList();
-    }
-
-    public Member selectMemberById(String userId) {
-        return memberMapper.selectMemberById(userId);
-
-    }
-}
-=======
     // 닉네임을 받아서 해당하는 회원을 조회하는 메서드
     public Member selectByNickName(String nickName) {
         return memberMapper.selectByNickName(nickName);
@@ -52,5 +38,18 @@ public class MybatisRepository implements Repository {
     public Member selectByEmail(String emailId, String emailDomain) {
         return memberMapper.selectByEmail(emailId, emailDomain);
     }
+
+    public void profileUpdate(ProfileUpdate profileUpdate) {
+        memberMapper.profileUpdate(profileUpdate);
+    }
+
+    public Member findId(FindId findId) {
+        return memberMapper.findId(findId);
+    }
+
+    public Member findPassword(FindPassword findPassword) {
+        return memberMapper.findPassword(findPassword);
+    }
+
+    public void changePassword(ChangePassword changePassword ) {memberMapper.changePassword(changePassword);}
 }
->>>>>>> c9965d3b08600187281e94b7693021e35be5192e

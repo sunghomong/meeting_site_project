@@ -20,4 +20,6 @@ public class AuthService {
     public Member selectByIdPassword(String userId, String userPassword) {
         return mybatisRepository.selectByIdPassword(userId, userPassword);
     }
+
+
 }

@@ -1,11 +1,8 @@
 package com.meeting_site_project.YM.mapper;
 
-import com.meeting_site_project.YM.vo.JoinMember;
-import com.meeting_site_project.YM.vo.Member;
+import com.meeting_site_project.YM.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-
-import java.util.List;
 
 @Mapper
 public interface MemberMapper {
@@ -21,13 +18,15 @@ public interface MemberMapper {
 
     public Member selectById(String userId);
 
-<<<<<<< HEAD
-    public List<Member> getMemberList();  //회원 전체 목록 조회
-
-    Member selectMemberById(String userId); // 수정을 하기 위한 멤버 조회
-=======
     public Member selectByNickName(String nickName);
 
     public Member selectByEmail(String emailId, String emailDomain);
->>>>>>> c9965d3b08600187281e94b7693021e35be5192e
+
+    public void profileUpdate(ProfileUpdate profileUpdate);
+
+    public Member findId(FindId findId);
+
+    public Member findPassword(FindPassword findPassword);
+
+    public void changePassword(ChangePassword changePassword);
 }

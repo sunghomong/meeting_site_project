@@ -5,6 +5,10 @@ import com.meeting_site_project.YM.vo.JoinMember;
 import com.meeting_site_project.YM.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.util.UUID;
 
 @Service
 public class JoinService {
@@ -18,7 +22,21 @@ public class JoinService {
     }
 
     // 회원 정보를 저장하는 메서드
-    public void insertMember(JoinMember joinMember){
+    public void insertMember(JoinMember joinMember, MultipartFile userPicture) throws Exception{
+
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+
+        UUID uuid = UUID.randomUUID();
+
+        String fileName = uuid + "_" + userPicture.getOriginalFilename();
+
+        File saveFile = new File(projectPath, fileName);
+
+        userPicture.transferTo(saveFile);
+
+        joinMember.setUserPicture(fileName);
+        joinMember.setPicturePath("/files/" + fileName);
+
         mybatisRepository.insertMember(joinMember);
     }
 

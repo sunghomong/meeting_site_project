@@ -18,13 +18,11 @@
         <td th:text="${member.userId}">1</td>
         <td th:text="${member.nickName}">홍길동</td>
         <td th:text="${member.signDate}">가입 날짜</td>
+        <td th:text="${member.userAdmin}">0</td>
         <td>
             <label><input type="radio" th:field="*{member.userAdmin}" th:value="1" th:checked="${member.userAdmin == 1}"/> 관리자</label>
             <label><input type="radio" th:field="*{member.userAdmin}" th:value="0" th:checked="${member.userAdmin == 0}"/> 일반 회원</label>
         </td>
-    </tr>
-    <tr th:unless="${not #lists.isEmpty(member)}">
-        <td colspan="7">등록된 회원의 정보가 없습니다.</td>
     </tr>
 </table>
 </body>
