@@ -17,6 +17,7 @@ public class Member {
     private String userId;
     private String userName;
     private String userPicture;
+    private String picturePath;
     private String userMbti;
     private String userPassword;
     private String userInfo;
@@ -27,6 +28,6 @@ public class Member {
     private String emailDomain;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date signDate;
-
+    private int avgScore;
 
 }

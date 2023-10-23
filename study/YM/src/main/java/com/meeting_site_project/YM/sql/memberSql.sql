@@ -1,3 +1,4 @@
+-- 회원 정보 테이블 ------------------------------------
 create table member (
 userId  nvarchar2(100) primary key,
 userName nvarchar2(100),
@@ -12,14 +13,25 @@ emailId nvarchar2(50),
 emailDomain nvarchar2(50),
 signDate date default sysdate
 );
-
-CREATE TABLE group (
+-- 회원 점수 테이블 ------------------------------------
+create table userScore (
+evaluatedUserId  nvarchar2(100),
+userScore number,
+evaluateUserId nvarchar2(100),
+PRIMARY KEY (evaluatedUserId,evaluateUserId),
+FOREIGN KEY (evaluatedUserId)
+REFERENCES member(userId)
+);
+-- 모임 테이블 ------------------------------------
+CREATE TABLE groupInfo (
 groupId nvarchar2(30) PRIMARY KEY,
-sidoCode nvarchar2(30),
-sigoonCode nvarchar2(30),
+ownerUserId nvarchar2(30),
+sidoName nvarchar2(30),
+sigoonName nvarchar2(30),
 groupName nvarchar2(30),
 groupInfo nvarchar2(100),
 groupNumberOfPeople number,
+<<<<<<< HEAD
 group_picture nvarchar2(100)
 );
 
@@ -34,4 +46,22 @@ CREATE TABLE ask (
     attachments nvarchar2(100) DEFAULT NULL,  -- 첨부 파일 정보
     comments nvarchar2(500) DEFAULT NULL,  -- 댓글 정보
     history nvarchar2(30) DEFAULT NULL -- 이력 정보 또는 변경 이력
+=======
+groupPicture nvarchar2(100),
+groupPicturePath nvarchar2(300)
+);
+-- 그룹의 키워드 테이블 ------------------------------------
+CREATE TABLE groupByKeyword(
+groupId nvarchar2(30),
+firstKeyword nvarchar2(30),
+secondKeyword nvarchar2(30),
+PRIMARY KEY (groupId),
+FOREIGN KEY (groupId)
+REFERENCES groupInfo(groupId)
+);
+-- 키워드 테이블 ------------------------------------
+CREATE TABLE keyword (
+firstKeyword nvarchar2(30),
+secondKeyword nvarchar2(30) primary key
+>>>>>>> b36670d54222f2707da0c6bb65b4a9f3058fccbf
 );
