@@ -59,7 +59,7 @@ public class FAQController {
     }
 
     @PostMapping("createAsk")
-    public String createAsk(@RequestBody AskContent askContent) {
+    public String createAsk(@RequestBody AskContent askContent ) {
         // UUID를 사용하여 고유한 askId 생성
         String uniqueAskId = UUID.randomUUID().toString();
         System.out.println(uniqueAskId); // 고유 id 확인

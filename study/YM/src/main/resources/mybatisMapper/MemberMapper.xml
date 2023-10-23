@@ -29,7 +29,6 @@
         SELECT * FROM member WHERE emailId=#{emailId} AND emailDomain=#{emailDomain}
     </select>
 
-<<<<<<< HEAD
     <update id="profileUpdate" parameterType="ProfileUpdate">
         UPDATE member SET userName=#{userName},
         <if test="userPicture != null">userPicture=#{userPicture},</if>
@@ -52,7 +51,6 @@
 
 
 
-=======
     <!-- 관리자를 위한 쿼리 문 -->
     <select id="getMemberList" resultType="member"> <!-- 전체 회원 조회를 위한 SELECT문 (관리자) -->
         SELECT * FROM member
@@ -66,7 +64,6 @@
     <delete id="deleteMemberById" parameterType="String"> <!--회원 정보 삭제 (관리자)-->
         DELETE FROM member WHERE userId=#{userId}
     </delete>
-<<<<<<< HEAD
 
     <!-- 고객 문의 서비스 -->
     <select id="selectAskList" resultType="askContent"> <!-- 고객 문의 조회를 위한 SELECT문 -->
@@ -75,7 +72,5 @@
     <insert id="insertAsk" parameterType="AskContent">
         INSERT INTO member VALUES (#{askId}, #{userId}, #{subject}, #{content}, sysdate,'미해결',#{attachments},'','')
     </insert>
-=======
->>>>>>> 0159ee1ba674e273d64fb5cc57a3a50aba730741
->>>>>>> b36670d54222f2707da0c6bb65b4a9f3058fccbf
+
 </mapper>
