@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>firstMeeting</title>
+</head>
+<!-- OpenLayers 라이브러리를 사용하기 위한 CSS를 불러옵니다. -->
+<link rel="stylesheet" href="http://openlayers.org/en/latest/css/ol.css" type="text/css">
+<!-- jQuery 라이브러리를 불러옵니다. -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<body>
+<h1>모임 등록</h1>
+<!-- 브이월드 행정구역 정보를 이용한 셀렉트 박스를 구현합니다. -->
+<form id="nsdiSearchForm" th:action="@{/firstMeeting}" method="post" class="form_data" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <th>모임 대표 이미지</th>
+            <td><input type="file" name="groupPicture" required></td>
+        </tr>
+        <tr>
+            <th>작성자 아이디</th>
+            <td><input type="text" name="ownerUserId" size="80" required></td>
+        </tr>
+        <tr>
+            <th>모임 이름</th>
+            <td><input type="text" name="groupName" size="80" required></td>
+        </tr>
+        <tr>
+            <th>모임 장소</th>
+            <td>
+                <!-- 첫 번째 셀렉트 박스. 시/도를 선택할 수 있습니다. -->
+                <select id="sido_code" name="sidoName">
+                    <option>선택</option>
+                </select>
+                <!-- 두 번째 셀렉트 박스. 시/군을 선택할 수 있습니다. -->
+                <select id="sigoon_code" name="sigoonName">
+                    <option>선택</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <input type="radio" name="meeting"  th:value="0" th:checked="${groupInfoMeetingPoint == 0}"/>원데이 모임
+                <input type="radio" name="meeting"  th:value="1" th:checked="${groupInfoMeetingPoint == 1}"/>정기 모임
+            </td>
+        </tr>
+        <tr>
+            <th>모임 인원</th>
+            <td><input type="number" name="groupNumberOfPeople" size="80" required></td>
+        </tr>
+        <tr>
+            <th>모임 정보</th>
+            <td><input type="text" name="groupName" size="80" required></td>
+        </tr>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">전송</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<script>
+    // jQuery의 AJAX 요청에서 CORS를 지원합니다.
+    $.support.cors = true;
+
+    // 페이지가 로딩될 때 실행됩니다.
+    $(function(){
+        // 첫 번째 AJAX 요청으로 시/도 목록을 가져옵니다.
+        $.ajax({
+            type: "get",
+            url: "https://api.vworld.kr/req/data?key=CEB52025-E065-364C-9DBA-44880E3B02B8&domain=http://localhost:8080&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIDO_INFO",
+            async: false,
+            dataType: 'jsonp',
+            success: function(data) {
+                let html = "<option>선택</option>";
+
+                // 받아온 데이터를 기반으로 옵션을 생성합니다.
+                data.response.result.featureCollection.features.forEach(function(f){
+                    let 행정구역코드 = f.properties.ctprvn_cd;
+                    let 행정구역명 = f.properties.ctp_kor_nm;
+
+                    // 옵션 태그를 생성하여 추가합니다.
+                    html +=`<option value="${행정구역명}">${행정구역명}</option>`
+                })
+
+                // 생성된 옵션 태그를 첫 번째 셀렉트 박스에 추가합니다.
+                $('#sido_code').html(html);
+            },
+            error: function(xhr, stat, err) {}
+        });
+
+        // 첫 번째 셀렉트 박스에서 값이 변경될 때 실행됩니다.
+        $(document).on("change","#sido_code",function(){
+            // 선택된 값(시/도 코드)을 가져옵니다.
+            let thisVal = $(this).val();
+            console.log(thisVal);
+
+
+            // 두 번째 AJAX 요청으로 시/군 목록을 가져옵니다.
+            $.ajax({
+                type: "get",
+                url: "https://api.vworld.kr/req/data?key=CEB52025-E065-364C-9DBA-44880E3B02B8&domain=http://localhost:8080&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIGG_INFO",
+                data : {attrfilter : 'full_nm:like:'+thisVal},
+                async: false,
+                dataType: 'jsonp',
+                success: function(data) {
+                    let html = "<option>선택</option>";
+
+                    // 받아온 데이터를 기반으로 옵션을 생성합니다.
+                    data.response.result.featureCollection.features.forEach(function(f){
+                        let 행정구역코드 = f.properties.sig_cd;
+                        let 행정구역명 = f.properties.sig_kor_nm;
+
+                        // 옵션 태그를 생성하여 추가합니다.
+                        html +=`<option value="${행정구역명}">${행정구역명}</option>`
+                    })
+
+                    // 생성된 옵션 태그를 두 번째 셀렉트 박스에 추가합니다.
+                    $('#sigoon_code').html(html);
+                },
+                error: function(xhr, stat, err) {}
+            });
+        });
+    })
+</script>
+</body>
+</html>
