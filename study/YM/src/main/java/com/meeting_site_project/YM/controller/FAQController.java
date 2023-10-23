@@ -59,10 +59,10 @@ public class FAQController {
     }
 
     @PostMapping("createAsk")
-    public String createAsk(@RequestBody AskContent askContent ) {
+    public String createAsk(@RequestBody AskContent askContent ,@RequestParam("userId") String userId) {
         // UUID를 사용하여 고유한 askId 생성
+        askContent.setUserId(userId);
         String uniqueAskId = UUID.randomUUID().toString();
-        System.out.println(uniqueAskId); // 고유 id 확인
         // askContent에 생성된 askId 설정
         askContent.setAskId(uniqueAskId);
 
@@ -71,6 +71,6 @@ public class FAQController {
         // subject, content, attachments 등의 데이터를 사용하여 문의 작성 처리
 
         // 성공 또는 실패에 따라 리다이렉트할 URL을 반환
-        return "redirect:/success"; // 성공했을 경우 리다이렉트할 URL
+        return "redirect:/FAQ/askList"; // 성공했을 경우 리다이렉트할 URL
     }
 }
