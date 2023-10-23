@@ -14,6 +14,6 @@ public class LogoutController {
 
         session.invalidate(); // 세션 무효화. 즉, 로그아웃 처리
 
-        return "home"; // 홈 화면으로 이동
+        return "redirect:/"; // 홈 화면으로 이동
     }
 }

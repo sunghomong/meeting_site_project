@@ -12,11 +12,12 @@
         <a href="#">정기 모임</a>
         <p>정지윤</p>
 
-        <a th:if="${session.loginMember == null}" href="/login">로그인</a>
-        <a th:if="${session.loginMember == null}" href="/join">회원가입</a>
+        <a th:if="${session.loginMember == null}" th:href="@{/login}">로그인</a>
+        <a th:if="${session.loginMember == null}" th:href="@{/join}">회원가입</a>
 
 
-        <a th:if="${session.loginMember != null}" href="/logout">로그아웃</a>
+        <a th:if="${session.loginMember != null}" th:href="@{/logout}">로그아웃</a>
+        <a th:if="${session.loginMember != null}" th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
         <p>조성호</p>
         <a href="/manager">관리자 페이지</a>
         <a href="#">고객센터</a>
