@@ -1,0 +1,11 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>아이디 찾기</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p>아이디 : <span th:text="${userId}"></span></p>
+    <button onclick="location.href = /*[[@{/login}]]*/ '/login'">로그인</button>
+</body>
+</html>

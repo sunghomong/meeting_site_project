@@ -1,8 +1,10 @@
 package com.meeting_site_project.YM.repository;
 
 import com.meeting_site_project.YM.mapper.MemberMapper;
+import com.meeting_site_project.YM.vo.AskContent;
 import com.meeting_site_project.YM.vo.JoinMember;
 import com.meeting_site_project.YM.vo.Member;
+import com.meeting_site_project.YM.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
@@ -53,6 +55,20 @@ public class MybatisRepository implements Repository {
         return memberMapper.selectByEmail(emailId, emailDomain);
     }
 
+    public void profileUpdate(ProfileUpdate profileUpdate) {
+        memberMapper.profileUpdate(profileUpdate);
+    }
+
+    public Member findId(FindId findId) {
+        return memberMapper.findId(findId);
+    }
+
+    public Member findPassword(FindPassword findPassword) {
+        return memberMapper.findPassword(findPassword);
+    }
+
+    public void changePassword(ChangePassword changePassword ) {memberMapper.changePassword(changePassword);}
+
     public void updateMemberAdmin(HashMap<String, Object> parameters) {
         memberMapper.updateMemberAdmin(parameters);
     }
@@ -60,6 +76,14 @@ public class MybatisRepository implements Repository {
     public void deleteMemberById(String userId) {
         memberMapper.deleteMemberById(userId);
 
+    }
+
+    public List<AskContent> selectAskList() {
+        return memberMapper.selectAskList();
+    }
+
+    public void insertAsk(AskContent askContent) {
+        memberMapper.insertAsk(askContent);
     }
 }
 

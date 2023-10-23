@@ -41,21 +41,27 @@ public class ManagerController {
 
 
     @GetMapping("memberList")
-    public String getMemberList(Model model) { // 전체 회원을 조회하기 위한 컨트롤러
+    public String listMembers(Model model) {
+        // 가상의 회원 목록 생성 (이 정보를 실제 데이터베이스에서 가져오도록 바꿀 수 있습니다)
+        List<Member> members = new ArrayList<>();
 
-        List<Member> memberList = checkService.findMembers(); // service에서 멤버를 불러옴
-
-        model.addAttribute("memberList", memberList); // model 객체로 memberList를 보내줌
+//        members.add(new Member);
+//        members.add(new Member);
+        // SELECT * FROM member
+        model.addAttribute("members", members);
 
         return "manager/memberList";
     }
 
+
     @GetMapping("memberEdit")
     public String editMemberPage(@RequestParam("userid") String userId, Model model) { //수정 페이지로 이동시 member를 불러오기 위한 헨들러
         // 특정 회원을 수정하는 페이지로 이동하는 로직을 구현
+        userId = "홍길동";
         // 데이터베이스에서 userId에 해당하는 회원 정보를 가져오는 로직을 구현
 
         Member member = checkService.selectMemberById(userId);
+
         System.out.println(member);
         model.addAttribute("member",member);
 
@@ -82,5 +88,16 @@ public class ManagerController {
         deleteService.deleteMemberById(userId);
 
         return "redirect:/manager/memberList"; // 특정 회원 삭제 후 회원 목록 페이지로 리다이렉트
+    }
+
+    @GetMapping("/groupList")
+    public String groupListForm(Model model){ // 모임 리스트를 보여주는 form 으로 이동하는 로직 구현
+
+//        checkService.selectGroupList();
+
+
+//        model.addAttribute("groupList",groupList);
+
+        return "/manager/groupList";
     }
 }

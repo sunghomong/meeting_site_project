@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>문의 작성</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#askForm").submit(function (event) {
+                event.preventDefault(); // 기본 폼 제출 방지
+
+                var subject = $("#subject").val();
+                var content = $("#content").val();
+                var attachments = $("#attachments")[0].files[0];
+
+                // 데이터를 JSON 형식으로 묶음
+                var requestData = {
+                    subject: subject,
+                    content: content,
+                    attachments: attachments
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/FAQ/createAsk",
+                    data: JSON.stringify(requestData), // JSON으로 변환
+                    contentType: "application/json", // JSON 타입 설정
+                    success: function (response) {
+                        alert("문의가 제출되었습니다.");
+                        // 성공 후 필요한 작업 수행
+                    },
+                    error: function () {
+                        alert("문의 제출에 실패했습니다.");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>문의 작성</h1>
+
+<form id="askForm" enctype="multipart/form-data">
+    <label for="subject">제목:</label><br>
+    <input type="text" id="subject" name="subject" required><br>
+
+    <label for="content">문의 내용:</label><br>
+    <textarea id="content" name="content" rows="4" cols="50" required></textarea><br>
+
+    <label for="attachments">첨부 파일 (선택):</label><br>
+    <input type="file" id="attachments" name="attachments"><br>
+
+    <input type="submit" value="제출">
+</form>
+</body>
+</html>

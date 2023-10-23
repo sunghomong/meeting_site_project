@@ -12,5 +12,6 @@ public class AuthInfo {
     private String userName;
     private String nickName;
     private String userPicture;
+    private String picturePath;
     private int userAdmin;
 }

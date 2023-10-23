@@ -1,7 +1,9 @@
 package com.meeting_site_project.YM.mapper;
 
+import com.meeting_site_project.YM.vo.AskContent;
 import com.meeting_site_project.YM.vo.JoinMember;
 import com.meeting_site_project.YM.vo.Member;
+import com.meeting_site_project.YM.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -31,7 +33,18 @@ public interface MemberMapper {
 
     public Member selectByEmail(String emailId, String emailDomain);
 
+    public void profileUpdate(ProfileUpdate profileUpdate);
+
+    public Member findId(FindId findId);
+
+    public Member findPassword(FindPassword findPassword);
+
+    public void changePassword(ChangePassword changePassword);
     public void updateMemberAdmin(HashMap<String, Object> parameters);
 
     public void deleteMemberById(String userId);
+
+    public List<AskContent> selectAskList(); // 고객 문의 리스트 전체 조회
+
+    public void insertAsk(AskContent askContent);
 }
