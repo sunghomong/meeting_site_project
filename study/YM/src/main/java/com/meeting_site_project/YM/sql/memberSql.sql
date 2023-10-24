@@ -31,7 +31,6 @@ sigoonName nvarchar2(30),
 groupName nvarchar2(30),
 groupInfo nvarchar2(100),
 groupNumberOfPeople number,
-<<<<<<< HEAD
 group_picture nvarchar2(100)
 );
 
@@ -46,9 +45,8 @@ CREATE TABLE ask (
     attachments nvarchar2(100) DEFAULT NULL,  -- 첨부 파일 정보
     comments nvarchar2(500) DEFAULT NULL,  -- 댓글 정보
     history nvarchar2(30) DEFAULT NULL -- 이력 정보 또는 변경 이력
-=======
-groupPicture nvarchar2(100),
-groupPicturePath nvarchar2(300)
+    groupPicture nvarchar2(100),
+    groupPicturePath nvarchar2(300)
 );
 -- 그룹의 키워드 테이블 ------------------------------------
 CREATE TABLE groupByKeyword(
@@ -63,5 +61,4 @@ REFERENCES groupInfo(groupId)
 CREATE TABLE keyword (
 firstKeyword nvarchar2(30),
 secondKeyword nvarchar2(30) primary key
->>>>>>> b36670d54222f2707da0c6bb65b4a9f3058fccbf
 );

@@ -41,7 +41,8 @@
     <p>MBTI : [[${member.userMbti}]]</p>
     <p>매력 점수 : [[${member.avgScore}]]</p><br>
     <button th:onclick="|location.href='@{/profileUpdate(userId=${member.userId})}'|">프로필 수정</button>
-    <button th:onclick="|location.href='@{/profileUpdate}'|">회원 정보 수정</button>
+    <button th:onclick="|location.href='@{/confirmPassword}'|">비밀번호 변경</button>
+    <button onclick="location.href = /*[[@{/}]]*/ '/'">메인</button>
 
 
 </body>

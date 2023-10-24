@@ -29,6 +29,10 @@
         SELECT * FROM member WHERE emailId=#{emailId} AND emailDomain=#{emailDomain}
     </select>
 
+    <select id="selectByPassword" resultType="member" parameterType="LoginCommand">
+        SELECT * FROM member WHERE userPassword=#{userPassword} AND userId=#{userId}
+    </select>
+
     <update id="profileUpdate" parameterType="ProfileUpdate">
         UPDATE member SET userName=#{userName},
         <if test="userPicture != null">userPicture=#{userPicture},</if>

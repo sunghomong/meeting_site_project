@@ -28,7 +28,9 @@ public class LoginController {
 
     // 세션 관련 상수 클래스
     public abstract class SessionConst {
+
         public static final String LOGIN_MEMBER = "loginMember";
+
     }
 
     // 로그인 폼을 불러오는 요청에 대한 핸들러 메서드
@@ -55,7 +57,7 @@ public class LoginController {
         }
 
         // 사용자의 아이디와 비밀번호로 회원 정보 조회
-        Member member = authService.selectByIdPassword(loginCommand.getUserId(), loginCommand.getUserPassword());
+        Member member = authService.selectByIdPassword(loginCommand);
 
         // 회원 정보가 없으면 로그인 실패 처리
         if(member==null) {
