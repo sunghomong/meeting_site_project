@@ -20,7 +20,7 @@
     <tbody>
         <tr th:each="ask : ${askList}">
             <td th:text="${ask.userId}">userId</td>
-            <td><a th:href="@{/FAQ/{askId}(askId=${ask.askId})}" th:text="${ask.title}">글 제목</a></td>
+            <td><a th:href="@{/FAQ/{askId}(askId=${ask.askId})}" th:text="${ask.subject}">글 제목</a></td>
             <td th:text="${ask.createDate}">2023-10-22 10:00</td>
             <td th:text="${ask.status}">미해결</td>
         </tr>

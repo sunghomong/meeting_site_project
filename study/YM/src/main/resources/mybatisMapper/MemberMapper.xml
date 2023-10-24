@@ -74,7 +74,7 @@
         SELECT * FROM askList
     </select>
     <insert id="insertAsk" parameterType="AskContent">
-        INSERT INTO member VALUES (#{askId}, #{userId}, #{subject}, #{content}, sysdate,'미해결',#{attachments},'','')
+        INSERT INTO askList VALUES (#{askId}, #{userId}, #{subject}, #{content}, sysdate,'미해결',#{attachmentName},#{attachmentPath},'','')
     </insert>
 
 </mapper>

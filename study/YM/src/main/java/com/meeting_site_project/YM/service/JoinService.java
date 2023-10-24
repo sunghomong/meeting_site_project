@@ -56,7 +56,22 @@ public class JoinService {
         return mybatisRepository.selectByEmail(emailId, emailDomain);
     }
 
-    public void insertAsk(AskContent askContent) {
+    public void insertAsk(AskContent askContent, MultipartFile attachments) throws Exception{
+
+        // 윈도우 전용은 // 으로 처리가 가능하지만 다양한 처리를 위해 separator을 사용
+        String projectPath = System.getProperty("user.dir")+ File.separator + "YM" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "attachments";
+
+        UUID uuid = UUID.randomUUID();
+
+        String fileName = uuid + "_" + attachments.getOriginalFilename();
+
+        File saveFile = new File(projectPath, fileName);
+
+        attachments.transferTo(saveFile);
+
+        askContent.setAttachmentName(fileName);
+        askContent.setAttachmentPath("/attachments/" + fileName);
+
         mybatisRepository.insertAsk(askContent);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -47,30 +48,34 @@ public class FAQController {
     }
 
     @GetMapping("createAsk")
-    public  String createAskForm(@RequestParam(value = "userId", required = false) String userId) {
+    public  String createAskForm(@RequestParam(value = "userId", required = false) String userId, Model model) {
 
-        if (userId.isEmpty()) {
-            System.out.println("로그인이 필요합니다.");
+        if (userId.isEmpty()) { // 로그인 정보 없을시
             return "redirect:/login";
         } else {
-            System.out.println(userId);
+            model.addAttribute("userId",userId);
             return "/FAQ/createAsk";
         }
     }
 
     @PostMapping("createAsk")
-    public String createAsk(@RequestBody AskContent askContent ,@RequestParam("userId") String userId) {
-        // UUID를 사용하여 고유한 askId 생성
+    public void createAsk(@RequestParam("subject") String subject,
+                            @RequestParam("content") String content,
+                            @RequestParam("attachments") MultipartFile attachments ,
+                            @RequestParam("userId") String userId) throws Exception {
+
+        AskContent askContent = new AskContent();
+
+        askContent.setSubject(subject);
+        askContent.setContent(content);
         askContent.setUserId(userId);
+
+        // UUID를 사용하여 고유한 askId 생성
         String uniqueAskId = UUID.randomUUID().toString();
         // askContent에 생성된 askId 설정
         askContent.setAskId(uniqueAskId);
 
         // 폼 데이터를 받아 처리하는 코드를 작성
-        joinService.insertAsk(askContent);
-        // subject, content, attachments 등의 데이터를 사용하여 문의 작성 처리
-
-        // 성공 또는 실패에 따라 리다이렉트할 URL을 반환
-        return "redirect:/FAQ/askList"; // 성공했을 경우 리다이렉트할 URL
+        joinService.insertAsk(askContent,attachments);
     }
 }
