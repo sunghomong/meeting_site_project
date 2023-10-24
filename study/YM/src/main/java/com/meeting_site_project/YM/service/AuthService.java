@@ -1,6 +1,7 @@
 package com.meeting_site_project.YM.service;
 
 import com.meeting_site_project.YM.repository.MybatisRepository;
+import com.meeting_site_project.YM.vo.LoginCommand;
 import com.meeting_site_project.YM.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class AuthService {
     }
 
     // 아이디와 비밀번호를 받아서 해당 정보와 일치하는 회원을 조회하는 메서드
-    public Member selectByIdPassword(String userId, String userPassword) {
-        return mybatisRepository.selectByIdPassword(userId, userPassword);
+    public Member selectByIdPassword(LoginCommand loginCommand) {
+        return mybatisRepository.selectByIdPassword(loginCommand);
     }
 
 

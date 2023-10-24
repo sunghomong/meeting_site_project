@@ -33,7 +33,6 @@
 <body>
     <h1>프로필 수정</h1>
     <form th:action th:object="${member}" method="post" enctype="multipart/form-data">
-        <p th:text="*{userId}"></p>
         <input type="hidden" th:field="*{userId}">
     <div class="box" style="background: #BDBDBD;">
         <img class="profile" th:src="@{${member.picturePath}}" alt="프로필 이미지">

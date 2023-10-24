@@ -31,4 +31,6 @@ public class CheckService {
     public List<AskContent> selectAskList() {
         return mybatisRepository.selectAskList();
     }
+
+
 }

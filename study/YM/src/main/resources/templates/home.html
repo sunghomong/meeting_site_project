@@ -3,29 +3,73 @@
 <head>
     <title>홈</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
 </head>
 <body>
     <header>
-        <a href="/">요즘뭐해?</a>
-        <p>강민지</p>
-        <a href="#">원데이 모임</a>
-        <a href="#">정기 모임</a>
-        <p>정지윤</p>
+        <div class="MainHeader_header__WXxwu">
+            <div class="MainHeader_header__top__gspE8">
+                <a href="/">요즘뭐해?</a>
+                <div class="MainHeader_header__content__WRkIy">
+                    <a class="LinkOnClick_title__0WSZ9" href="/#">원데이</a>
+                    <a class="LinkOnClick_title__0WSZ9" href="/#">정기</a>
+                    <a class="LinkOnClick_title__0WSZ9" href="/#">내 모임</a>
+                    <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember == null}" th:href="@{/login}">로그인</a>
+                    <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember == null}" th:href="@{/join}">회원가입</a>
 
-        <a th:if="${session.loginMember == null}" th:href="@{/login}">로그인</a>
-        <a th:if="${session.loginMember == null}" th:href="@{/join}">회원가입</a>
+                    <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}" th:href="@{/logout}">로그아웃</a>
+                    <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}" th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
+                    <a class="LinkOnClick_title__0WSZ9" href="/manager">관리자 페이지</a>
+                    <a class="LinkOnClick_title__0WSZ9" href="/FAQ">고객센터</a>
+                </div>
+                <div class="MainHeader_header__download__mWzbG"><img alt="appdownload-mobile" srcSet="https://images.munto.kr/munto-web/app_download.svg?s=96x96 1x, https://images.munto.kr/munto-web/app_download.svg?s=256x256 2x" src="https://images.munto.kr/munto-web/app_download.svg?s=256x256"
+                                                                        width="86" height="30" decoding="async" data-nimg="1" class="MainHeader_option__pLNE2" loading="lazy" style="color:transparent" />
+                    <div class="MainHeader_hamburger__MYcJU" aria-hidden="true"><span class="MainHeader_hamburger__line1__H_1_a"></span><span class="MainHeader_hamburger__line2__b5RPB"></span><span class="MainHeader_hamburger__line3__dcHNJ"></span></div>
+                </div>
+            </div>
+        </div>
+        <section class="Main_section__rShmE">
+            <div class="Main_template__J5p3A">
+                <div class="Main_content__UPjHs">
+                    <div class="Main_content__title__erjlR">취향으로 <br/>만나는 우리</div>
+                    <div class="Main_content__description__DMNMc">관심사 기반 커뮤니티, <b>요즘 뭐해?</b></div>
+                </div>
+                </div>
 
-        <a th:if="${session.loginMember != null}" href="/logout">로그아웃</a>
+        </section>
 
-        <a th:if="${session.loginMember != null}" th:href="@{/logout}">로그아웃</a>
-        <a th:if="${session.loginMember != null}" th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
-        <p>조성호</p>
-        <a href="/manager">관리자 페이지</a>
-        <a href="/FAQ">고객센터</a>
-        <p>공통</p>
-        <a href="#">나의모임</a>
+
+
+
     </header>
-    <section ></section>
-    <footer></footer>
+
+    <footer>
+
+        <footer class="Footer_footer__Dhw_9">
+            <div class="Footer_container__5d2_x">
+                <div class="Footer_info__iYhms">
+                    <p class="Footer_info__subject__yTBPX">요즘 뭐해? 정보</p>
+                    <p class="Footer_info__content__cu7zK"><a href="/notice">공지사항</a></p>
+                    <p class="Footer_info__content__cu7zK"><a href="/event">이벤트</a></p>
+                    <p class="Footer_info__content__cu7zK"><a href="/FAQ/list.html">자주 묻는 질문</a></p>
+                    <p class="Footer_info__content__cu7zK"><a target="_blank" href="/notice/detail.html?id=311">제휴 및 입점 문의</a></p>
+                    <p class="Footer_info__content__cu7zK"><a target="_blank" rel="noreferrer" href="https://people.munto.kr/">채용</a></p>
+                </div>
+                <div class="Footer_sns__2wNzr">
+                    <p class="Footer_sns__subject__v9us5">소셜 미디어</p>
+                    <p class="Footer_sns__content__WCsNm"><a target="_blank" rel="noreferrer" aria-label="요즘 뭐해? instagram 링크 버튼" href="https://instagram.com/s.h__dailys?igshid=MzRlODBiNWFlZA==">인스타그램</a></p>
+                    <p class="Footer_sns__content__WCsNm"><a target="_blank" rel="noreferrer" aria-label="요즘 뭐해? Youtube 링크 버튼" href="https://youtube.com/@chomong?si=Pt_EBZQvqEv4WP4V">유튜브</a></p>
+                </div>
+                <div class="Footer_company__pBIS1">
+                    <p class="Footer_company__title__VlrEE">주식회사 요즘 뭐해?</p>
+                    <p class="Footer_company__content__QXWHT">대표 : 이미리 | 개인정보관리책임자 : 이미리 <br/>이메일 : munto@munto.kr | 대표번호 : 070-7606-4793<br/>주소 : 서울시 강남구 테헤란로 503 하이브로빌딩<br/>사업자등록번호 : 846-86-01452 | 통신판매 : 제 2022-서울강남-00623<br/>고객센터 : <a class="Footer_kakaoLink__1y_id" target="_self" href="https://pf.kakao.com/_kxgljxl/chat">@카카오톡채널</a>                            | 운영 시간 : (월~일) 오전 11:00 ~ 오후 5:00</p>
+                    <p class="Footer_company__info__dONPJ"><a target="_self" href="/policyV2">이용약관</a> | <a target="_self" href="/privacyV2">개인정보처리방침</a> | <a target="_self" href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=8468601452">사업자정보확인</a></p>
+                </div>
+            </div>
+        </footer>
+    </footer>
+
+
 </body>
 </html>

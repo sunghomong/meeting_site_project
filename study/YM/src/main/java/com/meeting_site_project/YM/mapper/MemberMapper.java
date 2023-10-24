@@ -20,7 +20,7 @@ public interface MemberMapper {
 
     public void insertMember(JoinMember joinMember);
 
-    public Member selectByIdPassword(String userId, String userPassword);
+    public Member selectByIdPassword(LoginCommand loginCommand);
 
     public Member selectById(String userId);
 
@@ -47,4 +47,6 @@ public interface MemberMapper {
     public List<AskContent> selectAskList(); // 고객 문의 리스트 전체 조회
 
     public void insertAsk(AskContent askContent);
+
+    public Member selectByPassword(String userPassword, String userId);
 }
