@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.List;
 
 
@@ -24,15 +22,12 @@ public class OnedayMtController {
     }
 
     @GetMapping("/onedayMtForm")
-    public String onedayMeetingList(HttpSession session, Model model) {
+    public String onedayMeetingList(@RequestParam("number") int groupType, Model model) {
 
-        List<GroupInfo> groupInfoList = meetingService.selectJoinList();
+        List<GroupInfo> groupInfoList = meetingService.selectOnedayGroupList(groupType);
 
         model.addAttribute("groupInfo",groupInfoList );
-//        GroupInfo groupInfo = meetingService.insertFirstMeeting();
- /*       GroupInfo gi = new GroupInfo();
-        gi.setGroupPicturePath("/files/8f5066ee-90aa-4592-a4f8-f0418264ae9e_유스케이스 다이어그램.png");*/
-//        model.addAttribute("groupInfo",groupInfo.getGroupInfo());
+
         return "meeting/onedayMtForm";
     }
 }
