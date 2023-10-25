@@ -11,7 +11,8 @@ birthday nvarchar2(50),
 nickName nvarchar2(50),
 emailId nvarchar2(50),
 emailDomain nvarchar2(50),
-signDate date default sysdate
+signDate date default sysdate,
+avgScore number default 0
 );
 -- 회원 점수 테이블 ------------------------------------
 create table userScore (
