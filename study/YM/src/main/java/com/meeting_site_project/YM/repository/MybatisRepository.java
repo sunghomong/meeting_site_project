@@ -70,7 +70,9 @@ public class MybatisRepository implements Repository {
         return memberMapper.findPassword(findPassword);
     }
 
-    public void changePassword(ChangePassword changePassword ) {memberMapper.changePassword(changePassword);}
+    public void changePassword(ChangePassword changePassword) {
+        memberMapper.changePassword(changePassword);
+    }
 
     public void updateMemberAdmin(HashMap<String, Object> parameters) {
         memberMapper.updateMemberAdmin(parameters);
@@ -89,6 +91,8 @@ public class MybatisRepository implements Repository {
     public void insertAsk(AskContent askContent) {
         memberMapper.insertAsk(askContent);
     }
+<<<<<<< HEAD
+=======
 
 
     public AskContent selectAskDetailByAskId(String askId) {
@@ -103,4 +107,18 @@ public class MybatisRepository implements Repository {
         return memberMapper.selectNoticeListByUserId(userId);
     }
 }
+>>>>>>> 3d770b22edeaeaaf96ed6f9180ea47b845ba6b8d
 
+
+    public void insertFirstMeeting(GroupInfo groupInfo) {
+        memberMapper.insertFirstMeeting(groupInfo);
+    }
+
+    public GroupInfo selectByMeeting(int meeting) {
+        return memberMapper.selectByMeeting(meeting);
+    }
+
+    public List<GroupInfo> selectJoinList() {
+        return memberMapper.selectJoinList();
+    }
+}

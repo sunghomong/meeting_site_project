@@ -2,13 +2,15 @@ package com.meeting_site_project.YM.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class GroupInfo {
-    private String groupId;
+    private int groupId;
     private String ownerUserId;
     private String sidoName;
     private String sigoonName;

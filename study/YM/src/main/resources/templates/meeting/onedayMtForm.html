@@ -1,20 +1,62 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>onedayMtForm</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>원데이 모임</title>
 </head>
 <body>
-    <ul>
-        <li><a href="#">전체</a></li>
-        <li><a href="#">취미</a></li>
-        <li><a href="#">MBTI</a></li>
-        <li><a href="#">지역</a></li>
-        <li><a href="#">D-day</a></li>
-    </ul>
-    <a href="firstMeeting">모임 등록</a>
-    <div class="groupContent">
+<ul>
+    <li><a href="#">전체</a></li>
+    <li><a href="#">취미</a></li>
+    <li><a href="#">MBTI</a></li>
+    <li><a href="#">지역</a></li>
+    <li><a href="#">D-day</a></li>
+</ul>
+<a href="firstMeeting">모임 등록</a>
+<div class="firstMeetingGroup">
+    <form th:object="${groupInfo}" th:action="#" method="post">
+        <input type="hidden" th:field="*{groupId}" />
+        <div class="groupContent">
+            <img class="groupPicturePath" th:src="@{${groupInfo.groupPicturePath}}">
+            <ul>
+                <li><input type="text" name="firstKeyword"></li>
+                <li><span th:text="${groupInfo.groupName}"/></li>
+                <li><span th:text="${groupInfo.sidoName, groupInfo.sigoonName}"/></li>
+            </ul>
+        </div>
+        <!--         <label for="ownerUserId">Owner User ID:</label>
+                 <input type="text" th:field="*{ownerUserId}" />
 
-    </div>
+                 <label for="sidoName">Sido Name:</label>
+                 <input type="text" th:field="*{sidoName}" />
+
+                 <label for="sigoonName">Sigoon Name:</label>
+                 <input type="text" th:field="*{sigoonName}" />
+
+
+
+                 <label for="groupInfo">Group Info:</label>
+                 <textarea th:field="*{groupInfo}"></textarea>
+
+                 <label for="groupNumberOfPeople">Number of People:</label>
+                 <input type="number" th:field="*{groupNumberOfPeople}" />
+
+                 <label for="groupPicture">Group Picture:</label>
+                 <input type="text" th:field="*{groupPicture}" />
+
+                 <label for="groupPicturePath">Group Picture Path:</label>
+                 <input type="text" th:field="*{groupPicturePath}" />
+
+                 <label for="groupDate">Group Date:</label>
+                 <input type="datetime-local" th:field="*{groupDate}" />
+
+                 <label for="meeting">Meeting:</label>
+                 <input type="number" th:field="*{meeting}" />
+
+                 <button type="submit">Save</button>
+     -->
+    </form>
+</div>
 </body>
 </html>
