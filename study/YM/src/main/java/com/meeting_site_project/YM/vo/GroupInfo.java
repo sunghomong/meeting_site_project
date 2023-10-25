@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupInfo {
-    private int groupId;
+    private String groupId;
     private String ownerUserId;
     private String sidoName;
     private String sigoonName;
@@ -19,6 +19,8 @@ public class GroupInfo {
     private int groupNumberOfPeople;
     private String groupPicture;
     private String groupPicturePath;
-    private Timestamp groupTime;
-    private int meeting;
+    private int groupType;
+    private Date regDate;
+    private String firstKeyword;
+    private String secondKeyword;
 }

@@ -3,60 +3,45 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>원데이 모임</title>
+    <title>원데이 모임 목록</title>
+    <style>
+    a {
+    position: absolute;
+    font-size: 30px;
+    bottom: 50px;
+    right: 50%;
+    }
+    </style>
 </head>
+
 <body>
-<ul>
-    <li><a href="#">전체</a></li>
-    <li><a href="#">취미</a></li>
-    <li><a href="#">MBTI</a></li>
-    <li><a href="#">지역</a></li>
-    <li><a href="#">D-day</a></li>
-</ul>
-<a href="firstMeeting">모임 등록</a>
-<div class="firstMeetingGroup">
-    <form th:object="${groupInfo}" th:action="#" method="post">
-        <input type="hidden" th:field="*{groupId}" />
-        <div class="groupContent">
-            <img class="groupPicturePath" th:src="@{${groupInfo.groupPicturePath}}">
-            <ul>
-                <li><input type="text" name="firstKeyword"></li>
-                <li><span th:text="${groupInfo.groupName}"/></li>
-                <li><span th:text="${groupInfo.sidoName, groupInfo.sigoonName}"/></li>
-            </ul>
-        </div>
-        <!--         <label for="ownerUserId">Owner User ID:</label>
-                 <input type="text" th:field="*{ownerUserId}" />
-
-                 <label for="sidoName">Sido Name:</label>
-                 <input type="text" th:field="*{sidoName}" />
-
-                 <label for="sigoonName">Sigoon Name:</label>
-                 <input type="text" th:field="*{sigoonName}" />
 
 
+<h1 style="text-align: center">원데이</h1>
+<div th:each="info : ${groupInfo}" style="width: 250px; height: 400px; border: 1px solid #ccc; margin: 10px; float: left;">
 
-                 <label for="groupInfo">Group Info:</label>
-                 <textarea th:field="*{groupInfo}"></textarea>
+    <img th:src="${info.groupPicturePath}" style="width: 250px; height: 200px;">
 
-                 <label for="groupNumberOfPeople">Number of People:</label>
-                 <input type="number" th:field="*{groupNumberOfPeople}" />
+    <p th:text="${info.secondKeyword}" style="margin: 5px 0 5px;"></p>
 
-                 <label for="groupPicture">Group Picture:</label>
-                 <input type="text" th:field="*{groupPicture}" />
+    <h1 th:text="${info.groupName}" style="margin: 5px 0 5px;"></h1>
 
-                 <label for="groupPicturePath">Group Picture Path:</label>
-                 <input type="text" th:field="*{groupPicturePath}" />
+    <p th:text="${info.groupInfo}" style="margin: 5px 0 5px;"></p>
 
-                 <label for="groupDate">Group Date:</label>
-                 <input type="datetime-local" th:field="*{groupDate}" />
+    <p th:text="${info.sidoName + ' ' + info.sigoonName}" style="margin: 5px 0 5px;"></p>
 
-                 <label for="meeting">Meeting:</label>
-                 <input type="number" th:field="*{meeting}" />
 
-                 <button type="submit">Save</button>
-     -->
-    </form>
+    <p style="margin: 5px 0 5px; text-align: right;">
+       모집 인원 : <span th:text="${info.groupNumberOfPeople}"></span>
+    </p>
 </div>
+<a href="firstMeeting?number=0">모임 등록</a>
+
+
 </body>
 </html>
+
+
+
+
+
