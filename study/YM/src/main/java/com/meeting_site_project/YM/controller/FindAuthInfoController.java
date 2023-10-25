@@ -90,6 +90,7 @@ public class FindAuthInfoController {
         }
         changePassword.setUserId(userId);
         findAuthInfoService.changePassword(changePassword);
+
         return "findAuthInfo/changePasswordSuccess";
     }
 

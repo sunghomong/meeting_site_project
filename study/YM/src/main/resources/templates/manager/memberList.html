@@ -20,17 +20,15 @@
         <td th:text="${member.signDate}">가입 날짜</td>
         <td th:text="${member.userAdmin}">권한</td>
         <td>
-            <!--<button onclick="editMember('${member.userId}')" style="cursor : pointer;">수정</button>
-            <button type="button" id="modalOpenButton" style="cursor : pointer;">삭제</button>
-            <input type="hidden" name="userid" value="${member.userid}">-->
             <button th:onclick="|location.href='@{memberEdit(userid=${member.userId})}'|" style="cursor: pointer;">수정
             </button>
+
             <button type="button" th:attr="data-userid=${member.userId}" onclick="deleteMember(this.getAttribute('data-userid'))" style="cursor: pointer;">삭제</button>
-            <input type="hidden" name="userid" value="${member.userId}">
+            <input type="hidden" name="userid" value="${member.userid}">
         </td>
     </tr>
 </table>
-
+<a th:href="@{/}">메인</a>
 <div id="modalContainer" class="hidden">
     <div id="modalContent">
         <p style="color: red; font-size: 24px; text-align: center;">정말 삭제하시겠습니까?</p>
@@ -59,6 +57,7 @@
         var deleteUserId = document.getElementById('deleteUserId');
         deleteUserId.value = userId; // 삭제할 아이디 저장
     }
+
 
     function confirmDelete() {
         // "네" 버튼 클릭 시 삭제 로직 수행

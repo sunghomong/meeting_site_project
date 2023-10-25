@@ -26,8 +26,8 @@ public class MybatisRepository implements Repository {
     }
 
     // 아이디와 비밀번호를 받아서 해당 정보와 일치하는 회원을 조회하는 메서드
-    public Member selectByIdPassword(String userId, String userPassword) {
-        return memberMapper.selectByIdPassword(userId, userPassword);
+    public Member selectByIdPassword(LoginCommand loginCommand) {
+        return memberMapper.selectByIdPassword(loginCommand);
     }
 
     // 아이디를 받아서 해당하는 회원을 조회하는 메서드
@@ -55,6 +55,9 @@ public class MybatisRepository implements Repository {
         return memberMapper.selectByEmail(emailId, emailDomain);
     }
 
+    public Member selectByPassword(String userPassword, String userId) {
+        return memberMapper.selectByPassword(userPassword, userId);
+    }
     public void profileUpdate(ProfileUpdate profileUpdate) {
         memberMapper.profileUpdate(profileUpdate);
     }
@@ -80,6 +83,7 @@ public class MybatisRepository implements Repository {
 
     }
 
+    // 고객 문의 서비스 구현
     public List<AskContent> selectAskList() {
         return memberMapper.selectAskList();
     }
@@ -87,6 +91,23 @@ public class MybatisRepository implements Repository {
     public void insertAsk(AskContent askContent) {
         memberMapper.insertAsk(askContent);
     }
+<<<<<<< HEAD
+=======
+
+
+    public AskContent selectAskDetailByAskId(String askId) {
+        return memberMapper.selectAskDetailByAskId(askId);
+    }
+
+    public List<Notices> selectNoticeList() {
+        return memberMapper.selectNoticeList();
+    }
+
+    public List<Notices> selectNoticeListByUserId(String userId) {
+        return memberMapper.selectNoticeListByUserId(userId);
+    }
+}
+>>>>>>> 3d770b22edeaeaaf96ed6f9180ea47b845ba6b8d
 
 
     public void insertFirstMeeting(GroupInfo groupInfo) {

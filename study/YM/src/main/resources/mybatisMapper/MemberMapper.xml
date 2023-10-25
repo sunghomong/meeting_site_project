@@ -29,6 +29,10 @@
         SELECT * FROM member WHERE emailId=#{emailId} AND emailDomain=#{emailDomain}
     </select>
 
+    <select id="selectByPassword" resultType="member" parameterType="LoginCommand">
+        SELECT * FROM member WHERE userPassword=#{userPassword} AND userId=#{userId}
+    </select>
+
     <update id="profileUpdate" parameterType="ProfileUpdate">
         UPDATE member SET userName=#{userName},
         <if test="userPicture != null">userPicture=#{userPicture},</if>
@@ -64,15 +68,22 @@
     <delete id="deleteMemberById" parameterType="String"> <!--회원 정보 삭제 (관리자)-->
         DELETE FROM member WHERE userId=#{userId}
     </delete>
+    <select id="selectNoticeListByUserId" resultType="Notices" parameterType="String"> <!-- 본인이 올린 공지 사항 확인 -->
+        SELECT * FROM notices WHERE userId=#{userId}
+    </select>
 
     <!-- 고객 문의 서비스 -->
     <select id="selectAskList" resultType="askContent"> <!-- 고객 문의 조회를 위한 SELECT문 -->
         SELECT * FROM askList
     </select>
     <insert id="insertAsk" parameterType="AskContent">
-        INSERT INTO member VALUES (#{askId}, #{userId}, #{subject}, #{content}, sysdate,'미해결',#{attachments},'','')
+        INSERT INTO askList VALUES (#{askId}, #{userId}, #{subject}, #{content}, sysdate,'미해결',#{attachmentName},#{attachmentPath},'','')
     </insert>
+    <select id="selectAskDetailByAskId" resultType="askContent" parameterType="String">
+        SELECT * FROM askList WHERE askId=#{askId}
+    </select>
 
+<<<<<<< HEAD
     <insert id="insertFirstMeeting" parameterType="groupInfo">
         INSERT INTO groupInfo VALUES (groupInfo_seq.nextval, #{ownerUserId}, #{sidoName}, #{sigoonName}, #{groupName}, #{groupInfo}, 0, #{groupPicture}, #{groupPicturePath}, sysdate, 0)
     </insert>
@@ -87,5 +98,10 @@
 
     <select id="selectJoinList" resultType="groupInfo">
         SELECT * FROM groupInfo
+=======
+    <!-- 공지 사항 서비스 -->
+    <select id="selectNoticeList" resultType="Notices" >
+        SELECT * FROM notices
+>>>>>>> 3d770b22edeaeaaf96ed6f9180ea47b845ba6b8d
     </select>
 </mapper>

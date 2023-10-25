@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>본인 공지 사항 목록</title>
+</head>
+<body>
+<h1>본인 작성 공지 사항 목록</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="notice : ${notices}">
+        <td><a th:href="@{/notice/noticeDetail(noticeId=${notice.noticeId})}" th:text="${notice.title}">공지사항 제목</a></td>
+        <td th:text="${notice.createDate}">작성일</td>
+    </tr>
+    <tr th:unless="${not #lists.isEmpty(notices)}">
+        <td colspan="7">등록된 공지 사항이 없습니다.</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

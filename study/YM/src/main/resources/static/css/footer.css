@@ -1,0 +1,135 @@
+.Footer_footer__Dhw_9 {
+    width: 100%;
+    padding: 60px 0 86px;
+    background-color: #2d2d2d;
+    font-family: Pretendard;
+    height : 180px;
+
+}
+
+
+@media screen and (max-width:900px) {
+    .Footer_footer__Dhw_9 {
+        box-sizing: border-box;
+        background-color: #2d2d2d;
+        padding: 28px 20px 119px
+    }
+}
+
+.Footer_container__5d2_x {
+    width: 100%;
+    max-width: 1189px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position: relative
+}
+
+.Footer_container__5d2_x div p a {
+    text-decoration: none;
+    color: #e4e4e4;
+}
+.Footer_container__5d2_x div p {
+    font-weight: normal;
+}
+
+@media screen and (max-width:900px) {
+    .Footer_container__5d2_x {
+        width: 100%;
+        display: grid;
+        margin: 0 auto;
+        box-sizing: border-box;
+        position: relative
+    }
+    .Footer_info__iYhms {
+        grid-column: 1
+    }
+}
+
+.Footer_info__subject__yTBPX {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.43;
+    color: #fff
+}
+
+@media screen and (max-width:900px) {
+    .Footer_info__subject__yTBPX {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.43
+    }
+}
+
+.Footer_info__content__cu7zK {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.43;
+    color: #e4e4e4;
+    margin-top: 12px
+}
+
+@media screen and (max-width:900px) {
+    .Footer_sns__2wNzr {
+        grid-column: 2
+    }
+}
+
+.Footer_sns__subject__v9us5 {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.43;
+    color: #fff
+}
+
+.Footer_sns__content__WCsNm {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.43;
+    color: #e4e4e4;
+    margin-top: 12px
+}
+
+.Footer_company__pBIS1 {
+    margin-top: 0
+}
+
+@media screen and (max-width:900px) {
+    .Footer_company__pBIS1 {
+        grid-column: 1/span 2;
+        margin-top: 40px
+    }
+}
+
+.Footer_company__title__VlrEE {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.43;
+    color: #fff
+}
+
+.Footer_company__content__QXWHT {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #e4e4e4;
+    margin-top: 8px
+}
+
+.Footer_company__info__dONPJ {
+    margin-top: 22px;
+    color: #e4e4e4;
+    font-size: 12px;
+    line-height: 1.5
+}
+
+@media screen and (max-width:900px) {
+    .Footer_company__info__dONPJ {
+        margin-top: 8px
+    }
+}
+
+.Footer_kakaoLink__1y_id {
+    color: #e4e4e4 !important;
+    text-decoration: underline !important
+}
