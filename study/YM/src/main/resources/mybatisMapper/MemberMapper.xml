@@ -73,4 +73,19 @@
         INSERT INTO member VALUES (#{askId}, #{userId}, #{subject}, #{content}, sysdate,'미해결',#{attachments},'','')
     </insert>
 
+    <insert id="insertFirstMeeting" parameterType="groupInfo">
+        INSERT INTO groupInfo VALUES (groupInfo_seq.nextval, #{ownerUserId}, #{sidoName}, #{sigoonName}, #{groupName}, #{groupInfo}, 0, #{groupPicture}, #{groupPicturePath}, sysdate, 0)
+    </insert>
+
+    <select id="selectByMeeting" resultType="groupInfo" parameterType="java.util.HashMap">
+        SELECT * FROM groupInfo WHERE meeting = #{meeting}
+    </select>
+
+    <select id="selectGroupInById" resultType="groupInfo" parameterType="int">
+        SELECT * FROM groupInfo WHERE groupId=#{groupId}
+    </select>
+
+    <select id="selectJoinList" resultType="groupInfo">
+        SELECT * FROM groupInfo
+    </select>
 </mapper>

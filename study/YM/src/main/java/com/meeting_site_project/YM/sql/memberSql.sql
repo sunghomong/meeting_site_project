@@ -24,7 +24,7 @@ REFERENCES member(userId)
 );
 -- 모임 테이블 ------------------------------------
 CREATE TABLE groupInfo (
-groupId nvarchar2(30) PRIMARY KEY,
+groupId number PRIMARY KEY,
 ownerUserId nvarchar2(30),
 sidoName nvarchar2(30),
 sigoonName nvarchar2(30),
