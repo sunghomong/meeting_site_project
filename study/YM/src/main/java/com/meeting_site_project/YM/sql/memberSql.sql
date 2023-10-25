@@ -1,8 +1,9 @@
 -- 회원 정보 테이블 ------------------------------------
 create table member (
-userId  nvarchar2(100) primary key,
+userId  nvarchar2(100),
 userName nvarchar2(100),
 userPicture nvarchar2(100),
+picturePath NVARCHAR2(500),
 userMbti nvarchar2(10),
 userPassword nvarchar2(100),
 userInfo nvarchar2(500) default null,
@@ -12,7 +13,8 @@ nickName nvarchar2(50),
 emailId nvarchar2(50),
 emailDomain nvarchar2(50),
 signDate date default sysdate,
-avgScore number default 0
+avgScore number default 0,
+CONSTRAINT member_pk PRIMARY KEY (userId)
 );
 -- 회원 점수 테이블 ------------------------------------
 create table userScore (
@@ -37,8 +39,8 @@ group_picture nvarchar2(100)
 
 -- 고객 문의를 위한 테이블
 CREATE TABLE askList (
-    askId NVARCHAR2(40) PRIMARY KEY,  -- 고유한 문의 ID
-    userId nvarchar2(100) REFERENCES member (userId),  -- 외래 키로 member 테이블의 user_id 참조
+    askId NVARCHAR2(40),  -- 고유한 문의 ID (기본키)
+    userId nvarchar2(100),  -- 외래 키로 member 테이블의 user_id 참조
     subject nvarchar2(30),  -- 문의 주제
     content nvarchar2(500),  -- 문의 내용
     createDate DATE DEFAULT sysdate,  -- 문의 생성 일자
@@ -46,7 +48,10 @@ CREATE TABLE askList (
     attachmentName nvarchar2(100) DEFAULT NULL, -- 첨부 파일 이름
     attachmentPath nvarchar2(300) DEFAULT NULL, -- 첨부 파일 경로
     comments nvarchar2(500) DEFAULT NULL,  -- 댓글 정보
-    history nvarchar2(30) DEFAULT NULL -- 이력 정보 또는 변경 이력
+    history nvarchar2(30) DEFAULT NULL, -- 이력 정보 또는 변경 이력
+    CONSTRAINT askList_FK_PK_userId FOREIGN KEY(userId) REFERENCES member(userId)
+    ON DELETE CASCADE,
+    CONSTRAINT askList_Pk PRIMARY KEY (askId)
 );
 
 -- 그룹의 키워드 테이블 ------------------------------------
@@ -62,4 +67,17 @@ REFERENCES groupInfo(groupId)
 CREATE TABLE keyword (
 firstKeyword nvarchar2(30),
 secondKeyword nvarchar2(30) primary key
+);
+-- 공지사항 테이블 ----------------------------------------
+CREATE TABLE notices (
+noticeId NVARCHAR2(40),  -- 고유한 공지 사항 ID (기본키)
+userId nvarchar2(100),  -- 외래 키로 member 테이블의 user_id 참조
+title nvarchar2(30), -- 공지 사항의 제목
+content nvarchar2(500), -- 공지 사항의 내용
+createDate DATE DEFAULT sysdate, -- 생성 일자
+attachmentName nvarchar2(100) DEFAULT NULL, -- 첨부 파일 이름
+attachmentPath nvarchar2(300) DEFAULT NULL, -- 첨부 파일 경로
+CONSTRAINT notices_FK_PK_userId FOREIGN KEY(userId) REFERENCES member(userId)
+ON DELETE CASCADE,
+CONSTRAINT notices_PK PRIMARY KEY (noticeId)
 );

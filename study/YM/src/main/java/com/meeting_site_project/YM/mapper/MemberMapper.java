@@ -46,16 +46,15 @@ public interface MemberMapper {
 
     public List<AskContent> selectAskList(); // 고객 문의 리스트 전체 조회
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 432cfa1581cc6cb700098df67f9841278f8ad045
     public void insertAsk(AskContent askContent);
 
     public Member selectByPassword(String userPassword, String userId);
 
-<<<<<<< HEAD
-=======
+    public AskContent selectAskDetailByAskId(String askId);
 
->>>>>>> 432cfa1581cc6cb700098df67f9841278f8ad045
+    List<Notices> selectNoticeList();
+
+    List<Notices> selectNoticeListByUserId(String userId);
+
 }

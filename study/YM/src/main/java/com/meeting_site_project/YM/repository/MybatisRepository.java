@@ -81,12 +81,26 @@ public class MybatisRepository implements Repository {
 
     }
 
+    // 고객 문의 서비스 구현
     public List<AskContent> selectAskList() {
         return memberMapper.selectAskList();
     }
 
     public void insertAsk(AskContent askContent) {
         memberMapper.insertAsk(askContent);
+    }
+
+
+    public AskContent selectAskDetailByAskId(String askId) {
+        return memberMapper.selectAskDetailByAskId(askId);
+    }
+
+    public List<Notices> selectNoticeList() {
+        return memberMapper.selectNoticeList();
+    }
+
+    public List<Notices> selectNoticeListByUserId(String userId) {
+        return memberMapper.selectNoticeListByUserId(userId);
     }
 }
 

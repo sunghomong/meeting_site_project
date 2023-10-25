@@ -6,11 +6,13 @@ import com.meeting_site_project.YM.service.CheckService;
 import com.meeting_site_project.YM.service.DeleteService;
 import com.meeting_site_project.YM.service.UpdateService;
 import com.meeting_site_project.YM.vo.Member;
+import com.meeting_site_project.YM.vo.Notices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +37,10 @@ public class ManagerController {
 
 
     @GetMapping("")
-    public String createForm() {
+    public String createForm(@RequestParam("userId") String userId, HttpSession session) {
+        System.out.println(userId);
+        session.setAttribute("userId",userId);
+
         return "manager/main";
     }
 
@@ -95,4 +100,19 @@ public class ManagerController {
 
         return "/manager/groupList";
     }
+
+    @GetMapping("/noticeList")
+    public String noticeListFormForManager(HttpSession session,Model model) {
+        String userId = (String) session.getAttribute("userId");
+
+        System.out.println(userId);
+
+        List<Notices> notices = checkService.selectNoticeListByUserId(userId);
+
+        model.addAttribute(notices);
+
+        return "/manager/noticeList";
+    }
+
+
 }

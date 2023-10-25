@@ -3,6 +3,7 @@ package com.meeting_site_project.YM.service;
 import com.meeting_site_project.YM.repository.MybatisRepository;
 import com.meeting_site_project.YM.vo.AskContent;
 import com.meeting_site_project.YM.vo.Member;
+import com.meeting_site_project.YM.vo.Notices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,19 @@ public class CheckService {
 
     public List<AskContent> selectAskList() {
         return mybatisRepository.selectAskList();
+    }
+
+    public AskContent selectAskDetailByAskId(String askId) {
+        return mybatisRepository.selectAskDetailByAskId(askId);
+
+    }
+
+    public List<Notices> selectNoticeList() {
+        return mybatisRepository.selectNoticeList();
+    }
+
+    public List<Notices> selectNoticeListByUserId(String userId) {
+        return mybatisRepository.selectNoticeListByUserId(userId);
     }
 
 

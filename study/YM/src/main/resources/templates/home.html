@@ -34,8 +34,8 @@
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
                     <a class="LinkOnClick_title__0WSZ9"
-                        th:if="${session.loginMember != null} and ${session.loginMember.userAdmin != 0}"
-                        href="/manager">관리자 페이지</a>
+                        th:if="${session.loginMember != null}"
+                        th:href="@{/manager(userId=${session.loginMember.userId})}">관리자 페이지</a>
                     <a class="LinkOnClick_title__0WSZ9" href="/FAQ">고객센터</a>
 
                 </div>

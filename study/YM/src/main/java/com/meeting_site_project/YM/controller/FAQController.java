@@ -60,9 +60,9 @@ public class FAQController {
 
     @PostMapping("createAsk")
     public void createAsk(@RequestParam("subject") String subject,
-                            @RequestParam("content") String content,
-                            @RequestParam("attachments") MultipartFile attachments ,
-                            @RequestParam("userId") String userId) throws Exception {
+                          @RequestParam("content") String content,
+                          @RequestParam("attachments") MultipartFile attachments ,
+                          @RequestParam("userId") String userId) throws Exception {
 
         AskContent askContent = new AskContent();
 
@@ -78,4 +78,25 @@ public class FAQController {
         // 폼 데이터를 받아 처리하는 코드를 작성
         joinService.insertAsk(askContent,attachments);
     }
+
+    @GetMapping("askDetail")
+    public String askDetail(@RequestParam("askId") String askId,HttpServletRequest request,Model model) {
+
+//        HttpSession session = request.getSession();
+//
+//        String userId = (String) session.getAttribute("userId"); // 세션에 저장되어 있는 userId 불러옴
+
+        String userId = (String) request.getAttribute("userId");
+
+        System.out.println(userId);
+
+        AskContent askContent = checkService.selectAskDetailByAskId(askId);
+
+//        request.getAttribute("userId",userId);
+        model.addAttribute("askContent", askContent);
+
+        return "/FAQ/askDetail";
+
+    }
+
 }

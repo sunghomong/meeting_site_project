@@ -68,6 +68,9 @@
     <delete id="deleteMemberById" parameterType="String"> <!--회원 정보 삭제 (관리자)-->
         DELETE FROM member WHERE userId=#{userId}
     </delete>
+    <select id="selectNoticeListByUserId" resultType="Notices" parameterType="String"> <!-- 본인이 올린 공지 사항 확인 -->
+        SELECT * FROM notices WHERE userId=#{userId}
+    </select>
 
     <!-- 고객 문의 서비스 -->
     <select id="selectAskList" resultType="askContent"> <!-- 고객 문의 조회를 위한 SELECT문 -->
@@ -76,5 +79,12 @@
     <insert id="insertAsk" parameterType="AskContent">
         INSERT INTO askList VALUES (#{askId}, #{userId}, #{subject}, #{content}, sysdate,'미해결',#{attachmentName},#{attachmentPath},'','')
     </insert>
+    <select id="selectAskDetailByAskId" resultType="askContent" parameterType="String">
+        SELECT * FROM askList WHERE askId=#{askId}
+    </select>
 
+    <!-- 공지 사항 서비스 -->
+    <select id="selectNoticeList" resultType="Notices" >
+        SELECT * FROM notices
+    </select>
 </mapper>

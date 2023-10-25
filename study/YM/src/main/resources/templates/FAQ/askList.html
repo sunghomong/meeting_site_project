@@ -10,24 +10,25 @@
 <button th:onclick="|location.href='@{/FAQ/createAsk(userId=${userId})}'|">문의 하기</button> <!-- "문의 하기" 버튼 -->
 <table>
     <thead>
-        <tr>
-            <th>글 작성자</th>
-            <th>글 제목</th>
-            <th>작성 일자</th>
-            <th>상태</th>
-        </tr>
+    <tr>
+        <th>글 작성자</th>
+        <th>글 제목</th>
+        <th>작성 일자</th>
+        <th>상태</th>
+    </tr>
     </thead>
     <tbody>
-        <tr th:each="ask : ${askList}">
-            <td th:text="${ask.userId}">userId</td>
-            <td><a th:href="@{/FAQ/{askId}(askId=${ask.askId})}" th:text="${ask.subject}">글 제목</a></td>
-            <td th:text="${ask.createDate}">2023-10-22 10:00</td>
-            <td th:text="${ask.status}">미해결</td>
-        </tr>
-        <tr th:unless="${not #lists.isEmpty(askList)}">
-            <td colspan="7">등록된 문의가 없습니다.</td>
-        </tr>
+    <tr th:each="ask : ${askList}">
+        <td th:text="${ask.userId}">userId</td>
+        <td><a th:href="@{/FAQ/askDetail(askId=${ask.askId})}" th:text="${ask.subject}">글 제목</a></td>
+        <td th:text="${ask.createDate}">2023-10-22 10:00</td>
+        <td th:text="${ask.status}">미해결</td>
+    </tr>
+    <tr th:unless="${not #lists.isEmpty(askList)}">
+        <td colspan="7">등록된 문의가 없습니다.</td>
+    </tr>
     </tbody>
 </table>
+<a th:href="@{/}">메인</a>
 </body>
 </html>
