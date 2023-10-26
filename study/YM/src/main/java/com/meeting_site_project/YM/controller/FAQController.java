@@ -48,14 +48,17 @@ public class FAQController {
     }
 
     @GetMapping("createAsk")
-    public  String createAskForm(@RequestParam(value = "userId", required = false) String userId, Model model) {
+    public  String createAskForm(HttpSession session, Model model) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("loginMember");
 
-        if (userId.isEmpty()) { // 로그인 정보 없을시
-            return "redirect:/login";
-        } else {
-            model.addAttribute("userId",userId);
-            return "/FAQ/createAsk";
+        if (authInfo != null) { // 로그인 한 상태
+            model.addAttribute("userId", authInfo.getUserId());
+            model.addAttribute("loggedIn", true);
+        } else { // 로그인 안한 상태
+            model.addAttribute("notLoggedIn", true);
         }
+
+        return "/FAQ/createAsk";
     }
 
     @PostMapping("createAsk")
@@ -86,7 +89,7 @@ public class FAQController {
 //
 //        String userId = (String) session.getAttribute("userId"); // 세션에 저장되어 있는 userId 불러옴
 
-        String userId = (String) request.getAttribute("userId");
+        String userId = (String) request.getAttribute("loginMember");
 
         System.out.println(userId);
 

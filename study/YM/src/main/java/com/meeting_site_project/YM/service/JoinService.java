@@ -25,8 +25,7 @@ public class JoinService {
     // 회원 정보를 저장하는 메서드
     public void insertMember(JoinMember joinMember, MultipartFile userPicture) throws Exception{
 
-        // 윈도우 전용은 // 으로 처리가 가능하지만 다양한 처리를 위해 separator을 사용
-        String projectPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "attachments";
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
         UUID uuid = UUID.randomUUID();
 
@@ -60,7 +59,7 @@ public class JoinService {
     public void insertAsk(AskContent askContent, MultipartFile attachments) throws Exception{
 
         // 윈도우 전용은 // 으로 처리가 가능하지만 다양한 처리를 위해 separator을 사용
-        String projectPath = System.getProperty("user.dir")+ File.separator + "YM" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "attachments";
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\attachments";
 
         UUID uuid = UUID.randomUUID();
 

@@ -55,6 +55,5 @@ public interface MemberMapper {
 
     List<Notices> selectNoticeList();
 
-    List<Notices> selectNoticeListByUserId(String userId);
 
 }

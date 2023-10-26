@@ -4,19 +4,25 @@ import ch.qos.logback.classic.Logger;
 import com.meeting_site_project.YM.mapper.MemberMapper;
 import com.meeting_site_project.YM.service.CheckService;
 import com.meeting_site_project.YM.service.DeleteService;
+import com.meeting_site_project.YM.service.ManagerService;
 import com.meeting_site_project.YM.service.UpdateService;
+import com.meeting_site_project.YM.vo.AuthInfo;
 import com.meeting_site_project.YM.vo.Member;
 import com.meeting_site_project.YM.vo.Notices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("manager")
@@ -28,13 +34,15 @@ public class ManagerController {
 
     DeleteService deleteService;
 
+    ManagerService managerService;
+
     @Autowired
-    public ManagerController(CheckService checkService, UpdateService updateService ,DeleteService deleteService) {
+    public ManagerController(CheckService checkService, UpdateService updateService, DeleteService deleteService, ManagerService managerService) {
         this.checkService = checkService;
         this.updateService = updateService;
         this.deleteService = deleteService;
+        this.managerService = managerService;
     }
-
 
     @GetMapping("")
     public String createForm(@RequestParam("userId") String userId, HttpSession session) {
@@ -103,16 +111,42 @@ public class ManagerController {
 
     @GetMapping("/noticeList")
     public String noticeListFormForManager(HttpSession session,Model model) {
-        String userId = (String) session.getAttribute("userId");
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("loginMember");
+        System.out.println(authInfo.getUserId());
 
-        System.out.println(userId);
+        List<Notices> notices = managerService.selectNoticeListByUserId(authInfo.getUserId()); // 본인이 만든 공지 사항 리스트 확인 (관리자)
 
-        List<Notices> notices = checkService.selectNoticeListByUserId(userId);
-
-        model.addAttribute(notices);
+        model.addAttribute("notices",notices);
 
         return "/manager/noticeList";
     }
 
+    @GetMapping("createNotice")
+    public String createNoticeForm() {
+
+        return "/manager/createNotice";
+    }
+
+    @PostMapping("createNotice")
+    public void insertNotice(@RequestParam("title") String title,
+                               @RequestParam("content") String content,
+                               @RequestParam("attachments") MultipartFile attachment,
+                               HttpServletRequest request) throws IOException {
+
+        AuthInfo authInfo = (AuthInfo) request.getSession().getAttribute("loginMember");
+
+        Notices notices = new Notices();
+
+        // UUID를 사용하여 고유한 askId 생성
+        String uniqueNoticeId = UUID.randomUUID().toString();
+
+        notices.setUserId(authInfo.getUserId());
+        notices.setNoticeId(uniqueNoticeId);
+        notices.setTitle(title);
+        notices.setContent(content);
+
+        managerService.insertNotice(notices,attachment);
+
+    }
 
 }

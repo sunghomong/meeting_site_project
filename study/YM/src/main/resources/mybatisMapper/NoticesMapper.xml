@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.meeting_site_project.YM.mapper.NoticesMapper">
+
+    <insert id="insertNotice" parameterType="Notices">
+        INSERT INTO Notices VALUES (#{noticeId},#{userId},#{title},#{content},sysdate,#{attachmentName},#{attachmentPath})
+    </insert>
+
+    <select id="selectNoticeListByUserId" resultType="Notices" parameterType="String"> <!-- 본인이 올린 공지 사항 확인 -->
+        SELECT * FROM Notices WHERE userId=#{userId}
+    </select>
+
+    <select id="selectNoticeList" resultType="Notices">
+        SELECT * FROM Notices
+    </select>
+
+    <select id="selectNoticeByNoticeId" resultType="Notices" parameterType="String">
+        SELECT * FROM Notices WHERE noticeId=#{noticeId}
+    </select>
+</mapper>

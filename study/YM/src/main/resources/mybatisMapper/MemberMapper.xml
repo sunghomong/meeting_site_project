@@ -68,9 +68,6 @@
     <delete id="deleteMemberById" parameterType="String"> <!--회원 정보 삭제 (관리자)-->
         DELETE FROM member WHERE userId=#{userId}
     </delete>
-    <select id="selectNoticeListByUserId" resultType="Notices" parameterType="String"> <!-- 본인이 올린 공지 사항 확인 -->
-        SELECT * FROM notices WHERE userId=#{userId}
-    </select>
 
     <!-- 고객 문의 서비스 -->
     <select id="selectAskList" resultType="askContent"> <!-- 고객 문의 조회를 위한 SELECT문 -->
@@ -84,7 +81,8 @@
     </select>
 
     <!-- 공지 사항 서비스 -->
-    <select id="selectNoticeList" resultType="Notices" >
+    <select id="selectNoticeList" resultType="Notices">
         SELECT * FROM notices
     </select>
+
 </mapper>

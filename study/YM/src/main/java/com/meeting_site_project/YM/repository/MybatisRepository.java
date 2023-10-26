@@ -99,8 +99,5 @@ public class MybatisRepository implements Repository {
         return memberMapper.selectNoticeList();
     }
 
-    public List<Notices> selectNoticeListByUserId(String userId) {
-        return memberMapper.selectNoticeListByUserId(userId);
-    }
 }
 

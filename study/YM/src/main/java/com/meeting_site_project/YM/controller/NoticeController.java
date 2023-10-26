@@ -3,11 +3,14 @@ package com.meeting_site_project.YM.controller;
 import com.meeting_site_project.YM.service.CheckService;
 import com.meeting_site_project.YM.service.DeleteService;
 import com.meeting_site_project.YM.service.JoinService;
+import com.meeting_site_project.YM.service.NoticeService;
 import com.meeting_site_project.YM.vo.Notices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -15,26 +18,32 @@ import java.util.List;
 @RequestMapping("/notice")
 public class NoticeController {
 
-    CheckService checkService;
-    DeleteService deleteService;
-    JoinService joinService;
+    NoticeService noticeService;
 
-    public NoticeController(CheckService checkService, DeleteService deleteService, JoinService joinService) {
-        this.checkService = checkService;
-        this.deleteService = deleteService;
-        this.joinService = joinService;
+    @Autowired
+    public NoticeController(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @GetMapping("")
     public String showNoticeListForm(Model model) {
 
-        List<Notices> notices = checkService.selectNoticeList();
+        List<Notices> notices = noticeService.selectNoticeList();
 
-        model.addAttribute(notices);
+        model.addAttribute("notices",notices);
 
         return "/notice/noticeList";
     }
 
+    @GetMapping("noticeDetail")
+    public String showNoticeDetail(@RequestParam("noticeId") String noticeId,Model model) {
+
+        Notices notices = noticeService.selectNoticeByNoticeId(noticeId);
+
+        model.addAttribute("notice",notices);
+
+        return "/notice/noticeDetail";
+    }
 
 
 }
