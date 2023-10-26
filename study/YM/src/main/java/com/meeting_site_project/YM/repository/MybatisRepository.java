@@ -91,6 +91,11 @@ public class MybatisRepository implements Repository {
     public void insertAsk(AskContent askContent) {
         memberMapper.insertAsk(askContent);
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> a7a8f0e698c59bf322c1eeaed80ef0f801f1616f
 
     public AskContent selectAskDetailByAskId(String askId) {
         return memberMapper.selectAskDetailByAskId(askId);
@@ -103,6 +108,13 @@ public class MybatisRepository implements Repository {
     public List<Notices> selectNoticeListByUserId(String userId) {
         return memberMapper.selectNoticeListByUserId(userId);
     }
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> a7a8f0e698c59bf322c1eeaed80ef0f801f1616f
     public void insertFirstMeeting(GroupInfo groupInfo) {
         memberMapper.insertFirstMeeting(groupInfo);
     }
@@ -111,7 +123,23 @@ public class MybatisRepository implements Repository {
         return memberMapper.selectByMeeting(meeting);
     }
 
-    public List<GroupInfo> selectJoinList() {
-        return memberMapper.selectJoinList();
+    public List<GroupInfo> selectOnedayGroupList(int groupType) {
+        return memberMapper.selectOnedayGroupList(groupType);
+    }
+
+    public List<GroupInfo> selectRegulardayGroupList(int groupType){
+        return memberMapper.selectRegulardayGroupList(groupType);
+    };
+
+    public List<Keyword> selectFirstKeywordList() {
+        return memberMapper.selectFirstKeywordList();
+    }
+
+    public List<Keyword> selectSecondKeywordList(String firstKeyword) {
+        return memberMapper.selectSecondKeywordList(firstKeyword);
+    }
+
+    public void insertGroupByKeyword(GroupInfo groupInfo) {
+        memberMapper.insertGroupByKeyword(groupInfo);
     }
 }
