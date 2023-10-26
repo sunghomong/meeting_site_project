@@ -91,9 +91,6 @@ public class MybatisRepository implements Repository {
     public void insertAsk(AskContent askContent) {
         memberMapper.insertAsk(askContent);
     }
-<<<<<<< HEAD
-=======
-
 
     public AskContent selectAskDetailByAskId(String askId) {
         return memberMapper.selectAskDetailByAskId(askId);
@@ -106,10 +103,6 @@ public class MybatisRepository implements Repository {
     public List<Notices> selectNoticeListByUserId(String userId) {
         return memberMapper.selectNoticeListByUserId(userId);
     }
-}
->>>>>>> 3d770b22edeaeaaf96ed6f9180ea47b845ba6b8d
-
-
     public void insertFirstMeeting(GroupInfo groupInfo) {
         memberMapper.insertFirstMeeting(groupInfo);
     }
