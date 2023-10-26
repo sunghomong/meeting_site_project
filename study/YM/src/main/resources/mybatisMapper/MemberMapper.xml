@@ -80,9 +80,44 @@
         SELECT * FROM askList WHERE askId=#{askId}
     </select>
 
+
+    <insert id="insertFirstMeeting" parameterType="groupInfo">
+        INSERT INTO groupInfo VALUES (#{groupId}, #{ownerUserId}, #{sidoName}, #{sigoonName}, #{groupName}, #{groupInfo}, #{groupNumberOfPeople}, #{groupPicture}, #{groupPicturePath},#{groupType} ,sysdate)
+    </insert>
+
+    <select id="selectByMeeting" resultType="groupInfo" parameterType="java.util.HashMap">
+        SELECT * FROM groupInfo WHERE meeting = #{meeting}
+    </select>
+
+    <select id="selectGroupInById" resultType="groupInfo" parameterType="int">
+        SELECT * FROM groupInfo WHERE groupId=#{groupId}
+    </select>
+
+    <select id="selectOnedayGroupList" resultType="groupInfo" parameterType="int">
+        SELECT * FROM groupinfo g JOIN groupbykeyword k ON g.groupId = k.groupid WHERE groupType = #{groupType}
+    </select>
+
+    <select id="selectRegulardayGroupList" resultType="groupInfo" parameterType="int">
+        SELECT * FROM groupinfo g JOIN groupbykeyword k ON g.groupId = k.groupid WHERE groupType = #{groupType}
+    </select>
     <!-- 공지 사항 서비스 -->
     <select id="selectNoticeList" resultType="Notices">
         SELECT * FROM notices
+
     </select>
+<<<<<<< HEAD
+=======
+    <select id="selectFirstKeywordList" resultType="Keyword">
+        SELECT DISTINCT firstKeyword FROM keyword
+    </select>
+
+    <select id="selectSecondKeywordList" parameterType="String" resultType="Keyword">
+        SELECT secondKeyword FROM keyword WHERE firstKeyword=#{firstKeyword}
+    </select>
+    <insert id="insertGroupByKeyword" parameterType="groupInfo">
+        INSERT INTO groupByKeyword VALUES (#{groupId}, #{firstKeyword}, #{secondKeyword})
+    </insert>
+
+>>>>>>> a7a8f0e698c59bf322c1eeaed80ef0f801f1616f
 
 </mapper>

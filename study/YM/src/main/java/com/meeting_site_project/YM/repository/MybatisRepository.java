@@ -70,7 +70,9 @@ public class MybatisRepository implements Repository {
         return memberMapper.findPassword(findPassword);
     }
 
-    public void changePassword(ChangePassword changePassword ) {memberMapper.changePassword(changePassword);}
+    public void changePassword(ChangePassword changePassword) {
+        memberMapper.changePassword(changePassword);
+    }
 
     public void updateMemberAdmin(HashMap<String, Object> parameters) {
         memberMapper.updateMemberAdmin(parameters);
@@ -91,6 +93,7 @@ public class MybatisRepository implements Repository {
     }
 
 
+
     public AskContent selectAskDetailByAskId(String askId) {
         return memberMapper.selectAskDetailByAskId(askId);
     }
@@ -99,5 +102,42 @@ public class MybatisRepository implements Repository {
         return memberMapper.selectNoticeList();
     }
 
+<<<<<<< HEAD
 }
+=======
+    public List<Notices> selectNoticeListByUserId(String userId) {
+        return memberMapper.selectNoticeListByUserId(userId);
+    }
+>>>>>>> a7a8f0e698c59bf322c1eeaed80ef0f801f1616f
 
+
+
+
+    public void insertFirstMeeting(GroupInfo groupInfo) {
+        memberMapper.insertFirstMeeting(groupInfo);
+    }
+
+    public GroupInfo selectByMeeting(int meeting) {
+        return memberMapper.selectByMeeting(meeting);
+    }
+
+    public List<GroupInfo> selectOnedayGroupList(int groupType) {
+        return memberMapper.selectOnedayGroupList(groupType);
+    }
+
+    public List<GroupInfo> selectRegulardayGroupList(int groupType){
+        return memberMapper.selectRegulardayGroupList(groupType);
+    };
+
+    public List<Keyword> selectFirstKeywordList() {
+        return memberMapper.selectFirstKeywordList();
+    }
+
+    public List<Keyword> selectSecondKeywordList(String firstKeyword) {
+        return memberMapper.selectSecondKeywordList(firstKeyword);
+    }
+
+    public void insertGroupByKeyword(GroupInfo groupInfo) {
+        memberMapper.insertGroupByKeyword(groupInfo);
+    }
+}

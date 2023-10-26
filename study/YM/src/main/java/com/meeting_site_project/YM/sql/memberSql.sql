@@ -27,14 +27,17 @@ REFERENCES member(userId)
 );
 -- 모임 테이블 ------------------------------------
 CREATE TABLE groupInfo (
-groupId nvarchar2(30) PRIMARY KEY,
+groupId nvarchar2(50) PRIMARY KEY,
 ownerUserId nvarchar2(30),
 sidoName nvarchar2(30),
 sigoonName nvarchar2(30),
 groupName nvarchar2(30),
 groupInfo nvarchar2(100),
 groupNumberOfPeople number,
-group_picture nvarchar2(100)
+groupPicture nvarchar2(100),
+groupPicturePath NVARCHAR2(500),
+groupType number,
+refDate DATE DEFAULT sysdate
 );
 
 -- 고객 문의를 위한 테이블
