@@ -20,6 +20,8 @@ import javax.validation.Valid;
 public class FindAuthInfoController {
 
     FindAuthInfoService findAuthInfoService;
+
+
     @Autowired
     public FindAuthInfoController(FindAuthInfoService findAuthInfoService) {
         this.findAuthInfoService = findAuthInfoService;
@@ -88,6 +90,7 @@ public class FindAuthInfoController {
             model.addAttribute("userId", userId);
             return "findAuthInfo/changePasswordForm";
         }
+
         changePassword.setUserId(userId);
         findAuthInfoService.changePassword(changePassword);
 

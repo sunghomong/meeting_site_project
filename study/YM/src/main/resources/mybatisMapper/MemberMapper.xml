@@ -70,9 +70,6 @@
     </delete>
 
     <!-- 고객 문의 서비스 -->
-    <select id="selectAskList" resultType="askContent"> <!-- 고객 문의 조회를 위한 SELECT문 -->
-        SELECT * FROM askList
-    </select>
     <insert id="insertAsk" parameterType="AskContent">
         INSERT INTO askList VALUES (#{askId}, #{userId}, #{subject}, #{content}, sysdate,'미해결',#{attachmentName},#{attachmentPath},'','')
     </insert>
@@ -105,8 +102,6 @@
         SELECT * FROM notices
 
     </select>
-<<<<<<< HEAD
-=======
     <select id="selectFirstKeywordList" resultType="Keyword">
         SELECT DISTINCT firstKeyword FROM keyword
     </select>
@@ -117,7 +112,5 @@
     <insert id="insertGroupByKeyword" parameterType="groupInfo">
         INSERT INTO groupByKeyword VALUES (#{groupId}, #{firstKeyword}, #{secondKeyword})
     </insert>
-
->>>>>>> a7a8f0e698c59bf322c1eeaed80ef0f801f1616f
 
 </mapper>

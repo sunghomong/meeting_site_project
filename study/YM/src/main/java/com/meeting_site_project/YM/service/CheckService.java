@@ -29,9 +29,6 @@ public class CheckService {
     }
 
 
-    public List<AskContent> selectAskList() {
-        return mybatisRepository.selectAskList();
-    }
 
     public AskContent selectAskDetailByAskId(String askId) {
         return mybatisRepository.selectAskDetailByAskId(askId);

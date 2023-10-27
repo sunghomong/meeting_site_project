@@ -84,3 +84,19 @@ CONSTRAINT notices_FK_PK_userId FOREIGN KEY(userId) REFERENCES member(userId)
 ON DELETE CASCADE,
 CONSTRAINT notices_PK PRIMARY KEY (noticeId)
 );
+-- 고객 문의 댓글 테이블 -------------------------------------------
+CREATE TABLE commentAsk (
+commentId NVARCHAR2(40), -- 고유한 comment 댓글 ID (기본키)
+userId nvarchar2(100), -- 외래 키로 member 테이블의 userId 참조
+askId NVARCHAR2(40), -- 외래 키로 askList 테이블의 askId 참조
+content nvarchar2(500), -- 댓글 내용
+createDate DATE DEFAULT sysdate,
+CONSTRAINT comment_FK_PK_userId FOREIGN KEY(userId) REFERENCES member(userId)
+ON DELETE CASCADE,
+CONSTRAINT comment_FK_PK_askId FOREIGN KEY(askId) REFERENCES askList(askId)
+ON DELETE CASCADE,
+CONSTRAINT comment_PK PRIMARY KEY (commentId)
+);
+
+
+

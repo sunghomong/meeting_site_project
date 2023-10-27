@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>공지사항 수정</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+                $(document).ready(function () {
+           $("#askForm").submit(function (event) {
+               event.preventDefault(); // 기본 폼 제출 방지
+
+               var formData = new FormData(); // FormData 객체 생성
+
+               formData.append("userId", $("#userId").val()); // 작성자 추가
+               formData.append("subject", $("#subject").val()); // 제목 추가
+               formData.append("content", $("#content").val()); // 내용 추가
+                formData.append("askId", $("#askId").val()); // 질문 아이디 추가
+
+               formData.append("attachments", $("#attachments")[0].files[0]); // 파일 추가
+
+                if (attachments) {
+                    formData.append("attachments", attachments); // 파일이 선택된 경우에만 추가
+                }
+
+               $.ajax({
+                   type: "POST",
+                   url: "/FAQ/askEdit",
+                   data: formData, // FormData 객체 사용
+                   processData: false, // 필수: FormData를 사용하기 때문에 false로 설정
+                   contentType: false, // 필수: FormData를 사용하기 때문에 false로 설정
+                   success: function (response) {
+                       alert("문의가 제출되었습니다.");
+                        // 성공 후 페이지 이동 (예: 홈 페이지로 이동)
+                        window.location.href = "/FAQ/";
+                   },
+                   error: function () {
+                       alert("문의 제출에 실패했습니다.");
+                   }
+               });
+           });
+        });
+    </script>
+</head>
+
+<body>
+<h1>공지 사항 수정</h1>
+<form id="askForm" enctype="multipart/form-data" th:if="${askContent != null}">
+    <input type="hidden" id="askId" name="askId" th:value="${askContent.askId}"/>
+    <div>
+        <label for="userId">작성자:</label>
+        <input type="text" id="userId" name="userId" th:value="${askContent.userId}" disabled="disabled" />
+    </div>
+
+    <div>
+        <label for="subject">제목:</label>
+        <input type="text" id="subject" name="subject" th:value="${askContent.subject}" required="required" />
+    </div>
+    <div>
+        <label for="content">내용:</label>
+        <textarea id="content" name="content" required="required" rows="4" cols="50" th:text="${askContent.content}" th:value="${askContent.content}"></textarea>
+    </div>
+
+    <div>
+        <label for="attachments">첨부 파일 (선택):</label><br>
+        <input type="file" id="attachments" name="attachments"><br>
+    </div>
+
+    <button type="submit">수정 완료</button>
+</form>
+
+<a th:href="@{/}">메인</a>
+</body>
+</html>

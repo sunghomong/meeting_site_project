@@ -84,9 +84,6 @@ public class MybatisRepository implements Repository {
     }
 
     // 고객 문의 서비스 구현
-    public List<AskContent> selectAskList() {
-        return memberMapper.selectAskList();
-    }
 
     public void insertAsk(AskContent askContent) {
         memberMapper.insertAsk(askContent);
@@ -101,16 +98,6 @@ public class MybatisRepository implements Repository {
     public List<Notices> selectNoticeList() {
         return memberMapper.selectNoticeList();
     }
-
-<<<<<<< HEAD
-}
-=======
-    public List<Notices> selectNoticeListByUserId(String userId) {
-        return memberMapper.selectNoticeListByUserId(userId);
-    }
->>>>>>> a7a8f0e698c59bf322c1eeaed80ef0f801f1616f
-
-
 
 
     public void insertFirstMeeting(GroupInfo groupInfo) {

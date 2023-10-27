@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.meeting_site_project.YM.mapper.AskMapper">
+
+    <select id="selectAskList" resultType="askContent"> <!-- 고객 문의 조회를 위한 SELECT문 -->
+        SELECT * FROM askList ORDER BY createDate DESC
+    </select>
+
+    <select id="selectAskListByAskId" resultType="AskContent" parameterType="String"> <!-- askId를 통한 상세 조회 -->
+        SELECT * FROM askList WHERE askId=#{askId}
+    </select>
+
+    <update id="updateAsk" parameterType="AskContent"> <!-- ask 수정 기능 -->
+        UPDATE askList set subject=#{subject},content=#{content},attachmentName=#{attachmentName},attachmentPath=#{attachmentPath},history='수정' where askId = #{askId}
+    </update>
+
+    <delete id="deleteAskByAskId" parameterType="String"> <!-- ask 삭제 기능 -->
+        DELETE FROM askList WHERE askId=#{askId}
+    </delete>
+
+    <update id="updateAskStatus" parameterType="AskContent"> <!-- 수정 사항 변경-->
+        UPDATE askList SET status=#{status} WHERE askId=#{askId}
+    </update>
+
+</mapper>
