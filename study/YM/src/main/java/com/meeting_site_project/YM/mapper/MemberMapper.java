@@ -46,10 +46,6 @@ public interface MemberMapper {
 
     public List<AskContent> selectAskList(); // 고객 문의 리스트 전체 조회
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a7a8f0e698c59bf322c1eeaed80ef0f801f1616f
     public void insertAsk(AskContent askContent); // 고객 문의 등록 하기
 
     public void insertFirstMeeting(GroupInfo groupInfo);
@@ -58,16 +54,11 @@ public interface MemberMapper {
 
     public int groupInfoSearchAll();
 
-<<<<<<< HEAD
     List<GroupInfo> selectJoinList();
-=======
+
     List<GroupInfo> selectOnedayGroupList(int groupType);
 
-
     List<GroupInfo> selectRegulardayGroupList(int groupType);
-
-
->>>>>>> a7a8f0e698c59bf322c1eeaed80ef0f801f1616f
 
     public Member selectByPassword(String userPassword, String userId);
 
@@ -77,12 +68,9 @@ public interface MemberMapper {
 
     List<Notices> selectNoticeListByUserId(String userId);
 
-<<<<<<< HEAD
-=======
     List<Keyword> selectFirstKeywordList();
 
     List<Keyword> selectSecondKeywordList(String firstKeyword);
 
     public void insertGroupByKeyword(GroupInfo groupInfo);
->>>>>>> a7a8f0e698c59bf322c1eeaed80ef0f801f1616f
 }

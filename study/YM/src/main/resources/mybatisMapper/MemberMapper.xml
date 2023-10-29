@@ -83,7 +83,6 @@
         SELECT * FROM askList WHERE askId=#{askId}
     </select>
 
-
     <insert id="insertFirstMeeting" parameterType="groupInfo">
         INSERT INTO groupInfo VALUES (#{groupId}, #{ownerUserId}, #{sidoName}, #{sigoonName}, #{groupName}, #{groupInfo}, #{groupNumberOfPeople}, #{groupPicture}, #{groupPicturePath},#{groupType} ,sysdate)
     </insert>
