@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/static/attachments/
+/src/main/resources/application-local.properties
+/src/main/resources/static/files/
+/src/main/resources/static/groupFiles/

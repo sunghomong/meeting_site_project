@@ -32,6 +32,8 @@
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
                     <a class="LinkOnClick_title__0WSZ9"
+                        th:href="@{/chat}">채팅하기</a>
+                    <a class="LinkOnClick_title__0WSZ9"
                         th:if="${session.loginMember != null}"
                         th:href="@{/manager(userId=${session.loginMember.userId})}">관리자 페이지</a>
                 </div>
@@ -41,7 +43,6 @@
                 </div>
             </div>
         </div>
-
     </header>
 
     <div id="wrapper">

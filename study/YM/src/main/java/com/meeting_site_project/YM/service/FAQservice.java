@@ -45,7 +45,6 @@ public class FAQservice {
     public static void updateAskWithAttachments(AskContent askContent, MultipartFile attachments) throws IOException {
         // 윈도우 전용은 // 으로 처리가 가능하지만 다양한 처리를 위해 separator을 사용
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\attachments";
-
         UUID uuid = UUID.randomUUID();
 
         String fileName = uuid + "_" + attachments.getOriginalFilename();
@@ -56,6 +55,8 @@ public class FAQservice {
 
         askContent.setAttachmentName(fileName);
         askContent.setAttachmentPath("/attachments/" + fileName);
+
+//        askContent.setAttachmentPath(projectPath+"\\"+fileName);
 
         askRepository.updateAsk(askContent);
     }

@@ -1,6 +1,6 @@
 -- 회원 정보 테이블 ------------------------------------
 create table member (
-userId  nvarchar2(100),
+userId varchar(20),
 userName nvarchar2(100),
 userPicture nvarchar2(100),
 picturePath NVARCHAR2(500),
@@ -43,7 +43,7 @@ refDate DATE DEFAULT sysdate
 -- 고객 문의를 위한 테이블
 CREATE TABLE askList (
     askId NVARCHAR2(40),  -- 고유한 문의 ID (기본키)
-    userId nvarchar2(100),  -- 외래 키로 member 테이블의 user_id 참조
+    userId varchar(20),  -- 외래 키로 member 테이블의 user_id 참조
     subject nvarchar2(30),  -- 문의 주제
     content nvarchar2(500),  -- 문의 내용
     createDate DATE DEFAULT sysdate,  -- 문의 생성 일자
@@ -74,7 +74,7 @@ secondKeyword nvarchar2(30) primary key
 -- 공지사항 테이블 ----------------------------------------
 CREATE TABLE notices (
 noticeId NVARCHAR2(40),  -- 고유한 공지 사항 ID (기본키)
-userId nvarchar2(100),  -- 외래 키로 member 테이블의 user_id 참조
+userId nvarchar2(100),  -- 외래 키로 member 테이블의 userId 참조
 title nvarchar2(30), -- 공지 사항의 제목
 content nvarchar2(500), -- 공지 사항의 내용
 createDate DATE DEFAULT sysdate, -- 생성 일자
