@@ -33,12 +33,11 @@
 <body>
     <h1>프로필 수정</h1>
     <form th:action th:object="${member}" method="post" enctype="multipart/form-data">
-        <input type="hidden" th:field="*{userId}">
     <div class="box" style="background: #BDBDBD;">
-        <img class="profile" th:src="@{${member.picturePath}}" alt="프로필 이미지">
+        <img id="profileImage" class="profile" th:src="@{${member.picturePath}}" alt="프로필 이미지">
     </div>
         <label for="picture">프로필 사진 변경 :</label>
-        <input type="file" id="picture" name="picture"><br>
+        <input type="file" id="picture" name="picture" onchange="displayImage(this)"><br>
     <label th:for="userName">이름 :</label>
     <input type="text" name="userName" th:field="*{userName}"><br>
     <label th:for="nickName">닉네임 :</label>
@@ -47,12 +46,26 @@
     <input type="date" name="birthday" th:field="*{birthday}"><br>
     <label th:for="userInfo">자기소개 :</label>
     <div class="userInfo">
-    <textarea name="userInfo"  th:val="*{userInfo}" placeholder="자기소개를 입력해주세요."></textarea>
+    <textarea name="userInfo"  th:field="*{userInfo}" placeholder="자기소개를 입력해주세요."></textarea>
     </div><br>
         <label th:for="userMbti">MBTI :</label>
         <input type="text" name="userMbti" th:field="*{userMbti}"><br>
         <p>매력 점수 : [[${member.avgScore}]]</p><br>
     <button type="submit">프로필 수정 완료</button>
     </form>
+
+
+<script>
+
+    function displayImage(input) {
+            var file = input.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var image = document.getElementById('profileImage');
+                image.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+</script>
 </body>
 </html>

@@ -5,9 +5,60 @@
     <meta charset="UTF-8">
     <title>모임 생성 폼</title>
     <style>
+
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="file"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group textarea {
+            height: 100px;
+        }
+
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .btn-submit {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
         li {
             cursor: pointer;
-            
+
         }
     </style>
 </head>
@@ -39,12 +90,10 @@
     <label for="meeting2">정기 모임</label><br>
 
     <!-- 모임 장소 -->
-    <label for="sidoName">시/도</label>
+    <label for="sidoName">지역 </label>
     <select id="sidoName" name="sidoName" th:field="*{sidoName}">
         <option value="">선택</option>
     </select>
-
-    <label for="sigoonName">시/군</label>
     <select id="sigoonName" name="sigoonName" th:field="*{sigoonName}">
         <option value="">선택</option>
     </select><br>
@@ -57,7 +106,7 @@
     <!-- 모임 정보 -->
     <label for="groupInfo">모임 정보</label>
     <textarea id="groupInfo" name="groupInfo" th:field="*{groupInfo}"></textarea><br>
-
+    <div class="keywords"></div>
     <ul id="firstKeyword">
         <li th:each="keyword : ${keywords}" class="clickable-li" th:text="${keyword.firstKeyword}" th:attr="data-value=${keyword.firstKeyword}"></li>
     </ul>
@@ -66,7 +115,9 @@
     </ul>
 
     <button type="submit">전송</button>
+
 </form>
+
 <script>
     // jQuery의 AJAX 요청에서 CORS를 지원합니다.
     $.support.cors = true;
@@ -187,11 +238,14 @@ $(document).ready(function() {
     $(document).on("click", "#secondKeyword li", function() {
         var secondKeyword = $(this).text(); // 두 번째 li의 텍스트 값을 가져옵니다.
 
+        
         // 기존 hidden input 삭제
         form.find("input[name='secondKeyword']").remove();
 
         // form 데이터에 값을 추가
         form.append("<input type='hidden' name='secondKeyword' value='" + secondKeyword + "'>");
+
+        $(".keywords").text(secondKeyword);
     });
 });
 

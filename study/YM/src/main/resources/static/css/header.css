@@ -4,15 +4,15 @@
         }
 .MainHeader_header__WXxwu {
     width: 100vw;
-    background-color: #EEEFF1;
+    background-color: #f1f1f1;
     margin: 0 auto;
     font-family: Pretendard;
     display: flex;
     align-items: center;
-    position: fixed;
+/*    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
+    right: 0;*/
     height: 80px;
     width: 100%;
     z-index: 1200;
@@ -23,7 +23,7 @@
 
 @media screen and (max-width:900px) {
     .MainHeader_header__WXxwu {
-        background-color: #EEEFF1;
+        background-color: #f1f1f1;
         height: 64px;
         width: 100vw;
         align-items: center;
@@ -79,7 +79,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 15px 14px 15px;
-    background-color: #EEEFF1;
+    background-color: #f1f1f1;
     z-index: 999;
 }
 
@@ -97,7 +97,7 @@
     max-width: 269px;
     animation: MainHeader_openToggle__s4m2N .4s linear;
     animation-timing-function: linear;
-    background-color: #EEEFF1;
+    background-color: #f1f1f1;
     display: flex;
     justify-content: space-between
 }

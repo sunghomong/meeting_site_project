@@ -30,7 +30,7 @@ public class ProfileService {
 
     public void ProfileUpdate(ProfileUpdate profileUpdate, MultipartFile picture, HttpSession session) throws Exception{
 
-       if (picture != null) {
+       if (!picture.isEmpty()) {
            AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
            // 만약 프로필 이미지가 존재한다면 기존 파일을 삭제합니다.
            if (authInfo.getPicturePath() != null) {
@@ -61,7 +61,11 @@ public class ProfileService {
             profileUpdate.setPicturePath("/files/" + fileName);
 
         }
-            mybatisRepository.profileUpdate(profileUpdate);
+       else if (picture.isEmpty()) {
+           profileUpdate.setUserPicture(null);
+           profileUpdate.setPicturePath(null);
+       }
+       mybatisRepository.profileUpdate(profileUpdate);
     }
 
 

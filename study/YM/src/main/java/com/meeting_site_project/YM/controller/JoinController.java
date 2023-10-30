@@ -24,13 +24,13 @@ public class JoinController {
 
     // 회원가입 페이지로 이동하는 요청에 대한 핸들러 메서드
     @GetMapping("/join")
-    public String loginForm(JoinMember joinmember, HttpSession session) {
+    public String loginForm(@ModelAttribute("joinMember") JoinMember joinMember, HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
         if(authInfo != null) {
             return "redirect:/";
         }
         // joinForm 객체를 모델에 추가하여 Thymeleaf에서 사용할 수 있도록 합니다.
-        return "join/joinForm"; // "join/joinForm.html" 뷰 페이지를 반환합니다.
+        return "join/joinForm2"; // "join/joinForm.html" 뷰 페이지를 반환합니다.
     }
 
     // 아이디 중복을 체크하는 요청에 대한 핸들러 메서드
@@ -62,7 +62,7 @@ public class JoinController {
     // 이메일 중복을 체크하는 요청에 대한 핸들러 메서드
     @PostMapping("/emailCheck")
     @ResponseBody
-    public String checkUserEmail(@RequestParam String emailId, @RequestParam String emailDomain) {
+    public String checkUserEmail(@RequestParam("emailId") String emailId, @RequestParam("emailDomain") String emailDomain) {
         // 이메일 중복 확인을 위해 JoinService에서 selectByEmail 메서드를 호출합니다.
         Member member = joinService.selectByEmail(emailId, emailDomain);
         if (member == null) {
@@ -80,10 +80,17 @@ public class JoinController {
 
     // 회원가입 정보를 처리하는 요청에 대한 핸들러 메서드
     @PostMapping("/joinSuccess")
-    public String joinSuccess(@Valid JoinMember joinMember, BindingResult bindingResult, MultipartFile userPicture ) throws Exception{
-        // JoinMember 객체의 유효성을 검사하고, 에러가 있으면 bindingResult에 에러 정보를 저장합니다.
-
-        joinService.insertMember(joinMember, userPicture); // 회원 정보를 DB에 저장합니다.
+    public String joinSuccess(@Valid @ModelAttribute("joinMember") JoinMember joinMember, BindingResult bindingResult, MultipartFile picture ) throws Exception{
+         // 폼 유효성 검사 에러가 있는지 확인
+        if(bindingResult.hasErrors()) {
+            return "join/joinForm2"; // 에러가 있으면 회원가입 폼으로 이동
+        }
+        if(!joinMember.getUserPassword().equals(joinMember.getConfirmUserPassword())) {
+            bindingResult.reject("passwordfail", "비밀번호가 일치하지 않습니다.");
+            return "join/joinForm2"; // 회원가입 폼으로 이동
+        }
+        joinMember.setUserInfo(joinMember.getUserInfo().replace("\r\n","<br>"));
+        joinService.insertMember(joinMember, picture); // 회원 정보를 DB에 저장합니다.
         return "join/joinSuccess"; // "join/joinSuccess.html" 뷰 페이지를 반환합니다.
     }
 }

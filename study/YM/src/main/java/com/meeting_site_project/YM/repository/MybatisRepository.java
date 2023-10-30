@@ -52,6 +52,7 @@ public class MybatisRepository implements Repository {
 
     // 이메일 아이디와 도메인을 받아서 해당하는 회원을 조회하는 메서드
     public Member selectByEmail(String emailId, String emailDomain) {
+
         return memberMapper.selectByEmail(emailId, emailDomain);
     }
 
@@ -83,6 +84,10 @@ public class MybatisRepository implements Repository {
 
     }
 
+    public void deleteGroup(String groupId) {
+        memberMapper.deleteGroup(groupId);
+    }
+
     // 고객 문의 서비스 구현
 
     public void insertAsk(AskContent askContent) {
@@ -112,10 +117,21 @@ public class MybatisRepository implements Repository {
         return memberMapper.selectOnedayGroupList(groupType);
     }
 
+    public List<Keyword> selectKeywords () {
+        return memberMapper.selectKeywords();
+    }
+
+    public GroupInfo selectGroupInfoById(String groupId) {
+        return memberMapper.selectGroupInfoById(groupId);
+    }
+
     public List<GroupInfo> selectRegulardayGroupList(int groupType){
         return memberMapper.selectRegulardayGroupList(groupType);
     };
 
+    public void updateMeeting(GroupInfo groupInfo) {
+        memberMapper.updateMeeting(groupInfo);
+    }
     public List<Keyword> selectFirstKeywordList() {
         return memberMapper.selectFirstKeywordList();
     }

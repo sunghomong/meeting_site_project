@@ -10,10 +10,10 @@
     </select>
 
     <insert id="insertMember" parameterType="JoinMember">
-        INSERT INTO member VALUES (#{userId}, #{userName}, #{userPicture}, #{picturePath} ,#{userMbti}, #{userPassword}, '', 0, #{birthday}, #{nickName}, #{emailId}, #{emailDomain}, sysdate, 0)
+        INSERT INTO member VALUES (#{userId}, #{userName}, #{userPicture}, #{picturePath} ,#{userMbti}, #{userPassword}, #{userInfo}, 0, #{birthday}, #{nickName}, #{emailId}, #{emailDomain}, sysdate, 0)
     </insert>
 
-    <select id="selectByIdPassword" resultType="member" parameterType="String">
+    <select id="selectByIdPassword" resultType="member" parameterType="LoginCommand">
         SELECT * FROM member WHERE userId=#{userId} AND userPassword = #{userPassword}
     </select>
 
@@ -29,7 +29,7 @@
         SELECT * FROM member WHERE emailId=#{emailId} AND emailDomain=#{emailDomain}
     </select>
 
-    <select id="selectByPassword" resultType="member" parameterType="LoginCommand">
+    <select id="selectByPassword" resultType="member" parameterType="String">
         SELECT * FROM member WHERE userPassword=#{userPassword} AND userId=#{userId}
     </select>
 
@@ -86,16 +86,20 @@
         SELECT * FROM groupInfo WHERE meeting = #{meeting}
     </select>
 
-    <select id="selectGroupInById" resultType="groupInfo" parameterType="int">
-        SELECT * FROM groupInfo WHERE groupId=#{groupId}
+    <select id="selectGroupInfoById" resultType="groupInfo" parameterType="String">
+        SELECT * FROM groupinfo g JOIN groupbykeyword k ON g.groupId = k.groupId WHERE g.groupId=#{groupId}
     </select>
 
     <select id="selectOnedayGroupList" resultType="groupInfo" parameterType="int">
-        SELECT * FROM groupinfo g JOIN groupbykeyword k ON g.groupId = k.groupid WHERE groupType = #{groupType}
+        SELECT * FROM groupinfo g JOIN groupbykeyword k ON g.groupId = k.groupId WHERE groupType = #{groupType}
     </select>
 
     <select id="selectRegulardayGroupList" resultType="groupInfo" parameterType="int">
         SELECT * FROM groupinfo g JOIN groupbykeyword k ON g.groupId = k.groupid WHERE groupType = #{groupType}
+    </select>
+
+    <select id="selectKeywords" resultType="keyword">
+        SELECT * FROM keyword
     </select>
     <!-- 공지 사항 서비스 -->
     <select id="selectNoticeList" resultType="Notices">
@@ -113,4 +117,17 @@
         INSERT INTO groupByKeyword VALUES (#{groupId}, #{firstKeyword}, #{secondKeyword})
     </insert>
 
+<<<<<<< HEAD
+    <update id="updateMeeting" parameterType="groupInfo">
+        UPDATE groupInfo SET groupName=#{groupName},
+        <if test="groupPicture != null">groupPicture=#{groupPicture},</if>
+        <if test="groupPicturePath != null">groupPicturePath=#{groupPicturePath},</if>
+        groupNumberOfPeople=#{groupNumberOfPeople}, groupInfo=#{groupInfo} WHERE groupId=#{groupId}
+    </update>
+
+    <delete id="deleteGroup" parameterType="String">
+        DELETE FROM groupInfo, groupByKeyword WHERE groupId=#{groupId}
+    </delete>
+=======
+>>>>>>> 7ef67eb52132549071bc504de586ba41e8bfe4da
 </mapper>

@@ -23,21 +23,26 @@ public class JoinService {
     }
 
     // 회원 정보를 저장하는 메서드
-    public void insertMember(JoinMember joinMember, MultipartFile userPicture) throws Exception{
+    public void insertMember(JoinMember joinMember, MultipartFile picture) throws Exception{
+        if (!picture.isEmpty()) {
+            String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
+<<<<<<< HEAD
+            UUID uuid = UUID.randomUUID();
+=======
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+>>>>>>> 7ef67eb52132549071bc504de586ba41e8bfe4da
 
-        UUID uuid = UUID.randomUUID();
+            String fileName = uuid + "_" + picture.getOriginalFilename();
 
-        String fileName = uuid + "_" + userPicture.getOriginalFilename();
+            File saveFile = new File(projectPath, fileName);
 
-        File saveFile = new File(projectPath, fileName);
+            picture.transferTo(saveFile);
 
-        userPicture.transferTo(saveFile);
+            joinMember.setUserPicture(fileName);
+            joinMember.setPicturePath("/files/" + fileName);
 
-        joinMember.setUserPicture(fileName);
-        joinMember.setPicturePath("/files/" + fileName);
-
+        }
         mybatisRepository.insertMember(joinMember);
     }
 

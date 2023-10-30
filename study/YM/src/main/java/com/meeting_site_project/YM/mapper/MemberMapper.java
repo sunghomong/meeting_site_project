@@ -5,6 +5,7 @@ import com.meeting_site_project.YM.vo.JoinMember;
 import com.meeting_site_project.YM.vo.Member;
 import com.meeting_site_project.YM.vo.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public interface MemberMapper {
 
     public Member selectByNickName(String nickName);
 
-    public Member selectByEmail(String emailId, String emailDomain);
+    public Member selectByEmail(@Param("emailId") String emailId,@Param("emailDomain") String emailDomain);
 
     public void profileUpdate(ProfileUpdate profileUpdate);
 
@@ -59,9 +60,13 @@ public interface MemberMapper {
 
     List<GroupInfo> selectRegulardayGroupList(int groupType);
 
+    public GroupInfo selectGroupInfoById(String groupId);
 
+    List<Keyword> selectKeywords();
 
-    public Member selectByPassword(String userPassword, String userId);
+    public void updateMeeting(GroupInfo groupInfo);
+
+    public Member selectByPassword(@Param("userPassword") String userPassword, @Param("userId") String userId);
 
     public AskContent selectAskDetailByAskId(String askId);
 
@@ -73,4 +78,6 @@ public interface MemberMapper {
     List<Keyword> selectSecondKeywordList(String firstKeyword);
 
     public void insertGroupByKeyword(GroupInfo groupInfo);
+
+    public void deleteGroup(String groupId);
 }

@@ -2,10 +2,7 @@ package com.meeting_site_project.YM.controller;
 
 
 import com.meeting_site_project.YM.service.ProfileService;
-import com.meeting_site_project.YM.vo.AuthInfo;
-import com.meeting_site_project.YM.vo.Member;
-import com.meeting_site_project.YM.vo.Password;
-import com.meeting_site_project.YM.vo.ProfileUpdate;
+import com.meeting_site_project.YM.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,13 +42,14 @@ public class ProfileController {
             return "redirect:/login";
         }
         Member member = profileService.selectById(userId);
+        member.setUserInfo(member.getUserInfo().replace("<br>","\r\n"));
         model.addAttribute("member", member);
-        return "/profile/profileUpdateForm";
+        return "/profile/profileUpdateForm2";
     }
 
     @PostMapping("/profileUpdate")
     public String profileUpdate(@Valid @ModelAttribute("profileUpdate") ProfileUpdate profileUpdate, MultipartFile picture, HttpServletRequest request, HttpSession session) throws Exception{
-        profileUpdate.setUserId(profileUpdate.getUserId().split(",")[0]);
+        profileUpdate.setUserInfo(profileUpdate.getUserInfo().replace("\r\n","<br>"));
         profileService.ProfileUpdate(profileUpdate, picture, session);
 
         Member member = profileService.selectById(profileUpdate.getUserId());
@@ -64,18 +62,17 @@ public class ProfileController {
     }
 
     @GetMapping("/confirmPassword")
-    public String confirmPassword(@ModelAttribute("password") Password password) {
+    public String confirmPassword(@ModelAttribute("password") ConfirmUserPassword confirmUserPassword) {
         return "profile/confirmPasswordForm";
     }
 
     @PostMapping("/confirmPassword")
-    public String confirmPasswordSuccess(@Valid @ModelAttribute("password") Password password, BindingResult bindingResult, HttpSession session) {
+    public String confirmPasswordSuccess(@Valid @ModelAttribute("password") ConfirmUserPassword confirmUserPassword, BindingResult bindingResult, HttpSession session) {
         if(bindingResult.hasErrors()) {
             return "profile/confirmPasswordForm"; // 에러가 있으면 로그인 폼으로 이동
         }
         AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
-
-        Member member = profileService.selectByPassword(password.getUserPassword(), authInfo.getUserId());
+        Member member = profileService.selectByPassword(confirmUserPassword.getUserPassword(), authInfo.getUserId());
 
         if(member==null) {
             bindingResult.reject("confirmPasswordFail", "비밀번호를 확인해주세요.");
