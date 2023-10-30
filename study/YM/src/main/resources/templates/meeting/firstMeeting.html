@@ -18,12 +18,11 @@
           align-items: center;
           min-height: 100vh;
           margin: 20px;
-
         }
 
         /* Button */
         button{
-          font-size: 15px;
+          font-size: 20px;
           font-weight: bold;
           cursor: pointer;
           border: none;
@@ -47,7 +46,7 @@
           display: flex;
           flex-direction: column;
           align-items: center;
-          min-width: 600px;
+          min-width: 700px;
         }
 
         h1 {
@@ -63,7 +62,7 @@
 
         input {
           color: rgba(0, 0, 0, 0.6);
-          font-size: 15px;
+          font-size: 20px;
           padding: 10px;
           cursor: pointer;
           }
@@ -71,9 +70,9 @@
         #cssGroupForm > label {
           display: block;
           text-transform: uppercase;
-          font-size: 11px;
+          font-size: 15px;
           color: rgb(15, 15, 15);
-          margin: 8px 0 5px 0;
+          margin: 30px 0 5px 0;
           font-weight: bold;
         }
 
@@ -96,6 +95,7 @@
        #cssGroupForm > #groupInfo {
           resize: none;
           height: 200px;
+          font-size: 20px;
        }
 
        #cssGroupForm > select {
@@ -104,6 +104,10 @@
           color: rgba(0, 0, 0, 0.6);
           border: 1px solid rgb(15, 15, 15);
           box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+       }
+
+       #cssGroupForm > #picture {
+        padding: 0;
        }
         ul {
           list-style: none;
@@ -114,19 +118,22 @@
            cursor: pointer;
        }
        #cssMeetingForm {
-          display: flex;
-          justify-content: center;
-          align-items: center;
+
+        display: flex;
+        justify-content: center;
       }
-      #cssMeetingForm > label {
-          margin: 0 120px 0 5px;
-          font-weight: bold;
+
+      #cssMeetingForm > .meeting1 {
+         width: 47%;
+         margin-right: 5px;
       }
+
       /* img */
       #preview {
-          width: 440px;
-          height: 350px;
+          width: 100%;
+          height: 400px;
           margin: 20px;
+          border-radius: 0;
       }
     </style>
 </head>
@@ -137,19 +144,24 @@
 
 <body>
 <div class="groupOut">
+    <h1>모임 등록</h1>
     <!-- 브이월드 행정구역 정보를 이용한 셀렉트 박스를 구현합니다. -->
     <img scr="" id="preview" style="display: none;">
-    <h1>모임 등록</h1>
     <form id="meetingForm" th:action method="post" th:object="${groupInfo}" enctype="multipart/form-data">
         <input type="hidden" id="ownerUserId" name="ownerUserId" th:value="${ownerUserId}">
         <!-- 모임 종류 -->
         <div id="cssMeetingForm">
-            <input type="radio" id="meeting1" name="groupType" value="0" th:checked="${groupType == 0}"/>
-            <label for="meeting1">원데이 모임</label>
+            <div class="meeting1">
+                <input type="radio" id="meeting1" name="groupType" value="0" th:checked="${groupType == 0}"/>
+                <label for="meeting1">원데이 모임</label>
+            </div>
             <input type="radio" id="meeting2" name="groupType" value="1" th:checked="${groupType == 1}"/>
             <label for="meeting2">정기 모임</label><br>
         </div>
         <div id="cssGroupForm">
+             모임 대표 이미지
+            <label for="picture">모임 대표 이미지</label>
+            <input type="file" id="picture" name="picture" th:accept="'image/*'" style="font-size: 15px;"><br>
             <!-- 모임 이름 -->
             <label for="groupName">모임 이름</label>
             <input type="text" id="groupName" name="groupName" th:field="*{groupName}"><br>
@@ -179,11 +191,9 @@
             <ul id="secondKeyword">
 
             </ul>
-
-            <!-- 모임 대표 이미지 -->
-            <label for="picture">모임 대표 이미지</label>
-            <input type="file" id="picture" name="picture" th:accept="'image/*'"><br>
-
+<!--            &lt;!&ndash; 모임 대표 이미지 &ndash;&gt;-->
+<!--            <label for="picture">모임 대표 이미지</label>-->
+<!--            <input type="file" id="picture" name="picture" th:accept="'image/*'" style="font-size: 15px;"><br>-->
             <button type="submit">전&nbsp;&nbsp;송</button>
         </div>
     </form>
@@ -332,7 +342,6 @@ $('#picture').change(function () {
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
 </script>
 </body>
 </html>
