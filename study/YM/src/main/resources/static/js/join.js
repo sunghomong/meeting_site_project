@@ -1,65 +1,3 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <script src=https://code.jquery.com/jquery-3.7.1.min.js></script>
-    <title>로그인폼</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-
-<h1>회원가입</h1>
-<img src="" id="preview"/>
-<form th:action="@{/joinSuccess}" method="post"   enctype="multipart/form-data">
-    <label for="userPicture">프로필 사진 업로드 :</label>
-    <input type="file" id="userPicture" name="userPicture" required><br>
-    <label for="userId">아이디 :</label>
-    <input type="text" id="userId" name="userId"  oninput="isIdChecked = false;" required>
-    <button type="button" onclick="checkId()">중복 확인</button>
-    <div id="checkIdMessage"></div><br>
-
-    <label for="userPassword">비밀번호 :</label>
-    <input type="password" id="userPassword" name="userPassword" required><br>
-
-    <label for="confirmUserPassword">비밀번호 확인 :</label>
-    <input type="password" id="confirmUserPassword" name="confirmUserPassword" required><br>
-
-    <label for="userName">이름 :</label>
-    <input type="text" id="userName" name="userName"  required><br>
-
-    <label for="nickName">닉네임 :</label>
-    <input type="text" id="nickName" name="nickName"  oninput="isNickNameChecked = false;" required>
-    <button type="button" onclick="checkNickName()">중복 확인</button>
-    <div id="checkNickNameMessage"></div><br>
-
-
-    <label for="emailId">이메일 :</label>
-    <input type="text" id="emailId" name="emailId"  class="form_w200" title="이메일 아이디" placeholder="이메일" maxlength="18" oninput="isEmailChecked = false;"/>
-    @
-    <input type="text" id="emailDomain" name="emailDomain"  class="form_w200" title="이메일 도메인" placeholder="이메일 도메인" maxlength="18"/>
-    <select class="select" title="이메일 도메인 주소 선택" th:onchange="setEmailDomain(this.value)">
-        <option value="">-선택-</option>
-        <option value="naver.com">naver.com</option>
-        <option value="gmail.com">gmail.com</option>
-        <option value="hanmail.net">hanmail.net</option>
-        <option value="nate.com">nate.com</option>
-        <option value="yahoo.com">yahoo.com</option>
-    </select> <button type="button" onclick="checkEmail()">중복 확인</button>
-    <div id="checkEmailMessage"></div><br>
-
-
-
-    <label for="userMbti">MBTI :</label>
-    <input type="text" id="userMbti" name="userMbti" ><br>
-
-    <label for="birthday">생일 :</label>
-    <input type="date" id="birthday" name="birthday"  required><br>
-
-    <button type="submit" onclick="return validateForm()">회원가입</button>
-    <button th:onclick="|location.href='@{/}'|">메인</button>
-</form>
-
-
 <script>
 
     var isIdChecked = false;
@@ -284,10 +222,3 @@ function setImageFromFile(input, expression) {
      }
 }
 </script>
-
-
-
-
-  
-</body>
-</html>

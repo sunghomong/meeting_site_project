@@ -51,6 +51,7 @@ public class LoginController {
     @PostMapping("/login")
     public String loginSuccess(@Valid @ModelAttribute("loginInfo") LoginCommand loginCommand, BindingResult bindingResult, HttpServletRequest request) {
 
+
         // 폼 유효성 검사 에러가 있는지 확인
         if(bindingResult.hasErrors()) {
             return "login/loginForm"; // 에러가 있으면 로그인 폼으로 이동

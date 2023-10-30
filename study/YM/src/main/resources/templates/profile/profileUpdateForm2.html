@@ -1,0 +1,268 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>프로필 수정 폼</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+        .notosanskr * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .profile-border {
+            width: 250px;
+            height: 250px;
+            border-radius: 70%;
+            background-color: #c3e0e9;
+            position: relative;
+            margin: auto;
+        }
+
+        .profile-box {
+            width: 238px;
+            height: 238px;
+            border-radius: 70%;
+            overflow: hidden;
+            position: absolute;
+            top:6px;
+            left: 6px;
+
+        }
+
+        .content {
+            margin: 70px auto;
+
+        }
+
+        .profile {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .userInfo {
+            font-family: 'Noto Sans KR', sans-serif;
+            width: 600px;
+            font-weight: bold;
+            color: #444;
+            font-size: 20px;
+            margin-top: 50px;
+            padding: 0 20px;
+            border: none;
+            resize: none;
+        }
+        .userInfo-input:focus {
+            outline: none;
+        }
+
+        #wrapper {
+            width: 100%;
+            min-height: calc(100vh - 220px);
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-me {
+            width: 600px;
+            font-family: 'GmarketSansMedium';
+            font-size: 40px;
+            color: #c3e0e9;
+            font-weight: bold;
+            margin-bottom: 50px;
+        }
+        .info-box {
+            display: flex;
+            justify-content: center;
+        }
+        .left-box{
+            width: 300px;
+
+        }
+        .right-box {
+            box-sizing: border-box;
+            width: 300px;
+            display: flex;
+            padding-left: 100px;
+            align-items: center;
+        }
+        .text {
+            font-family: 'GmarketSansMedium';
+            font-weight: bold;
+            font-size: 30px;
+            color: #c3e0e9;
+        }
+        .text-box {
+            padding-top: 10px;
+        }
+        .info-text {
+            width: 90px;
+            font-size: 14px;
+            font-family: 'GmarketSansMedium';
+            color: #494949;
+        }
+        .button-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .img-change{
+            width: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto 0;
+        }
+        .text-input {
+            border: none;
+            border-bottom: 1px solid #CFCFCF;
+            width: 165px;
+            font-size: 18px;
+            font-family: 'GmarketSansMedium';
+            color: #494949;
+            padding: 10px 0 0 15px;
+            margin-bottom: 10px;
+        }
+        .text-input:focus {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="MainHeader_header__WXxwu">
+        <div class="MainHeader_header__top__gspE8">
+            <div class="MainHeader_header__content__WRkIy">
+                <a class="logo-link" href="/"><img th:src="@{/images/KakaoTalk_20231024_193657045.png}"></a>
+                <a class="LinkOnClick_title__0WSZ9" href="/onedayMtForm?number=0">원데이</a>
+                <a class="LinkOnClick_title__0WSZ9" href="/regulardayMtForm?number=1">정기</a>
+                <a class="LinkOnClick_title__0WSZ9" href="/#">내 모임</a>
+                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember == null}"
+                   th:href="@{/login}">로그인</a>
+                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember == null}"
+                   th:href="@{/join}">회원가입</a>
+
+                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
+                   th:href="@{/logout}">로그아웃</a>
+                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
+                   th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
+                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
+                   th:href="@{/manager(userId=${session.loginMember.userId})}">관리자 페이지</a>
+                <a class="LinkOnClick_title__0WSZ9" href="/FAQ">고객센터</a>
+
+            </div>
+            <div class="box" style="background: #BDBDBD;" th:if="${session.loginMember != null}">
+                <a th:href="@{/profile(userId=${session.loginMember.userId})}"><img class="profile"
+                                                                                    th:src="@{${session.loginMember.picturePath}}"></a>
+            </div>
+        </div>
+    </div>
+
+
+
+</header>
+
+<div id="wrapper">
+    <div class="content">
+        <div class="about-me">프로필 수정</div>
+        <form th:action th:object="${member}" method="post" enctype="multipart/form-data">
+        <div class="info-box">
+            <div class="left-box">
+                <div class="profile-border">
+                    <div class="profile-box" style="background: #BDBDBD;">
+                        <img id="profileImage" class="profile" th:src="@{${member.picturePath}}">
+                    </div>
+                </div>
+                <div class="img-change">
+                <div class="info-text">사진 변경</div>
+                <input type="file" id="picture" name="picture" onchange="displayImage(this)">
+            </div>
+            </div>
+            <div class="right-box">
+                <div class="text-box">
+                    <div class="text">이름</div>
+                    <input class="text-input" type="text" name="userName" th:field="*{userName}">
+
+                    <div class="text">닉네임</div>
+                    <input class="text-input" type="text" name="nickName" th:field="*{nickName}">
+
+                    <div class="text">생일</div>
+                    <input  class="text-input" type="date" name="birthday" th:field="*{birthday}">
+
+                    <div class="text">MBTI</div>
+                    <input  class="text-input" type="text" name="userMbti" th:field="*{userMbti}">
+                </div>
+            </div>
+        </div>
+        <textarea name="userInfo"  th:field="*{userInfo}" class="userInfo"></textarea>
+        <div class="button-box">
+            <button type="submit">프로필 수정 완료</button>
+        </div>
+    </form>
+    </div>
+</div>
+
+<footer class="Footer_footer__Dhw_9">
+    <div class="Footer_container__5d2_x">
+        <div class="Footer_info__iYhms">
+            <p class="Footer_info__subject__yTBPX">요즘 뭐해? 정보</p>
+            <p class="Footer_info__content__cu7zK"><a href="/notice">공지사항</a></p>
+            <p class="Footer_info__contensst__cu7zK"><a href="/event">이벤트</a></p>
+            <p class="Footer_info__content__cu7zK"><a href="/FAQ/list.html">자주 묻는 질문</a></p>
+
+        </div>
+        <div class="Footer_sns__2wNzr">
+            <p class="Footer_sns__subject__v9us5">소셜 미디어</p>
+            <p class="Footer_sns__content__WCsNm"><a target="_blank" rel="noreferrer"
+                                                     aria-label="요즘 뭐해? instagram 링크 버튼"
+                                                     href="https://instagram.com/s.h__dailys?igshid=MzRlODBiNWFlZA==">인스타그램</a></p>
+            <p class="Footer_sns__content__WCsNm"><a target="_blank" rel="noreferrer"
+                                                     aria-label="요즘 뭐해? Youtube 링크 버튼"
+                                                     href="https://youtube.com/@chomong?si=Pt_EBZQvqEv4WP4V">유튜브</a></p>
+        </div>
+        <div class="Footer_company__pBIS1">
+            <p class="Footer_company__title__VlrEE">주식회사 요즘 뭐해?</p>
+            <p class="Footer_company__content__QXWHT">대표 : 이미리 | 개인정보관리책임자 : 이미리 <br />이메일 : munto@munto.kr | 대표번호 :
+                070-7606-4793<br />주소 : 서울시 강남구 테헤란로 503 하이브로빌딩<br />사업자등록번호 : 846-86-01452 | 통신판매 : 제
+                2022-서울강남-00623<br />고객센터 : <a class="Footer_kakaoLink__1y_id" target="_self"
+                                               href="https://pf.kakao.com/_kxgljxl/chat">@카카오톡채널</a> | 운영 시간 : (월~일) 오전 11:00 ~ 오후 5:00</p>
+            <p class="Footer_company__info__dONPJ"><a target="_self" href="/policyV2">이용약관</a> | <a target="_self"
+                                                                                                    href="/privacyV2">개인정보처리방침</a> | <a target="_self"
+                                                                                                                                        href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=8468601452">사업자정보확인</a></p>
+        </div>
+    </div>
+</footer>
+
+
+<script>
+
+    function displayImage(input) {
+            var file = input.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var image = document.getElementById('profileImage');
+                image.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+
+</script>
+</body>
+
+</html>

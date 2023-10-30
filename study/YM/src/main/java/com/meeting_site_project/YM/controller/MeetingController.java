@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -67,10 +68,54 @@ public class MeetingController {
 
     @PostMapping("/firstMeeting")
     public String firstMeeting(@Valid @ModelAttribute("groupInfo") GroupInfo groupInfo, BindingResult bindingResult , Model model, MultipartFile picture) throws Exception {
-        System.out.println(groupInfo);
         meetingService.insertFirstMeeting(groupInfo, picture);
         meetingService.insertGroupByKeyword(groupInfo);
+        if (groupInfo.getGroupType() == 0) {
+            return "redirect:/onedayMtForm?number=0";
+        }
 
-        return "redirect:/onedayMtForm?number=0";
+        return "redirect:/regulardayMtForm?number=1";
     }
+
+    @GetMapping("/meetingView")
+    public String meetingView(@RequestParam String groupId, Model model) {
+
+        GroupInfo groupInfo = meetingService.selectGroupInfoById(groupId);
+
+        model.addAttribute("groupInfo", groupInfo);
+
+        return "/meeting/meetingView";
+    }
+
+    @GetMapping("/meetingUpdateForm")
+    public String meetingUpdateForm(@RequestParam String groupId,  Model model) {
+        GroupInfo groupInfo = meetingService.selectGroupInfoById(groupId);
+        List<Keyword> keywords = meetingService.selectKeywords();
+        model.addAttribute("groupInfo", groupInfo);
+        model.addAttribute("keywords", keywords);
+        return "/meeting/meetingUpdateForm";
+    }
+
+    @PostMapping("/meetingUpdateForm")
+    public String meetingUpdate(GroupInfo groupInfo, MultipartFile picture) throws IOException {
+        System.out.println(groupInfo.getGroupId());
+        meetingService.updateMeeting(groupInfo, picture);
+
+        if (groupInfo.getGroupType() == 0) {
+            return "redirect:/onedayMtForm?number=0";
+        }
+
+        return "redirect:/regulardayMtForm?number=1";
+    }
+
+    @GetMapping("deleteGroup")
+    public String deleteGroup(@RequestParam String groupId) {
+
+        meetingService.deleteGroup(groupId);
+
+        return "redirect:/";
+    }
+
+
+
 }

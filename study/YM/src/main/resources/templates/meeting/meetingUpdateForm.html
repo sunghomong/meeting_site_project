@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>모임 수정</title>
+    <style>
+
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="file"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group textarea {
+            height: 100px;
+        }
+
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .btn-submit {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+        li {
+            cursor: pointer;
+
+        }
+    </style>
+</head>
+<!-- OpenLayers 라이브러리를 사용하기 위한 CSS를 불러옵니다. -->
+<link rel="stylesheet" href="http://openlayers.org/en/latest/css/ol.css" type="text/css">
+<!-- jQuery 라이브러리를 불러옵니다. -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<body>
+<h1>모임 수정</h1>
+<!-- 브이월드 행정구역 정보를 이용한 셀렉트 박스를 구현합니다. -->
+<img src="" id="preview"/>
+<form id="meetingForm" th:action method="post" th:object="${groupInfo}" enctype="multipart/form-data">
+    <div class="box" style="background: #BDBDBD;">
+        <img id="groupImage" class="profile" th:src="@{${groupInfo.groupPicturePath}}" alt="프로필 이미지">
+    </div>
+    <input type="hidden" name="groupType" th:value="${groupInfo.groupType}">
+    <!-- 모임 이름 -->
+    <label for="groupName">모임 이름</label>
+    <input type="text" id="groupName" name="groupName" th:field="*{groupName}"><br>
+
+    <!-- 모임 대표 이미지 -->
+    <label for="picture">모임 대표 이미지</label>
+    <input type="file" id="picture" name="picture" onchange="displayImage(this)"><br>
+
+    <p th:if="${groupInfo.groupType == 0}">모임 종류  원데이</p>
+    <p th:if="${groupInfo.groupType == 1}">모임 종류  정기</p>
+
+    <!-- 모임 장소 -->
+
+    <p> 모임 지역 <span th:text="${groupInfo.sidoName}"></span></p>
+    <p th:text="${groupInfo.sigoonName}"></p>
+
+
+    <!-- 모임 인원 -->
+    <label for="groupNumberOfPeople">모임 인원</label>
+    <input type="number" id="groupNumberOfPeople" name="groupNumberOfPeople" th:field="*{groupNumberOfPeople}"><br>
+
+    <!-- 모임 정보 -->
+    <label for="groupInfo">모임 정보</label>
+    <textarea id="groupInfo" name="groupInfo" th:field="*{groupInfo}"></textarea><br>
+
+    <p>모임 키워드 : <span th:text="${groupInfo.firstKeyword}"></span></p>
+    <p th:text="${groupInfo.secondKeyword}"></p>
+
+    <button type="submit">전송</button>
+
+</form>
+
+<script>
+
+    function displayImage(input) {
+               var file = input.files[0];
+               var reader = new FileReader();
+               reader.onload = function(e) {
+                   var image = document.getElementById('groupImage');
+                   image.src = e.target.result;
+               }
+               reader.readAsDataURL(file);
+           }
+
+
+</script>
+</body>
+</html>
