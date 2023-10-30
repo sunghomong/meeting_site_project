@@ -5,61 +5,129 @@
     <meta charset="UTF-8">
     <title>모임 생성 폼</title>
     <style>
-
-        .form-container {
-            max-width: 500px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+          border-radius: 5px;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="file"],
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 8px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .form-group textarea {
-            height: 100px;
-        }
-
-        .form-group input[type="radio"] {
-            margin-right: 10px;
-        }
-
-        .btn-submit {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .btn-submit:hover {
-            background-color: #0056b3;
-        }
-        li {
-            cursor: pointer;
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          margin: 20px;
 
         }
+
+        /* Button */
+        button{
+          font-size: 15px;
+          font-weight: bold;
+          cursor: pointer;
+          border: none;
+          background: rgb(155, 155, 226);
+          color: #fff;
+          width: 100%;
+          height: 100%;
+          margin: 20px 0;
+          padding: 15px 15px;
+          box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0), 0 3px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+          background: rgb(75, 75, 241);
+          box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* Form */
+        .groupOut {
+          box-shadow: 0 0 20px rgb(155, 155, 226);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          min-width: 600px;
+        }
+
+        h1 {
+          margin: 20px 20px;
+          color: rgb(49, 49, 208);
+       }
+
+        form {
+          position: relative;
+          padding: 10px 30px;
+          min-width: 500px;
+        }
+
+        input {
+          color: rgba(0, 0, 0, 0.6);
+          font-size: 15px;
+          padding: 10px;
+          cursor: pointer;
+          }
+
+        #cssGroupForm > label {
+          display: block;
+          text-transform: uppercase;
+          font-size: 11px;
+          color: rgb(15, 15, 15);
+          margin: 8px 0 5px 0;
+          font-weight: bold;
+        }
+
+        #cssGroupForm > #groupNumberOfPeople {
+          width: 100%;
+          height: 30px;
+          border: 1px solid rgb(15, 15, 15);
+          box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #cssGroupForm > #groupName, #cssGroupForm > #groupInfo {
+          width: 100%;
+          height: 40px;
+          padding: 10px;
+          color: rgba(0, 0, 0, 0.6);
+          border: 1px solid rgb(15, 15, 15);
+          box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+       }
+
+       #cssGroupForm > #groupInfo {
+          resize: none;
+          height: 200px;
+       }
+
+       #cssGroupForm > select {
+          width: 100%;
+          height: 40px;
+          color: rgba(0, 0, 0, 0.6);
+          border: 1px solid rgb(15, 15, 15);
+          box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+       }
+        ul {
+          list-style: none;
+          color: rgb(15, 15, 15);
+       }
+
+        ul > li {
+           cursor: pointer;
+       }
+       #cssMeetingForm {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+      #cssMeetingForm > label {
+          margin: 0 120px 0 5px;
+          font-weight: bold;
+      }
+      /* img */
+      #preview {
+          width: 440px;
+          height: 350px;
+          margin: 20px;
+      }
     </style>
 </head>
 <!-- OpenLayers 라이브러리를 사용하기 위한 CSS를 불러옵니다. -->
@@ -68,56 +136,58 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <body>
-<h1>모임 등록</h1>
-<!-- 브이월드 행정구역 정보를 이용한 셀렉트 박스를 구현합니다. -->
-<img src="" id="preview"/>
-<form id="meetingForm" th:action method="post" th:object="${groupInfo}" enctype="multipart/form-data">
-    <input type="hidden" id="ownerUserId" name="ownerUserId" th:value="${ownerUserId}">
+<div class="groupOut">
+    <!-- 브이월드 행정구역 정보를 이용한 셀렉트 박스를 구현합니다. -->
+    <img scr="" id="preview" style="display: none;">
+    <h1>모임 등록</h1>
+    <form id="meetingForm" th:action method="post" th:object="${groupInfo}" enctype="multipart/form-data">
+        <input type="hidden" id="ownerUserId" name="ownerUserId" th:value="${ownerUserId}">
+        <!-- 모임 종류 -->
+        <div id="cssMeetingForm">
+            <input type="radio" id="meeting1" name="groupType" value="0" th:checked="${groupType == 0}"/>
+            <label for="meeting1">원데이 모임</label>
+            <input type="radio" id="meeting2" name="groupType" value="1" th:checked="${groupType == 1}"/>
+            <label for="meeting2">정기 모임</label><br>
+        </div>
+        <div id="cssGroupForm">
+            <!-- 모임 이름 -->
+            <label for="groupName">모임 이름</label>
+            <input type="text" id="groupName" name="groupName" th:field="*{groupName}"><br>
 
-    <!-- 모임 이름 -->
-    <label for="groupName">모임 이름</label>
-    <input type="text" id="groupName" name="groupName" th:field="*{groupName}"><br>
+            <!-- 모임 장소 -->
+            <label for="sidoName">시/도</label>
+            <select id="sidoName" name="sidoName" th:field="*{sidoName}">
+                <option value="">선택</option>
+            </select>
 
-    <!-- 모임 대표 이미지 -->
-    <label for="picture">모임 대표 이미지</label>
-    <input type="file" id="picture" name="picture"><br>
+            <label for="sigoonName">시/군</label>
+            <select id="sigoonName" name="sigoonName" th:field="*{sigoonName}">
+                <option value="">선택</option>
+            </select><br>
 
-    <!-- 모임 종류 -->
-    <input type="radio" id="meeting1" name="groupType" value="0" th:checked="${groupType == 0}"/>
-    <label for="meeting1">원데이 모임</label>
+            <!-- 모임 인원 -->
+            <label for="groupNumberOfPeople">모임 인원</label>
+            <input type="number" id="groupNumberOfPeople" name="groupNumberOfPeople" th:field="*{groupNumberOfPeople}"><br>
 
-    <input type="radio" id="meeting2" name="groupType" value="1" th:checked="${groupType == 1}"/>
-    <label for="meeting2">정기 모임</label><br>
+            <!-- 모임 정보 -->
+            <label for="groupInfo">모임 소개</label>
+            <textarea id="groupInfo" name="groupInfo" th:field="*{groupInfo}"></textarea><br>
 
-    <!-- 모임 장소 -->
-    <label for="sidoName">지역 </label>
-    <select id="sidoName" name="sidoName" th:field="*{sidoName}">
-        <option value="">선택</option>
-    </select>
-    <select id="sigoonName" name="sigoonName" th:field="*{sigoonName}">
-        <option value="">선택</option>
-    </select><br>
+            <ul id="firstKeyword">
+                <li th:each="keyword : ${keywords}" class="clickable-li" th:text="${keyword.firstKeyword}" th:attr="data-value=${keyword.firstKeyword}"></li>
+            </ul>
+            <ul id="secondKeyword">
 
+            </ul>
 
-    <!-- 모임 인원 -->
-    <label for="groupNumberOfPeople">모임 인원</label>
-    <input type="number" id="groupNumberOfPeople" name="groupNumberOfPeople" th:field="*{groupNumberOfPeople}"><br>
+            <!-- 모임 대표 이미지 -->
+            <label for="picture">모임 대표 이미지</label>
+            <input type="file" id="picture" name="picture" th:accept="'image/*'"><br>
 
-    <!-- 모임 정보 -->
-    <label for="groupInfo">모임 정보</label>
-    <textarea id="groupInfo" name="groupInfo" th:field="*{groupInfo}"></textarea><br>
-    <div class="keywords"></div>
-    <ul id="firstKeyword">
-        <li th:each="keyword : ${keywords}" class="clickable-li" th:text="${keyword.firstKeyword}" th:attr="data-value=${keyword.firstKeyword}"></li>
-    </ul>
-    <ul id="secondKeyword">
-
-    </ul>
-
-    <button type="submit">전송</button>
-
-</form>
-
+            <button type="submit">전&nbsp;&nbsp;송</button>
+        </div>
+    </form>
+</div>
 <script>
     // jQuery의 AJAX 요청에서 CORS를 지원합니다.
     $.support.cors = true;
@@ -238,18 +308,30 @@ $(document).ready(function() {
     $(document).on("click", "#secondKeyword li", function() {
         var secondKeyword = $(this).text(); // 두 번째 li의 텍스트 값을 가져옵니다.
 
-        
         // 기존 hidden input 삭제
         form.find("input[name='secondKeyword']").remove();
 
         // form 데이터에 값을 추가
         form.append("<input type='hidden' name='secondKeyword' value='" + secondKeyword + "'>");
-
-        $(".keywords").text(secondKeyword);
     });
 });
 
+// 업로드 사진 미리보기
+$('#picture').change(function () {
+            setImageFromFile(this, '#preview');
+        });
 
+        function setImageFromFile(input, expression) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var previewElement = $(expression);
+                    previewElement.attr('src', e.target.result);
+                    previewElement.css('display', 'block'); // 미리보기 이미지를 보이게 함
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
 </script>
 </body>
