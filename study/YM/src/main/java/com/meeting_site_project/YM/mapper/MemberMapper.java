@@ -45,7 +45,6 @@ public interface MemberMapper {
 
     public void deleteMemberById(String userId);
 
-    public List<AskContent> selectAskList(); // 고객 문의 리스트 전체 조회
 
 
     public void insertAsk(AskContent askContent); // 고객 문의 등록 하기
@@ -73,7 +72,6 @@ public interface MemberMapper {
 
     List<Notices> selectNoticeList();
 
-    List<Notices> selectNoticeListByUserId(String userId);
 
     List<Keyword> selectFirstKeywordList();
 

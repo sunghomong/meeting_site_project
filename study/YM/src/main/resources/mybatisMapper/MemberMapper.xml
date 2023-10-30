@@ -68,14 +68,8 @@
     <delete id="deleteMemberById" parameterType="String"> <!--회원 정보 삭제 (관리자)-->
         DELETE FROM member WHERE userId=#{userId}
     </delete>
-    <select id="selectNoticeListByUserId" resultType="Notices" parameterType="String"> <!-- 본인이 올린 공지 사항 확인 -->
-        SELECT * FROM notices WHERE userId=#{userId}
-    </select>
 
     <!-- 고객 문의 서비스 -->
-    <select id="selectAskList" resultType="askContent"> <!-- 고객 문의 조회를 위한 SELECT문 -->
-        SELECT * FROM askList
-    </select>
     <insert id="insertAsk" parameterType="AskContent">
         INSERT INTO askList VALUES (#{askId}, #{userId}, #{subject}, #{content}, sysdate,'미해결',#{attachmentName},#{attachmentPath},'','')
     </insert>
@@ -108,7 +102,7 @@
         SELECT * FROM keyword
     </select>
     <!-- 공지 사항 서비스 -->
-    <select id="selectNoticeList" resultType="Notices" >
+    <select id="selectNoticeList" resultType="Notices">
         SELECT * FROM notices
 
     </select>
@@ -123,6 +117,7 @@
         INSERT INTO groupByKeyword VALUES (#{groupId}, #{firstKeyword}, #{secondKeyword})
     </insert>
 
+<<<<<<< HEAD
     <update id="updateMeeting" parameterType="groupInfo">
         UPDATE groupInfo SET groupName=#{groupName},
         <if test="groupPicture != null">groupPicture=#{groupPicture},</if>
@@ -133,4 +128,6 @@
     <delete id="deleteGroup" parameterType="String">
         DELETE FROM groupInfo, groupByKeyword WHERE groupId=#{groupId}
     </delete>
+=======
+>>>>>>> 7ef67eb52132549071bc504de586ba41e8bfe4da
 </mapper>

@@ -21,13 +21,13 @@ public class OnedayMtController {
         this.meetingService = meetingService;
     }
 
-    @GetMapping("/onedayMtForm")
-    public String onedayMeetingList(@RequestParam("number") int groupType, Model model) {
-
-        List<GroupInfo> groupInfoList = meetingService.selectOnedayGroupList(groupType);
-
-        model.addAttribute("groupInfo",groupInfoList );
-
-        return "meeting/onedayMtForm";
-    }
+//    @GetMapping("/onedayMtForm")
+//    public String onedayMeetingList(@RequestParam("number") int groupType, Model model) {
+//
+//        List<GroupInfo> groupInfoList = meetingService.selectOnedayGroupList(groupType);
+//
+//        model.addAttribute("groupInfo",groupInfoList );
+//
+//        return "meeting/onedayMtForm";
+//    }
 }

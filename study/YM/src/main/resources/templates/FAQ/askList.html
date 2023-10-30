@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>고객 문의 리스트</title>
@@ -7,18 +7,28 @@
 <body>
 <h1>고객 문의 리스트</h1>
 <!-- 새션 userId 데이터 받고 데이터 보내 주기 -->
-<button th:onclick="|location.href='@{/FAQ/createAsk(userId=${userId})}'|">문의 하기</button> <!-- "문의 하기" 버튼 -->
+<button th:onclick="|location.href='@{/FAQ/createAsk}'|">문의 하기</button> <!-- "문의 하기" 버튼 -->
+<!-- 스타일을 설정하여 특정 상태에 따른 테이블 행을 숨기기/보이기 -->
 <table>
     <thead>
     <tr>
         <th>글 작성자</th>
         <th>글 제목</th>
         <th>작성 일자</th>
-        <th>상태</th>
+        <th>
+            <label for="statusFilter">상태:</label>
+            <select id="statusFilter">
+                <option value="all">전체</option>
+                <option value="미해결">미해결</option>
+                <option value="해결완료">해결완료</option>
+                <option value="처리중">처리 중</option>
+            </select>
+            <button id="filterButton">조회</button>
+        </th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="ask : ${askList}">
+    <tr th:each="ask : ${askList}" th:id="askRow">
         <td th:text="${ask.userId}">userId</td>
         <td><a th:href="@{/FAQ/askDetail(askId=${ask.askId})}" th:text="${ask.subject}">글 제목</a></td>
         <td th:text="${ask.createDate}">2023-10-22 10:00</td>
@@ -30,5 +40,25 @@
     </tbody>
 </table>
 <a th:href="@{/}">메인</a>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#filterButton").click(function() {
+        var selectedStatus = $("#statusFilter").val();
+        if (selectedStatus === "all") {
+            // 모든 상태 행을 보이게 함
+            $("tr#askRow").show();
+        } else {
+            // 선택한 상태에 따라 필터링하여 해당 상태의 행만 보이게 함
+            $("tr#askRow").hide();
+            if (selectedStatus === "해결완료") {
+                // "해결" 상태만 선택
+                $("td:contains('해결완료')").closest("tr").show();
+            } else {
+                // 다른 상태 선택
+                $("td:contains('" + selectedStatus + "')").closest("tr").show();
+            }
+        }
+    });
+</script>
 </body>
 </html>

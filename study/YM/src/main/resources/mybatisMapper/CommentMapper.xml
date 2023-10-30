@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.meeting_site_project.YM.mapper.CommentMapper">
+
+    <insert id="insertCommentAsk" parameterType="CommentAsk">
+        INSERT INTO commentAsk VALUES (#{commentId}, #{userId}, #{askId}, #{content}, sysdate)
+    </insert>
+
+    <select id="selectCommentAsk" resultType="CommentAsk" parameterType="String">
+        SELECT * FROM commentAsk WHERE askId=#{askId}
+    </select>
+</mapper>

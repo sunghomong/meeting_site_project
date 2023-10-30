@@ -12,12 +12,14 @@ import java.util.Date;
 @NoArgsConstructor
 public class Notices {
 
-    private String noticeId;
-    private String userId;
-    private String title;
-    private String content;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Date createDate;
-    private String attachmentName;
-    private String attachmentPath;
+    private String noticeId; // 공지 사항 ID (기본키)
+    private String userId; // 외래 키로 member 테이블의 user_id 참조
+    private String title; // 공지 사항의 제목
+    private String content; // 공지 사항의 내용
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createDate; // 생성 일자
+
+    private String attachmentName; // 첨부 파일 이름
+    private String attachmentPath; // 첨부 파일 경로
 }

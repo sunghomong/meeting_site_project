@@ -27,7 +27,11 @@ public class JoinService {
         if (!picture.isEmpty()) {
             String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
+<<<<<<< HEAD
             UUID uuid = UUID.randomUUID();
+=======
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+>>>>>>> 7ef67eb52132549071bc504de586ba41e8bfe4da
 
             String fileName = uuid + "_" + picture.getOriginalFilename();
 
@@ -60,7 +64,7 @@ public class JoinService {
     public void insertAsk(AskContent askContent, MultipartFile attachments) throws Exception{
 
         // 윈도우 전용은 // 으로 처리가 가능하지만 다양한 처리를 위해 separator을 사용
-        String projectPath = System.getProperty("user.dir")+ File.separator + "YM" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "attachments";
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\attachments";
 
         UUID uuid = UUID.randomUUID();
 

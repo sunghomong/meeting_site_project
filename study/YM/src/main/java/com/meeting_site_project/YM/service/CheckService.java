@@ -29,9 +29,6 @@ public class CheckService {
     }
 
 
-    public List<AskContent> selectAskList() {
-        return mybatisRepository.selectAskList();
-    }
 
     public AskContent selectAskDetailByAskId(String askId) {
         return mybatisRepository.selectAskDetailByAskId(askId);
@@ -42,9 +39,6 @@ public class CheckService {
         return mybatisRepository.selectNoticeList();
     }
 
-    public List<Notices> selectNoticeListByUserId(String userId) {
-        return mybatisRepository.selectNoticeListByUserId(userId);
-    }
 
 
 }

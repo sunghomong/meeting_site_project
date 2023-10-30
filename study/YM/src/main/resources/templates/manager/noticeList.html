@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>본인 작성 공지 사항 목록</h1>
-
+<button th:onclick="|location.href='@{/manager/createNotice(userId=${userId})}'|">공지 사항 등록</button> <!-- "공지 사항 등록" 버튼 -->
 <table>
     <thead>
     <tr>
