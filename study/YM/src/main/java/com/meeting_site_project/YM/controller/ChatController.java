@@ -1,7 +1,10 @@
 package com.meeting_site_project.YM.controller;
 
+import com.meeting_site_project.YM.service.ChatService;
 import com.meeting_site_project.YM.vo.ChatMessage;
+import com.meeting_site_project.YM.vo.ChatRoom;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -10,9 +13,19 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class ChatController {
+
+    ChatService chatService;
+
+    @Autowired
+    public ChatController(ChatService chatService) {
+        this.chatService = chatService;
+    }
 
     // 사용자 등록 요청 처리
     @MessageMapping("/chat.register")
@@ -36,5 +49,13 @@ public class ChatController {
     @GetMapping("/chat")
     public String chatForm() {
         return "/chat"; // "/chat" 페이지로 이동
+    }
+
+    @GetMapping("/chat/chatRoomList")
+    public String createChatRoom(@RequestParam("userId") String userId) {
+
+        List<ChatRoom> chatRoomList = chatService.selectChatRoomListByUserId(userId);
+
+        return "";
     }
 }

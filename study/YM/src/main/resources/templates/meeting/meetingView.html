@@ -44,7 +44,7 @@
 <p>[[${groupInfo.secondKeyword}]]</p><br>
 
 <button th:if="${session.loginMember == null}" th:onclick="|location.href='@{/login})}'|">로그인 후 모임 참여하기</button>
-<button th:if="${session.loginMember != null} and ${session.loginMember.userId != groupInfo.ownerUserId}" th:onclick="|location.href='@{/meetingUpdateForm(groupId=${groupInfo.groupId})}'|">모임 참여하기</button>
+<button th:if="${session.loginMember != null} and ${session.loginMember.userId != groupInfo.ownerUserId}" th:onclick="|location.href='@{/chat(sessionUserId=${sessionUserId})}'|">채팅방 들어가기</button>
 <button th:if="${session.loginMember != null} and ${session.loginMember.userId == groupInfo.ownerUserId}" th:onclick="|location.href='@{/meetingUpdateForm(groupId=${groupInfo.groupId})}'|">모임 정보 수정</button>
 <button th:if="${session.loginMember != null} and ${session.loginMember.userId == groupInfo.ownerUserId}" th:onclick="|location.href='@{/deleteGroup(groupId=${groupInfo.groupId})}'|">모임 삭제</button>
 

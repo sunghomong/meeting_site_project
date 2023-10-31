@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>채팅방 목록</title>
+</head>
+<body>
+<h1>채팅방 목록</h1>
+
+<ul>
+    <!-- 타임리프 반복문을 사용하여 채팅방 목록을 동적으로 생성합니다. -->
+    <li th:each="chatRoom : ${chatRoomList}">
+        <a th:href="@{'/chat/chatRoom(chatRoomId=${chatRoom.chatRoomId})}" th:text="${chatRoom.chatRoomName}"></a>
+    </li>
+</ul>
+</body>
+</html>

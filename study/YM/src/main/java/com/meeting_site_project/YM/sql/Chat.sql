@@ -17,6 +17,7 @@ CREATE TABLE chatRoom(
     chatRoomId NVARCHAR2(50), -- 고유의 채팅방 id 기본키
     groupId NVARCHAR2(50), --  groupInfo 의 groupId 외래키 (하나의 모임당 하나의 방을 생성하기위한 외래키)
     ownerId VARCHAR(20), -- 채팅방의 방장
+    chatRoomName nvarchar2(30),
     maxUserCnt NUMBER, -- 채팅방 최대 인원 제한
     userCount NUMBER, -- 채팅방 현재 인원 수
     CONSTRAINT chatRoom_FK_PK_groupId FOREIGN KEY(groupId) REFERENCES groupInfo(groupId)
@@ -38,3 +39,4 @@ CREATE TABLE chatRoomMembers ( -- 채팅방에 속해 있는 멤버들 조회
     ON DELETE CASCADE,
     CONSTRAINT chatRoomMembers_Pk PRIMARY KEY (roomUserId)
 );
+

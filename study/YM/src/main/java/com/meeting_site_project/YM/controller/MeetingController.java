@@ -1,7 +1,9 @@
 package com.meeting_site_project.YM.controller;
 
+import com.meeting_site_project.YM.service.ChatService;
 import com.meeting_site_project.YM.service.MeetingService;
 import com.meeting_site_project.YM.vo.AuthInfo;
+import com.meeting_site_project.YM.vo.ChatRoom;
 import com.meeting_site_project.YM.vo.GroupInfo;
 import com.meeting_site_project.YM.vo.Keyword;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 
 @Controller
@@ -22,10 +25,14 @@ public class MeetingController {
 
     MeetingService meetingService;
 
+    ChatService chatService;
+
     @Autowired
-    public MeetingController(MeetingService meetingService) {
+    public MeetingController(MeetingService meetingService, ChatService chatService) {
         this.meetingService = meetingService;
+        this.chatService = chatService;
     }
+
 
     @GetMapping("/onedayMtForm")
     public String onedayMeetingList(@RequestParam("number") int groupType, Model model) {
@@ -70,6 +77,22 @@ public class MeetingController {
     public String firstMeeting(@Valid @ModelAttribute("groupInfo") GroupInfo groupInfo, BindingResult bindingResult , Model model, MultipartFile picture) throws Exception {
         meetingService.insertFirstMeeting(groupInfo, picture);
         meetingService.insertGroupByKeyword(groupInfo);
+
+        // 채팅방 생성
+        ChatRoom chatRoom = new ChatRoom();
+
+        // UUID를 사용하여 고유한 chatRoomId 생성
+        String uniqueChatRoomId = UUID.randomUUID().toString();
+
+        chatRoom.setChatRoomId(uniqueChatRoomId);
+        chatRoom.setOwnerId(groupInfo.getOwnerUserId());
+        chatRoom.setGroupId(groupInfo.getGroupId());
+        chatRoom.setMaxUserCnt(groupInfo.getGroupNumberOfPeople());
+        chatRoom.setChatRoomName(groupInfo.getGroupName());
+        chatRoom.setUserCount(1);
+
+        chatService.insertChatRoom(chatRoom); // 채팅방 생성
+
         if (groupInfo.getGroupType() == 0) {
             return "redirect:/onedayMtForm?number=0";
         }

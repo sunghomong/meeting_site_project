@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.meeting_site_project.YM.mapper.ChatMapper">
+
+    <insert id="insertChatRoom" parameterType="ChatRoom">
+        INSERT INTO chatRoom VALUES (#{chatRoomId}, #{groupId}, #{ownerId},#{chatRoomName},#{maxUserCnt},#{userCount})
+    </insert>
+
+    <select id="selectChatRoomListByUserId" parameterType="String" resultType="ChatRoom">
+        SELECT * FROM chatRoom
+    </select>
+
+
+</mapper>

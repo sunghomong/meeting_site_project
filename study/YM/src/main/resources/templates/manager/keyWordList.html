@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Keyword List</title>
+    <link href="/modalWindow.css" rel="stylesheet" type="text/css" />
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $("#keywordForm").submit(function (event) {
+            event.preventDefault(); // 기본 폼 제출 방지
+            console.log("들어옴");
+            var selectedFirstKeyword = $("input.radio-firstKeyword:checked").val();
+            var secondKeyword = $("#secondKeyword").val();
+
+            var data = {
+                "firstKeyword": selectedFirstKeyword,
+                "secondKeyword": secondKeyword
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/manager/addKeyWord",
+                data: JSON.stringify(data), // JSON 데이터로 설정
+                contentType: "application/json", // JSON 데이터라고 서버에 알림
+                success: function (response) {
+                        console.log(response);
+                        if (response === "duplicate") {
+                            alert("이미 존재하는 데이터입니다."); // 중복 메시지 표시
+                        } else {
+                            alert("정상적으로 추가되었습니다.");
+                            window.location.href = "/manager/keyWordList";
+                        }
+                    },
+                        error: function (xhr) {
+                    if (xhr.status === 409) {
+                        alert("이미 존재하는 데이터입니다.");
+                    } else {
+                        alert("문의 제출에 실패했습니다.");
+                    }
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $("#firstKeywordForm").submit(function (event) {
+            event.preventDefault(); // 기본 폼 제출 방지
+            console.log("들어옴");
+            var firstKeyword = $("#firstKeyWord").val();
+            var secondKeyword = $("#secondKeyWord").val();
+
+            var data = {
+                "firstKeyword": firstKeyword,
+                "secondKeyword": secondKeyword
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/manager/addKeyWord",
+                data: JSON.stringify(data), // JSON 데이터로 설정
+                contentType: "application/json", // JSON 데이터라고 서버에 알림
+                success: function (response) {
+                        console.log(response);
+                        if (response === "duplicate") {
+                            alert("이미 존재하는 데이터입니다."); // 중복 메시지 표시
+                        } else {
+                            alert("정상적으로 추가되었습니다.");
+                            window.location.href = "/manager/keyWordList";
+                        }
+                    },
+                        error: function (xhr) {
+                    if (xhr.status === 409) {
+                        alert("이미 존재하는 데이터입니다.");
+                    } else {
+                        alert("문의 제출에 실패했습니다.");
+                    }
+                }
+            });
+        });
+    });
+</script>
+<body>
+<h1>Keyword List</h1>
+<h2>주 키워드</h2>
+<ul>
+    <li th:each="firstKeyWord : ${firstKeyWords}">
+        <a href="#" th:text="${firstKeyWord}" th:attr="data-keyword=${firstKeyWord}" onclick="loadSubKeywords(this.getAttribute('data-keyword')); return false;"></a>
+        <button type="button" th:attr="data-firstKeyWord=${firstKeyWord}" onclick="deleteFirstKeyword(this.getAttribute('data-firstKeyWord'))" style="cursor: pointer;">삭제</button>
+    </li>
+</ul>
+<button type="button" id="addFirstKeyWord">주 키워드 추가</button>
+<form id="firstKeywordForm" style="display:none;">
+    <input type="text" id="firstKeyWord" name="firstKeyword" placeholder="주 키워드 입력" required>
+    <input type="text" id="secondKeyWord" name="secondKeyword" placeholder="보조 키워드 입력" required>
+    <button type="submit" id="addFirstKeyWordAndSecondKeyWord">추가</button>
+    <button type="button" id="cancelFirstKeywordFormButton">취소</button>
+</form>
+<script>
+    document.getElementById("addFirstKeyWord").addEventListener("click", function () {
+    var form = document.getElementById("firstKeywordForm");
+
+        // form을 보이게 하고, 버튼은 감춥니다.
+        form.style.display = "block";
+        this.style.display = "none"; // this는 현재 클릭한 버튼을 나타냅니다.
+    });
+    document.getElementById("cancelFirstKeywordFormButton").addEventListener("click", function () {
+        var form = document.getElementById("firstKeywordForm");
+        var button = document.getElementById("addFirstKeyWord");
+
+        form.style.display = "none";
+        button.style.display = "block";
+    });
+</script>
+<!-- h2 태그 id = subKeywordsList "보조 키워드"-->
+<ul id="subKeywordsList">
+    <!-- 여기에 보조 키워드가 동적으로 추가 -->
+</ul>
+<form id="keywordForm" style="display:none;">
+    <ul>
+        <li th:each="firstKeyWord : ${firstKeyWords}">
+            <label>
+                <input type="radio" name="firstKeyword" class="radio-firstKeyword" th:value="${firstKeyWord}" th:text="${firstKeyWord}">
+            </label>
+        </li>
+    </ul>
+    <input type="text" id="secondKeyword" name="secondKeyword" placeholder="보조 키워드 입력" required>
+    <button type="submit" id="submitButton">추가</button>
+    <button type="button" id="cancelFormButton">취소</button>
+</form>
+<button type="button" id="addFormButton" style="none;">보조 키워드 추가</button>
+
+<div id="modalContainer" class="hidden">
+    <div id="modalContent">
+        <p style="color: red; font-size: 24px; text-align: center;">부 키워드가 존재한다면 같이 삭제될 수 있습니다. 정말 삭제하시겠습니까? </p>
+        <button onclick="confirmDelete()">네</button>
+        <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
+        <input type="hidden" id="deleteFirstKeyWord" name="firstKeyWord" value="">
+    </div>
+</div>
+</body>
+<script>
+    const modal = document.getElementById('modalContainer');
+    const modalCloseButton = document.getElementById('modalCloseButton');
+    const deleteUserId = document.getElementById('deleteUserId');
+
+    function deleteFirstKeyword(firstKeyWord) {
+        // 삭제 버튼 클릭 시 모달 열기
+        modal.classList.remove('hidden'); // 모달창 오픈
+        var deleteFirstKeyWord = document.getElementById('deleteFirstKeyWord');
+        deleteFirstKeyWord.value = firstKeyWord; // 삭제할 아이디 저장
+    }
+
+        function confirmDelete() {
+        // "네" 버튼 클릭 시 삭제 로직 수행
+        var deleteFirstKeyWord = document.getElementById('deleteFirstKeyWord');
+        var firstKeyWord = deleteFirstKeyWord.value;
+        if (firstKeyWord) {
+            window.location = '/manager/firstKeywordDelete/' + firstKeyWord;
+        }
+    }
+
+    function cancelDelete() {
+        // "아니요" 버튼 클릭 시 모달 닫기
+        modal.classList.add('hidden');
+    }
+</script>
+
+
+<script>
+    var subKeywordsTitle = null;
+
+    function loadSubKeywords(firstKeyword) {
+        // Ajax를 사용하여 서버에 요청을 보냅니다.
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/manager/showSubKeyWords?firstKeyword=" + firstKeyword, true);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) { // HTTP 상태 코드 200은 "성공"
+                var subKeywords = JSON.parse(xhr.responseText); // 서버로부터의 응답 텍스트를 JSON 형식으로 파싱하여 JavaScript 객체로 반환
+                displaySubKeywords(subKeywords);
+            } else {
+                console.error("서버에서 보조 키워드를 가져오는 중 오류가 발생했습니다.");
+            }
+        };
+
+        xhr.send();
+    }
+
+    function displaySubKeywords(subKeywords) {
+        var subKeywordsList = document.getElementById("subKeywordsList");
+        subKeywordsList.innerHTML = "";
+
+        // "보조 키워드" 제목을 한 번만 생성
+        if (!subKeywordsTitle) {
+            subKeywordsTitle = document.createElement("h2");
+            subKeywordsTitle.textContent = "보조 키워드";
+            var subKeywordsList = document.getElementById("subKeywordsList");
+            subKeywordsList.parentElement.insertBefore(subKeywordsTitle, subKeywordsList);
+        }
+
+            subKeywords.forEach(function (subKeyword) {
+            var li = document.createElement("li");
+            var span = document.createElement("span");
+            span.textContent = subKeyword;
+            li.appendChild(span);
+
+            // 삭제 버튼 추가
+            var deleteSecondButton = document.createElement("button");
+            deleteSecondButton.textContent = "삭제";
+            deleteSecondButton.onclick = function() {
+                    var subKeywordToDelete = subKeyword;
+
+                // Ajax를 사용하여 서버에 삭제 요청을 보냅니다.
+                $.ajax({
+                    type: "DELETE",
+                    url: "/manager/deleteSecondKeyWord",
+                    data: JSON.stringify({ subKeyword: subKeywordToDelete }),
+                    contentType: "application/json",
+                    success: function (response) {
+                        if (response === "deleted") {
+                            // 성공적으로 삭제되면 클라이언트에서도 삭제
+                            subKeywords.splice(subKeywords.indexOf(subKeywordToDelete), 1);
+                            subKeywordsList.removeChild(li);
+                        } else {
+                            alert("삭제에 실패했습니다.");
+                        }
+                    },
+                    error: function () {
+                        alert("삭제에 실패했습니다.");
+                    }
+                });
+            };
+            li.appendChild(deleteSecondButton);
+
+            subKeywordsList.appendChild(li);
+        });
+    }
+    var formVisible = false;
+
+    document.getElementById("addFormButton").addEventListener("click", function () {
+        var form = document.getElementById("keywordForm");
+        var button = document.getElementById("addFormButton");
+        if (!formVisible) {
+            button.style.display = "none";
+            form.style.display = "block"; // 폼을 보이게 합니다.
+            formVisible = true;
+        }
+    });
+
+    document.getElementById("cancelFormButton").addEventListener("click", function () {
+        var form = document.getElementById("keywordForm");
+        var button = document.getElementById("addFormButton");
+        if (formVisible) {
+            button.style.display = "block";
+            form.style.display = "none"; // 폼을 가림
+            formVisible = false;
+        }
+    });
+
+
+</script>
+</html>
