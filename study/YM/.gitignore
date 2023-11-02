@@ -39,4 +39,9 @@ out/
 /src/main/resources/application-local.properties
 /src/main/resources/static/files/
 /src/main/resources/static/groupFiles/
+<<<<<<< HEAD
 /src/main/java/com/meeting_site_project/YM/sql/
+=======
+/src/main/resources/static/files/
+/src/main/resources/static/groupFiles/
+>>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3

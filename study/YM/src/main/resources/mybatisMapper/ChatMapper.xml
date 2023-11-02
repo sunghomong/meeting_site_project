@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.meeting_site_project.YM.mapper.ChatMapper">
+
+    <insert id="insertChatRoom" parameterType="ChatRoom">
+        INSERT INTO chatRoom VALUES (#{chatRoomId}, #{groupId}, #{ownerId},#{chatRoomName},#{maxUserCnt},#{userCount})
+    </insert>
+
+    <select id="selectChatRoomListByUserId" parameterType="String" resultType="ChatRoom">
+        SELECT * FROM chatRoom
+    </select>
+
+    <select id="selectChatRoomCntByUserId" parameterType="String" resultType="Int">
+        SELECT COUNT(*) FROM chatRoom
+    </select>
+
+    <select id="selectChatRoomInfoByRoomId" parameterType="String" resultType="ChatRoom">
+        SELECT * FROM chatRoom WHERE chatRoomId=#{chatRoomId}
+    </select>
+
+    <insert id="insertChatMessage" parameterType="ChatMessage">
+        INSERT INTO chatMessages VALUES (#{messageId},#{userId},#{chatRoomId}, #{content, jdbcType=CLOB}, #{sender},#{type},sysdate)
+    </insert>
+
+    <select id="getLastChatMessagesByRoomId" parameterType="String" resultType="ChatMessage">
+        SELECT * FROM chatMessages WHERE chatRoomId=#{chatRoomId}
+    </select>
+
+    <insert id="insertChatRoomMembers" parameterType="ChatRoomMembers"> <!-- 채팅방에 참여한 회원 -->
+        INSERT INTO chatRoomMembers VALUES(#{roomUserId},#{userId},#{chatRoomId},#{admin})
+    </insert><!-- admin 1(방장) , 0(일반)-->
+
+    <select id="selectChatRoomIdListByUserId" resultType="String">
+        SELECT chatRoomId FROM chatRoomMembers WHERE userId=#{userId}
+    </select>
+
+    <select id="selectChatRoomByChatRoomId" parameterType="String" resultType="ChatRoom">
+        SELECT * FROM chatRoom WHERE chatRoomId=#{chatRoomId}
+    </select>
+</mapper>

@@ -27,9 +27,13 @@ public class JoinService {
         if (!picture.isEmpty()) {
             String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
+<<<<<<< HEAD
 
             UUID uuid = UUID.randomUUID();
 
+=======
+            UUID uuid = UUID.randomUUID();
+>>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
 
             String fileName = uuid + "_" + picture.getOriginalFilename();
 

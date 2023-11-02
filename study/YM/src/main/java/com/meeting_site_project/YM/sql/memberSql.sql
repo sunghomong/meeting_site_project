@@ -24,7 +24,7 @@ sidoName nvarchar2(30),
 sigoonName nvarchar2(30),
 groupName nvarchar2(30),
 groupInfo nvarchar2(100),
-groupNumberOfPeople number,
+groupNumberOfPeople number, -- 제한수
 groupPicture nvarchar2(100),
 groupPicturePath NVARCHAR2(500),
 groupType number,
@@ -59,8 +59,8 @@ REFERENCES groupInfo(groupId)
 );
 -- 키워드 테이블 ------------------------------------
 CREATE TABLE keyword (
-firstKeyword nvarchar2(30),
-secondKeyword nvarchar2(30) primary key
+firstKeyword nvarchar2(30) primary key,
+secondKeyword nvarchar2(30)
 );
 -- 공지사항 테이블 ----------------------------------------
 CREATE TABLE notices (

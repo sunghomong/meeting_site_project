@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>메니저 페이지</title>
+<<<<<<< HEAD
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
     <link th:href="@{/css/sidebar.css}" rel="stylesheet">
@@ -24,5 +25,72 @@
 </div>
 
 <footer th:replace="/home.html :: footer"></footer>
+=======
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        ul{list-style:none;}
+
+        html{scroll-behavior:smooth;}/*부드러운 스크롤 이동*/
+
+        /* 사이드 바 */
+        #sidebar {
+            min-width: 200px;
+            height: 465px;
+            background:#9fcedf;
+            font-size: 20px;
+            position: fixed;
+            top: 100px;
+            left: 0;
+        }
+
+        #sidebar h2 {
+            background:#9fcedf;
+            padding: 10px 10px;
+        }
+        #sidebar a {
+            display: block;
+            width: 100%;
+            height: 20px;
+            padding: 15px 15px;
+            text-decoration: none;
+        }
+
+        #sidebar a:hover{
+            background-color: rgba(0, 0, 0, 0.2);
+            color: #fff;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    상단메뉴
+</header>
+
+<div id="sidebar">
+    <section>
+        <h2>관리자 페이지</h2>
+        <hr>
+    </section>
+    <section>
+        <ul>
+            <li><a href="/manager/managerProfile">관리자 계정 관리</a></li> <!-- 관리자 개인 정보 수정 -->
+            <li><a href="/manager/memberList">회원 관리</a></li> <!-- 회원 정보 수정 및 삭제 -->
+            <li><a href="/manager/groupList">모임 관리</a></li> <!-- 모임 정보 상세 보기 및 삭제 -->
+            <li>
+                <a href="/manager/keyWordList">키워드 관리</a> <!-- 키워드 수정 및 삭제 -->
+            </li>
+            <li><a href="/manager/askList">고객 문의 관리</a></li> <!-- 고객 문의 답장 및 Q&A 관리-->
+            <li><a href="/manager/noticeList">공지 사항 관리</a></li> <!-- 공지 사항 게시 및 수정 등 삭제 -->
+            <li><a href="#"></a></li>
+        </ul>
+    </section>
+    <a th:href="@{/}">메인</a>
+</div>
+>>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
 </body>
 </html>

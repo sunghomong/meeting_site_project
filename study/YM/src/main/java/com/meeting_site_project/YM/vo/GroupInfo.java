@@ -10,13 +10,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupInfo {
-    private String groupId;
-    private String ownerUserId;
+    private String groupId; // 그룹 id
+    private String ownerUserId; // 방장
     private String sidoName;
     private String sigoonName;
-    private String groupName;
+    private String groupName; // 그룹 이름
     private String groupInfo;
-    private int groupNumberOfPeople;
+    private int groupNumberOfPeople; // 제한수
     private String groupPicture;
     private String groupPicturePath;
     private int groupType;

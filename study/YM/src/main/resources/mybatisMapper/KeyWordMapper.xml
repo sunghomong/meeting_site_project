@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.meeting_site_project.YM.mapper.KeyWordMapper">
+
+    <select id="selectFirstKeyWords" resultType="String">
+        SELECT DISTINCT firstKeyword FROM keyWord
+    </select>
+    <select id="selectSecondKeyWords" resultType="String">
+        SELECT DISTINCT secondKeyword FROM keyWord
+    </select>
+    <select id="selectSecondKeyWordsByFirstKeyWord" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT secondKeyword
+        FROM keyWord
+        WHERE firstKeyword = #{firstKeyword}
+    </select>
+
+    <insert id="insertKeyWord" parameterType="KeyWord">
+        INSERT INTO keyWord VALUES(#{firstKeyword},#{secondKeyword})
+    </insert>
+
+    <select id="selectKeyWordBySecondKeyWord" parameterType="String" resultType="String">
+        SELECT secondKeyword FROM keyWord WHERE secondKeyword = #{secondKeyword}
+    </select>
+
+    <delete id="deleteKeyWordByFirstKeyWord" parameterType="String"> <!-- 주 키워드, 부 키워드 전부 삭제 -->
+        DELETE FROM keyWord WHERE firstKeyword=#{firstKeyword}
+    </delete>
+
+    <delete id="deleteKeyWordBySecondKeyWord" parameterType="String">
+        DELETE FROM keyWord WHERE secondKeyword=#{secondKeyword}
+    </delete>
+</mapper>
