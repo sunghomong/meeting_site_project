@@ -33,7 +33,7 @@ sidoName nvarchar2(30),
 sigoonName nvarchar2(30),
 groupName nvarchar2(30),
 groupInfo nvarchar2(100),
-groupNumberOfPeople number,
+groupNumberOfPeople number, -- 제한수
 groupPicture nvarchar2(100),
 groupPicturePath NVARCHAR2(500),
 groupType number,

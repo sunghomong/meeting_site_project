@@ -84,14 +84,16 @@ public class MeetingController {
         // UUID를 사용하여 고유한 chatRoomId 생성
         String uniqueChatRoomId = UUID.randomUUID().toString();
 
-        chatRoom.setChatRoomId(uniqueChatRoomId);
-        chatRoom.setOwnerId(groupInfo.getOwnerUserId());
-        chatRoom.setGroupId(groupInfo.getGroupId());
-        chatRoom.setMaxUserCnt(groupInfo.getGroupNumberOfPeople());
-        chatRoom.setChatRoomName(groupInfo.getGroupName());
-        chatRoom.setUserCount(1);
+        chatRoom.setChatRoomId(uniqueChatRoomId); // 채팅방 ID
+        chatRoom.setOwnerId(groupInfo.getOwnerUserId()); // 채팅 방장
+        chatRoom.setGroupId(groupInfo.getGroupId()); // 모임 ID
+        chatRoom.setMaxUserCnt(groupInfo.getGroupNumberOfPeople()); // 최대 인원수
+        chatRoom.setChatRoomName(groupInfo.getGroupName()); // 채팅방 이름
+        chatRoom.setUserCount(1); // 채팅방 인원수 1 자동적으로 증가 (방장)
 
         chatService.insertChatRoom(chatRoom); // 채팅방 생성
+        chatService.insertChatRoomOwnerMember(chatRoom); // chatRoom 데이터 가지고 멤버 생성
+
 
         if (groupInfo.getGroupType() == 0) {
             return "redirect:/onedayMtForm?number=0";
