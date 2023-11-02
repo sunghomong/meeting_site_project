@@ -39,3 +39,4 @@ out/
 /src/main/resources/application-local.properties
 /src/main/resources/static/files/
 /src/main/resources/static/groupFiles/
+/src/main/java/com/meeting_site_project/YM/sql/

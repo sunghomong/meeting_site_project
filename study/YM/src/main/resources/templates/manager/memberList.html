@@ -1,77 +1,270 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>회원 조회 페이지</title>
     <link href="/modalWindow.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<h1>회원 조회 페이지</h1>
-
-<table>
-    <tr>
-        <th>회원 ID</th>
-        <th>닉네임</th>
-        <th>가입 날짜</th>
-        <th>권한</th>
-    </tr>
-    <tr th:each="member : ${memberList}">
-        <td th:text="${member.userId}">회원 아이디</td>
-        <td th:text="${member.nickName}">닉네임</td>
-        <td th:text="${member.signDate}">가입 날짜</td>
-        <td th:text="${member.userAdmin}">권한</td>
-        <td>
-            <button th:onclick="|location.href='@{memberEdit(userid=${member.userId})}'|" style="cursor: pointer;">수정
-            </button>
-
-            <button type="button" th:attr="data-userid=${member.userId}" onclick="deleteMember(this.getAttribute('data-userid'))" style="cursor: pointer;">삭제</button>
-            <input type="hidden" name="userid" value="${member.userid}">
-        </td>
-    </tr>
-</table>
-<a th:href="@{/}">메인</a>
-<div id="modalContainer" class="hidden">
-    <div id="modalContent">
-        <p style="color: red; font-size: 24px; text-align: center;">정말 삭제하시겠습니까?</p>
-        <button onclick="confirmDelete()">네</button>
-        <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
-        <input type="hidden" id="deleteUserId" name="userid" value="">
-    </div>
-</div>
-
-<script type="text/javascript">
-
-    function editMember(event) {
-        // 수정 페이지로 이동하는 이벤트
-        let userId = event.target.parentNode.parentNode.childNodes[1].innerHTML;
-        console.log(userId); // userId 출력 (디버깅용)
-        window.location = 'memberEdit/' + userId;
-    }
-
-    const modal = document.getElementById('modalContainer');
-    const modalCloseButton = document.getElementById('modalCloseButton');
-    const deleteUserId = document.getElementById('deleteUserId');
-
-   function deleteMember(userId) {
-        // 삭제 버튼 클릭 시 모달 열기
-        modal.classList.remove('hidden'); // 모달창 오픈
-        var deleteUserId = document.getElementById('deleteUserId');
-        deleteUserId.value = userId; // 삭제할 아이디 저장
-    }
-
-
-    function confirmDelete() {
-        // "네" 버튼 클릭 시 삭제 로직 수행
-        var deleteUserId = document.getElementById('deleteUserId');
-        var userId = deleteUserId.value;
-        if (userId) {
-            window.location = 'delete/' + userId;
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+    <script src=https://code.jquery.com/jquery-3.7.1.min.js></script>
+    <style>
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
         }
-    }
 
-    function cancelDelete() {
-        // "아니요" 버튼 클릭 시 모달 닫기
-        modal.classList.add('hidden');
-    }
-</script>
+        .menu:nth-child(1) {
+            background-color: #4e97f7;
+        }
+
+        .wrapper {
+            background-color: #eeeeee99;
+        }
+
+        .content {
+            background-color: white;
+            border: 1px solid #dcdcdc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            min-width: 1000px;
+            margin: 100px 0;
+            padding: 40px;
+        }
+
+        .table {
+            
+            text-align: center;
+            border-collapse: collapse
+        }
+
+        .title {
+            font-family: 'GmarketSansMedium';
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+
+        th {
+            padding: 15px;
+        }
+
+        td {
+            width: 120px;
+            color: #222;
+            padding: 10px;
+        }
+
+        tr {
+            border-bottom: 1px solid #dcdcdc;
+        }
+
+        thead {
+            background-color: #b7b7b799;
+        }
+
+        td>button {
+            width: 50px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+
+        .page-box {
+            display: inline-block;
+            overflow: hidden;
+            margin: 50px auto 10px;
+        }
+
+        .content a {
+            text-align: center;
+            color: #75a5ce;
+            text-decoration: none;
+            outline: none;
+            float: left;
+            width: 40px;
+            line-height: 40px;
+            border: 1px solid #c3c3c3;
+        }
+
+        .selected {
+            color: #222;
+            background-color: #337ab7;
+
+        }
+        .form-box {
+            text-align: right;
+            margin: 30px 0;
+        }
+
+        .form-box input {
+            height: 5px;
+            padding: 10px;
+        }
+        .form-box button {
+            height: 28px;
+            width: 50px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+        #memberListMenu {
+            background-color: #4e97f7;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <header th:replace="/home.html :: header"></header>
+
+    <div class="wrapper">
+        <div class="wrapper">
+            <div id="side" class="side" th:fragment="sidebar">
+                <div class="header">MANAGER MENU</div>
+                <div onclick="location.href='/manager/memberList'" id="memberListMenu" class="menu">회원 관리</div>
+                <div onclick="location.href='/manager/groupList'" class="menu">모임 관리</div>
+                <div onclick="location.href='/manager/keyWordList'" class="menu">키워드 관리</div>
+                <div onclick="location.href='/manager/askList'" class="menu">고객 문의</div>
+                <div onclick="location.href='/manager/noticeList'" class="menu">공지 사항 관리</div>
+                <div onclick="location.href='/'" class="menu">메인</div>
+            </div>
+        </div>
+
+
+        <div class="content">
+            <div class="title">회원 조회 페이지</div>
+            <div class="form-box">
+                <form name="search-form" onsubmit="submitForm(event)">
+                    <input type="text" name="userId" placeholder="유저 아이디">
+                    <button type="button" onclick="getSearchList()" class="search-btn">검색</button>
+                </form>
+            </div>
+            <table class="table" id="userListTable">
+                <thead>
+                <tr>
+                    <th>회원 ID</th>
+                    <th>이름</th>
+                    <th>닉네임</th>
+                    <th style="width: 200px;">가입 날짜</th>
+                    <th>권한</th>
+                    <th style="width: 200px;">이메일</th>
+                    <th>관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr th:each="member : ${memberList}">
+                        <td th:text="${member.userId}">회원 아이디</td>
+                        <td th:text="${member.userName}">이름</td>
+                        <td th:text="${member.nickName}">닉네임</td>
+                        <td th:text="${#dates.format(member.signDate, 'yyyy년-MM월-dd일')}">가입 날짜</td>
+                        <td th:text="${member.userAdmin}">권한</td>
+                        <td><span th:text="${member.emailId}"></span>@<span th:text="${member.emailDomain}"></span></td>
+                        <td>
+                            <button th:onclick="|location.href='@{memberEdit(userid=${member.userId})}'|"
+                                style="cursor: pointer;">수정
+                            </button>
+                            <button type="button" th:attr="data-userid=${member.userId}"
+                                onclick="deleteMember(this.getAttribute('data-userid'))"
+                                style="cursor: pointer;">삭제</button>
+                            <input type="hidden" name="userid" value="${member.userid}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+
+    </div>
+    <div id="modalContainer" class="hidden">
+        <div id="modalContent">
+            <p style="color: red; font-size: 24px; text-align: center;">정말 삭제하시겠습니까?</p>
+            <button onclick="confirmDelete()">네</button>
+            <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
+            <input type="hidden" id="deleteUserId" name="userid" value="">
+        </div>
+    </div>
+    <footer th:replace="/home.html :: footer"></footer>
+    <script type="text/javascript">
+
+        function editMember(event) {
+            // 수정 페이지로 이동하는 이벤트
+            let userId = event.target.parentNode.parentNode.childNodes[1].innerHTML;
+            console.log(userId); // userId 출력 (디버깅용)
+            window.location = 'memberEdit/' + userId;
+        }
+
+        const modal = document.getElementById('modalContainer');
+        const modalCloseButton = document.getElementById('modalCloseButton');
+        const deleteUserId = document.getElementById('deleteUserId');
+
+        function deleteMember(userId) {
+            // 삭제 버튼 클릭 시 모달 열기
+            modal.classList.remove('hidden'); // 모달창 오픈
+            var deleteUserId = document.getElementById('deleteUserId');
+            deleteUserId.value = userId; // 삭제할 아이디 저장
+        }
+
+
+        function confirmDelete() {
+            // "네" 버튼 클릭 시 삭제 로직 수행
+            var deleteUserId = document.getElementById('deleteUserId');
+            var userId = deleteUserId.value;
+            if (userId) {
+                window.location = 'delete/' + userId;
+            }
+        }
+
+        function cancelDelete() {
+            // "아니요" 버튼 클릭 시 모달 닫기
+            modal.classList.add('hidden');
+        }
+
+        function getSearchList() {
+    var userId = document.querySelector("input[name=userId]").value;
+
+    $.ajax({
+        type: 'GET',
+        url: "/getSearchList",
+        data: { userId: userId },
+        success: function(result){
+            $('#userListTable tbody').empty(); // tbody만 비우도록 수정
+
+            if(result.length >= 1){
+                result.forEach(function(item){
+                    str='<tr>'
+                    str += "<td>"+item.userId+"</td>";
+                    str+="<td>"+item.userName+"</td>";
+                    str+="<td>"+item.nickName+"</td>";
+                    str += "<td>" + formatDate(new Date(item.signDate)) + "</td>";
+                    str+="<td>"+item.userAdmin+"</td>";
+                    str+="<td>"+item.emailId+"@"+item.emailDomain+"</td>";
+                    str+="<td>"
+                    + "<button onclick='editMember(event)' style='cursor: pointer;'>수정</button>"
+                    + "<button type='button' data-userid='" + item.userId + "' onclick='deleteMember(this.getAttribute(\"data-userid\"))' style='cursor: pointer;'>삭제</button>"
+                    + "<input type='hidden' name='userid' value='" + item.userid + "'>"
+                    + "</td>";
+                    str+="</tr>"
+                    $('#userListTable').append(str);
+                })				 
+            }
+        }
+    });
+
+    return false;
+}
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}년-${month}월-${day}일`;
+}
+function submitForm(event) {
+    event.preventDefault(); // 기본 제출 동작을 막습니다.
+    getSearchList();
+    return false;
+}
+    </script>
 </body>
+
 </html>

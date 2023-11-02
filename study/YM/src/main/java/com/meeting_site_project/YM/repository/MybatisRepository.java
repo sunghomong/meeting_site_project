@@ -1,9 +1,6 @@
 package com.meeting_site_project.YM.repository;
 
 import com.meeting_site_project.YM.mapper.MemberMapper;
-import com.meeting_site_project.YM.vo.AskContent;
-import com.meeting_site_project.YM.vo.JoinMember;
-import com.meeting_site_project.YM.vo.Member;
 import com.meeting_site_project.YM.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,8 +33,12 @@ public class MybatisRepository implements Repository {
     }
 
 
-    public List<Member> getMemberList() { // 전체 회원 조회를 위한 (관리자)
-        return memberMapper.getMemberList();
+    public List<Member> getMemberList(int start,int end ) { // 전체 회원 조회를 위한 (관리자)
+        return memberMapper.getMemberList(start, end);
+    }
+
+    public int getTotal() {
+        return memberMapper.getTotal();
     }
 
     public Member selectMemberById(String userId) {
@@ -94,7 +95,9 @@ public class MybatisRepository implements Repository {
         memberMapper.insertAsk(askContent);
     }
 
-
+    public void updateGroupKeyword(GroupInfo groupInfo) {
+        memberMapper.updateGroupKeyword(groupInfo);
+    }
 
     public AskContent selectAskDetailByAskId(String askId) {
         return memberMapper.selectAskDetailByAskId(askId);
@@ -143,4 +146,14 @@ public class MybatisRepository implements Repository {
     public void insertGroupByKeyword(GroupInfo groupInfo) {
         memberMapper.insertGroupByKeyword(groupInfo);
     }
+
+    public List<Member> getSearchList (String userId) {
+        return memberMapper.getSearchList(userId);
+    }
+
+    public List<GroupInfo> selectOnedayKeywordByGroupList (String firstKeyword, int groupType) {
+        return memberMapper.selectOnedayKeywordByGroupList(firstKeyword, groupType);
+    }
+
+
 }

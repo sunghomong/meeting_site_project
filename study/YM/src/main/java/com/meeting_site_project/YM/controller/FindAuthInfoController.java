@@ -1,5 +1,6 @@
 package com.meeting_site_project.YM.controller;
 
+import com.meeting_site_project.YM.Security.SHA256;
 import com.meeting_site_project.YM.service.FindAuthInfoService;
 import com.meeting_site_project.YM.vo.ChangePassword;
 import com.meeting_site_project.YM.vo.FindId;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.security.NoSuchAlgorithmException;
 
 @Controller
 public class FindAuthInfoController {
@@ -47,7 +49,7 @@ public class FindAuthInfoController {
             return "findAuthInfo/findIdForm";
         }
 
-        model.addAttribute("userId", member.getUserId());
+        model.addAttribute("member", member);
 
         return "/findAuthInfo/findIdSuccess";
     }
@@ -79,7 +81,7 @@ public class FindAuthInfoController {
     }
 
     @PostMapping("/changePassword")
-    public String changePasswordSuccess(@RequestParam("userId") String userId, @Valid @ModelAttribute("changePassword") ChangePassword changePassword, BindingResult bindingResult, Model model) {
+    public String changePasswordSuccess(@RequestParam("userId") String userId, @Valid @ModelAttribute("changePassword") ChangePassword changePassword, BindingResult bindingResult, Model model) throws NoSuchAlgorithmException {
 
         if(bindingResult.hasErrors()) {
             return "/findAuthInfo/changePasswordForm";
@@ -92,6 +94,8 @@ public class FindAuthInfoController {
         }
 
         changePassword.setUserId(userId);
+        SHA256 sha256 = new SHA256();
+        changePassword.setUserPassword(sha256.encrypt(changePassword.getUserPassword()));
         findAuthInfoService.changePassword(changePassword);
 
         return "findAuthInfo/changePasswordSuccess";

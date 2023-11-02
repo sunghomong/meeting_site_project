@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>회원 정보 수정 페이지</title>
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
 </head>
 <body>
+
+<header th:replace="/home.html :: header"></header>
 <h1>회원 조회 페이지</h1>
 <hr>
 <form method="post" th:action="@{/manager/memberEdit}" th:object="${member}">
@@ -38,5 +42,7 @@
     </table>
 </form>
 <a th:href="@{/}">메인</a>
+
+<footer th:replace="/home.html :: footer"></footer>
 </body>
 </html>

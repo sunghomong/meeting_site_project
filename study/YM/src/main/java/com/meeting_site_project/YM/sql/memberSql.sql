@@ -12,19 +12,10 @@ birthday nvarchar2(50),
 nickName nvarchar2(50),
 emailId nvarchar2(50),
 emailDomain nvarchar2(50),
-signDate date default sysdate,
-avgScore number default 0,
+signDate date default sysdate
 CONSTRAINT member_pk PRIMARY KEY (userId)
 );
--- 회원 점수 테이블 ------------------------------------
-create table userScore (
-evaluatedUserId  nvarchar2(100),
-userScore number,
-evaluateUserId nvarchar2(100),
-PRIMARY KEY (evaluatedUserId,evaluateUserId),
-FOREIGN KEY (evaluatedUserId)
-REFERENCES member(userId)
-);
+
 -- 모임 테이블 ------------------------------------
 CREATE TABLE groupInfo (
 groupId nvarchar2(50) PRIMARY KEY,

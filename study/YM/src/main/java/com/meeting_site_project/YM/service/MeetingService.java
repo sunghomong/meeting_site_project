@@ -48,6 +48,9 @@ public class MeetingService {
 
         return mybatisRepository.selectOnedayGroupList(groupType);
     }
+    public void updateGroupKeyword(GroupInfo groupInfo) {
+        mybatisRepository.updateGroupKeyword(groupInfo);
+    }
 
     public List<GroupInfo> selectRegulardayGroupList(int groupType) {
 
@@ -116,6 +119,10 @@ public class MeetingService {
 
     public void deleteGroup(String groupId) {
         mybatisRepository.deleteGroup(groupId);
+    }
+
+    public  List<GroupInfo> selectOnedayKeywordByGroupList(String firstKeyword, int groupType) {
+        return mybatisRepository.selectOnedayKeywordByGroupList(firstKeyword, groupType);
     }
 
 }

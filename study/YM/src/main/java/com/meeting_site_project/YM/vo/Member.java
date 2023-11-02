@@ -26,7 +26,7 @@ public class Member {
     private String nickName;
     private String emailId;
     private String emailDomain;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy년-MM월-dd일")
     private Date signDate;
     private int avgScore;
 

@@ -1,12 +1,20 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
 *{
             margin: 0;
             padding: 0;
+
         }
 .MainHeader_header__WXxwu {
     width: 100vw;
-    background-color: #f1f1f1;
+    background-color: #fff;
     margin: 0 auto;
-    font-family: Pretendard;
+    font-family: 'Pretendard-Regular';
     display: flex;
     align-items: center;
 /*    position: fixed;
@@ -17,13 +25,13 @@
     width: 100%;
     z-index: 1200;
     flex-direction: column;
-    box-shadow: 0 1px 0 0 rgba(81, 81, 81, 0.1);
+    border-bottom: 1px solid rgba(81, 81, 81, 0.1);;
 
 }
 
 @media screen and (max-width:900px) {
     .MainHeader_header__WXxwu {
-        background-color: #f1f1f1;
+        background-color: #fff;
         height: 64px;
         width: 100vw;
         align-items: center;
@@ -79,7 +87,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 15px 14px 15px;
-    background-color: #f1f1f1;
+    background-color: #fff;
     z-index: 999;
 }
 
@@ -97,7 +105,7 @@
     max-width: 269px;
     animation: MainHeader_openToggle__s4m2N .4s linear;
     animation-timing-function: linear;
-    background-color: #f1f1f1;
+    background-color: #fff;
     display: flex;
     justify-content: space-between
 }

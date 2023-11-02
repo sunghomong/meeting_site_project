@@ -1,5 +1,6 @@
 package com.meeting_site_project.YM.controller;
 
+import com.meeting_site_project.YM.Security.SHA256;
 import com.meeting_site_project.YM.service.JoinService;
 import com.meeting_site_project.YM.vo.AuthInfo;
 import com.meeting_site_project.YM.vo.JoinMember;
@@ -30,7 +31,7 @@ public class JoinController {
             return "redirect:/";
         }
         // joinForm 객체를 모델에 추가하여 Thymeleaf에서 사용할 수 있도록 합니다.
-        return "join/joinForm2"; // "join/joinForm.html" 뷰 페이지를 반환합니다.
+        return "join/joinForm"; // "join/joinForm.html" 뷰 페이지를 반환합니다.
     }
 
     // 아이디 중복을 체크하는 요청에 대한 핸들러 메서드
@@ -83,13 +84,15 @@ public class JoinController {
     public String joinSuccess(@Valid @ModelAttribute("joinMember") JoinMember joinMember, BindingResult bindingResult, MultipartFile picture ) throws Exception{
          // 폼 유효성 검사 에러가 있는지 확인
         if(bindingResult.hasErrors()) {
-            return "join/joinForm2"; // 에러가 있으면 회원가입 폼으로 이동
+            return "join/joinForm"; // 에러가 있으면 회원가입 폼으로 이동
         }
         if(!joinMember.getUserPassword().equals(joinMember.getConfirmUserPassword())) {
             bindingResult.reject("passwordfail", "비밀번호가 일치하지 않습니다.");
-            return "join/joinForm2"; // 회원가입 폼으로 이동
+            return "join/joinForm"; // 회원가입 폼으로 이동
         }
         joinMember.setUserInfo(joinMember.getUserInfo().replace("\r\n","<br>"));
+        SHA256 sha256 = new SHA256();
+        joinMember.setUserPassword(sha256.encrypt(joinMember.getUserPassword()));
         joinService.insertMember(joinMember, picture); // 회원 정보를 DB에 저장합니다.
         return "join/joinSuccess"; // "join/joinSuccess.html" 뷰 페이지를 반환합니다.
     }

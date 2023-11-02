@@ -1,5 +1,6 @@
 package com.meeting_site_project.YM.controller;
 
+import com.meeting_site_project.YM.Security.SHA256;
 import com.meeting_site_project.YM.service.AuthService;
 import com.meeting_site_project.YM.vo.AuthInfo;
 import com.meeting_site_project.YM.vo.LoginCommand;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.security.NoSuchAlgorithmException;
 
 @Controller
 public class LoginController {
@@ -49,7 +51,7 @@ public class LoginController {
 
     // 로그인 성공 시 처리하는 요청에 대한 핸들러 메서드
     @PostMapping("/login")
-    public String loginSuccess(@Valid @ModelAttribute("loginInfo") LoginCommand loginCommand, BindingResult bindingResult, HttpServletRequest request) {
+    public String loginSuccess(@Valid @ModelAttribute("loginInfo") LoginCommand loginCommand, BindingResult bindingResult, HttpServletRequest request) throws NoSuchAlgorithmException {
 
 
         // 폼 유효성 검사 에러가 있는지 확인
@@ -58,6 +60,8 @@ public class LoginController {
         }
 
         // 사용자의 아이디와 비밀번호로 회원 정보 조회
+        SHA256 sha256 = new SHA256();
+        loginCommand.setUserPassword(sha256.encrypt(loginCommand.getUserPassword()));
         Member member = authService.selectByIdPassword(loginCommand);
 
         // 회원 정보가 없으면 로그인 실패 처리

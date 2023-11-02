@@ -1,11 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>회원가입 성공</title>
+    <title>회원가입</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport"
+          content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+        .notosanskr * {
+        font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+            .wrapper {
+                background-color: #eeeeee99;
+      min-height: calc(100vh - 80px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+        #container {
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            width: 500px;
+            height: 400px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .img-box {
+            width: 500px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom : 10px;
+        }
+
+        .img-box img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .title {
+            font-size: 30px;
+            color: #76828e;
+            font-weight: 600;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .content {
+            line-height: 1.6em;
+            font-size: 19px;
+            color: #9c9c9c;
+            font-family: 'Pretendard-Regular';
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+
+        button {
+            border: none;
+            border-radius: 40px;
+            width: 120px;
+            height: 50px;
+            background-color: #2372ea;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top : 20px;
+        }
+
+        button:hover {
+            background-color: #1c57b0;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>회원가입에 성공하셨습니다.</h1>
-    <a href="/login">로그인</a>
+<header th:replace="/home.html :: header"></header>
+
+<div class="wrapper">
+    <div id="container">
+        <div class="wrap">
+            <div class="img-box">
+                <img th:src="@{/icon/checkIcon.png}">
+            </div>
+            <div class="title">회원가입 완료</div>
+            <div class="content">회원가입이 완료되었습니다.<br>
+                지금 로그인 하시겠습니까?</div>
+            <div class="button">
+                <button onclick="location.href = /*[[@{/login}]]*/ '/login'">로그인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="/home.html :: footer"></footer>
 </body>
+
+
 </html>

@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>공지사항 상세 정보</title>
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
 </head>
 <body>
+<header th:replace="/home.html :: header"></header>
 <h1>공지사항 상세 정보</h1>
 <table>
     <tr>
@@ -28,5 +31,7 @@
     <img th:if="${notice.attachmentName != null and #strings.endsWith(notice.attachmentName, 'jpg') or #strings.endsWith(notice.attachmentName, 'jpeg') or #strings.endsWith(notice.attachmentName, 'png') or #strings.endsWith(notice.attachmentName, 'gif')}"
          th:src="@{${notice.attachmentPath}}" alt="첨부 이미지">
 </div>
+
+<footer th:replace="/home.html :: footer"></footer>
 </body>
 </html>
