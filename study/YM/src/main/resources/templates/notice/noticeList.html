@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>공지사항 목록</title>
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
 </head>
 <body>
+
+<header th:replace="/home.html :: header"></header>
 <h1>공지사항 목록</h1>
 
 <table>
@@ -24,5 +28,7 @@
     </tr>
     </tbody>
 </table>
+
+<footer th:replace="/home.html :: footer"></footer>
 </body>
 </html>

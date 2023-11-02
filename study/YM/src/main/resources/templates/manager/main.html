@@ -3,6 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>메니저 페이지</title>
+<<<<<<< HEAD
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+    
+
+</head>
+<body>
+    <header th:replace="/home.html :: header"></header>
+
+    <div id="side" class="side" th:fragment="sidebar">
+        <div class="header">MANAGER MENU</div>
+        <div onclick="location.href='/manager/memberList'" class="menu">회원 관리</div>
+        <div onclick="location.href='/manager/groupList'" class="menu">모임 관리</div>
+        <div onclick="location.href='/manager/keyWordList'" class="menu">키워드 관리</div>
+        <div onclick="location.href='/manager/askList'" class="menu">고객 문의</div>
+        <div onclick="location.href='/manager/noticeList'" class="menu">공지 사항 관리</div>
+        <div onclick="location.href='/'" class="menu">메인</div>
+    </div>
+</div>
+
+<footer th:replace="/home.html :: footer"></footer>
+=======
     <style>
         * {
             margin: 0;
@@ -68,5 +91,6 @@
     </section>
     <a th:href="@{/}">메인</a>
 </div>
+>>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
 </body>
 </html>

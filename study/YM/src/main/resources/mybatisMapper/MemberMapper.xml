@@ -55,10 +55,20 @@
 
 
 
+
     <!-- 관리자를 위한 쿼리 문 -->
     <select id="getMemberList" resultType="member"> <!-- 전체 회원 조회를 위한 SELECT문 (관리자) -->
-        SELECT * FROM member
+        SELECT userId, userName, nickName, signDate, userAdmin, emailId, emailDomain FROM
+        (
+        SELECT ROWNUM num, userId, userName, nickName, signDate, userAdmin, emailId, emailDomain
+        FROM (SELECT * FROM member ORDER BY signDate DESC))
+        WHERE num between #{start} and #{end}
     </select>
+
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(*) FROM member
+    </select>
+
     <select id="selectMemberById" resultType="member" parameterType="String"> <!-- 회원 수정을 위한 SELECT문 (관리자) -->
         SELECT * FROM member WHERE userId=#{userId}
     </select>
@@ -85,17 +95,25 @@
     <select id="selectByMeeting" resultType="groupInfo" parameterType="java.util.HashMap">
         SELECT * FROM groupInfo WHERE meeting = #{meeting}
     </select>
+    <select id="getSearchList" resultType="member">
+        SELECT * FROM member WHERE userId like '%' ||  #{userId} || '%'
+    </select>
 
     <select id="selectGroupInfoById" resultType="groupInfo" parameterType="String">
         SELECT * FROM groupinfo g JOIN groupbykeyword k ON g.groupId = k.groupId WHERE g.groupId=#{groupId}
     </select>
 
     <select id="selectOnedayGroupList" resultType="groupInfo" parameterType="int">
-        SELECT * FROM groupinfo g JOIN groupbykeyword k ON g.groupId = k.groupId WHERE groupType = #{groupType}
+        SELECT * FROM groupinfo g JOIN groupbykeyword k ON g.groupId = k.groupId WHERE groupType = #{groupType} ORDER BY dbms_random.value
     </select>
 
     <select id="selectRegulardayGroupList" resultType="groupInfo" parameterType="int">
-        SELECT * FROM groupinfo g JOIN groupbykeyword k ON g.groupId = k.groupid WHERE groupType = #{groupType}
+        SELECT * FROM groupinfo g JOIN groupbykeyword k ON g.groupId = k.groupid WHERE groupType = #{groupType} ORDER BY dbms_random.value
+    </select>
+
+    <select id="selectOnedayKeywordByGroupList" resultType="groupInfo">
+        SELECT * FROM groupInfo g JOIN groupbykeyword k ON g.groupId = k.groupid
+        WHERE firstKeyword = #{firstKeyword} and groupType=#{groupType} ORDER BY dbms_random.value
     </select>
 
     <select id="selectKeywords" resultType="keyword">
@@ -117,6 +135,10 @@
         INSERT INTO groupByKeyword VALUES (#{groupId}, #{firstKeyword}, #{secondKeyword})
     </insert>
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
     <update id="updateMeeting" parameterType="groupInfo">
         UPDATE groupInfo SET groupName=#{groupName},
         <if test="groupPicture != null">groupPicture=#{groupPicture},</if>
@@ -124,7 +146,17 @@
         groupNumberOfPeople=#{groupNumberOfPeople}, groupInfo=#{groupInfo} WHERE groupId=#{groupId}
     </update>
 
+    <update id="updateGroupKeyword" parameterType="groupInfo">
+        UPDATE groupByKeyword SET firstKeyword=#{firstKeyword}, secondKeyword=#{secondKeyword}
+        WHERE groupId = #{groupId}
+    </update>
+
     <delete id="deleteGroup" parameterType="String">
         DELETE FROM groupInfo, groupByKeyword WHERE groupId=#{groupId}
     </delete>
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
 </mapper>

@@ -1,10 +1,9 @@
 .Footer_footer__Dhw_9 {
-box-sizing : border-box;
     width: 100%;
-    padding: 40px 0 40px;
+    padding: 40px 0;
     background-color: #2d2d2d;
     font-family: Pretendard;
-    height : 220px;
+    height : 160px;
 
 }
 
@@ -64,10 +63,10 @@ box-sizing : border-box;
 }
 
 .Footer_info__content__cu7zK {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
     line-height: 1.43;
-    color: #e4e4e4;
+    color: #bdbdbd;
     margin-top: 12px
 }
 
@@ -85,10 +84,10 @@ box-sizing : border-box;
 }
 
 .Footer_sns__content__WCsNm {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
     line-height: 1.43;
-    color: #e4e4e4;
+    color: #bdbdbd;
     margin-top: 12px
 }
 
@@ -111,15 +110,15 @@ box-sizing : border-box;
 }
 
 .Footer_company__content__QXWHT {
-    font-size: 10px;
+    font-size: 9px;
     line-height: 1.5;
-    color: #e4e4e4;
+    color: #bdbdbd;
     margin-top: 8px
 }
 
 .Footer_company__info__dONPJ {
     margin-top: 22px;
-    color: #e4e4e4;
+    color: #bdbdbd;
     font-size: 10px;
     line-height: 1.5
 }
@@ -131,6 +130,6 @@ box-sizing : border-box;
 }
 
 .Footer_kakaoLink__1y_id {
-    color: #e4e4e4 !important;
+    color: #bdbdbd !important;
     text-decoration: underline !important
 }

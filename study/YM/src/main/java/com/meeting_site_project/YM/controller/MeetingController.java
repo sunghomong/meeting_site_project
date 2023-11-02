@@ -1,16 +1,24 @@
 package com.meeting_site_project.YM.controller;
 
+<<<<<<< HEAD
+import com.meeting_site_project.YM.service.CheckService;
+=======
 import com.meeting_site_project.YM.service.ChatService;
+>>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
 import com.meeting_site_project.YM.service.MeetingService;
 import com.meeting_site_project.YM.vo.AuthInfo;
 import com.meeting_site_project.YM.vo.ChatRoom;
 import com.meeting_site_project.YM.vo.GroupInfo;
 import com.meeting_site_project.YM.vo.Keyword;
+import com.meeting_site_project.YM.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -24,13 +32,20 @@ import java.util.UUID;
 public class MeetingController {
 
     MeetingService meetingService;
+    CheckService checkService;
 
     ChatService chatService;
 
     @Autowired
+<<<<<<< HEAD
+    public MeetingController(MeetingService meetingService, CheckService checkService) {
+        this.meetingService = meetingService;
+        this.checkService = checkService;
+=======
     public MeetingController(MeetingService meetingService, ChatService chatService) {
         this.meetingService = meetingService;
         this.chatService = chatService;
+>>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
     }
 
 
@@ -38,8 +53,10 @@ public class MeetingController {
     public String onedayMeetingList(@RequestParam("number") int groupType, Model model) {
 
         List<GroupInfo> groupInfoList = meetingService.selectOnedayGroupList(groupType);
+        List<Keyword> keywords = meetingService.selectFirstKeywordList();
 
         model.addAttribute("groupInfo",groupInfoList );
+        model.addAttribute("keywords", keywords);
 
         return "meeting/onedayMtForm";
     }
@@ -48,8 +65,10 @@ public class MeetingController {
     public String regulardayMeetingList(@RequestParam("number") int groupType, Model model) {
 
         List<GroupInfo> groupInfoList = meetingService.selectRegulardayGroupList(groupType);
+        List<Keyword> keywords = meetingService.selectFirstKeywordList();
 
         model.addAttribute("groupInfo",groupInfoList );
+        model.addAttribute("keywords", keywords);
 
         return "meeting/regulardayMtForm";
     }
@@ -107,6 +126,9 @@ public class MeetingController {
 
         GroupInfo groupInfo = meetingService.selectGroupInfoById(groupId);
 
+        Member member = checkService.selectMemberById(groupInfo.getOwnerUserId());
+
+        model.addAttribute("memberInfo", member);
         model.addAttribute("groupInfo", groupInfo);
 
         return "/meeting/meetingView";
@@ -115,16 +137,18 @@ public class MeetingController {
     @GetMapping("/meetingUpdateForm")
     public String meetingUpdateForm(@RequestParam String groupId,  Model model) {
         GroupInfo groupInfo = meetingService.selectGroupInfoById(groupId);
-        List<Keyword> keywords = meetingService.selectKeywords();
+        List<Keyword> keywords = meetingService.selectFirstKeywordList();
+        List<Keyword> secondKeywords = meetingService.selectSecondKeywordList(groupInfo.getFirstKeyword());
         model.addAttribute("groupInfo", groupInfo);
         model.addAttribute("keywords", keywords);
+        model.addAttribute("secondKeywords", secondKeywords);
         return "/meeting/meetingUpdateForm";
     }
 
     @PostMapping("/meetingUpdateForm")
     public String meetingUpdate(GroupInfo groupInfo, MultipartFile picture) throws IOException {
-        System.out.println(groupInfo.getGroupId());
         meetingService.updateMeeting(groupInfo, picture);
+        meetingService.updateGroupKeyword(groupInfo);
 
         if (groupInfo.getGroupType() == 0) {
             return "redirect:/onedayMtForm?number=0";

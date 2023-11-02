@@ -1,6 +1,7 @@
 package com.meeting_site_project.YM.controller;
 
 import com.meeting_site_project.YM.service.MeetingService;
+import com.meeting_site_project.YM.vo.GroupInfo;
 import com.meeting_site_project.YM.vo.Keyword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,5 +23,14 @@ public class AjaxController {
         List<Keyword> keywords = meetingService.selectSecondKeywordList(firstKeyword); // 예시로 yourService.getList 메서드를 호출
 
         return keywords;
+    }
+
+    @PostMapping("keywordByGroupRequest")
+    public List<GroupInfo> keywordByGroupRequest (@RequestParam("firstKeyword") String firstKeyword, @RequestParam("groupType") int groupType) {
+        System.out.println(firstKeyword);
+        System.out.println(groupType);
+        List<GroupInfo> groupList = meetingService.selectOnedayKeywordByGroupList(firstKeyword, groupType);
+
+        return groupList;
     }
 }

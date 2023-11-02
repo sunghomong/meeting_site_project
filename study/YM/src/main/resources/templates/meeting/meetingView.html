@@ -1,28 +1,191 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>모임 정보</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <style>
-        .box {
-            width: 150px;
-            height: 150px;
-            border-radius: 70%;
-            overflow: hidden;
-        }
-        .profile {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .userInfo {
-            width: 300px;
-            height: 100px;
-            border: 1px solid #eaeaeadd;
-            background-color: #eaeaeadd;
-            border-radius: 30px;
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+
+    <head>
+        <style>
+            @font-face {
+                font-family: 'Pretendard-Regular';
+                src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+                font-weight: 400;
+                font-style: normal;
+            }
+
+            .SocialingHostImage_host__kz5xl {
+                position: relative
+            }
+
+            .SocialingHostImage_host__image__NUYeg {
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border-radius: 50%
+            }
+
+
+            .IntroduceHtml_introduce__KLDMs {
+                box-sizing: border-box;
+                position: relative;
+                width: calc(100% - 28px);
+                height: auto;
+                background-color: #f4f4f4;
+                padding: 15px 20px 41px;
+                color: #383535;
+                font-size: 16px;
+                line-height: 26px;
+                letter-spacing: -.6px;
+                font-weight: 700;
+            }
+
+            .IntroduceHtml_introduce__content__AGQj0 {
+                display: inline;
+                height: auto;
+                white-space: pre-line;
+                overflow: scroll;
+                -webkit-user-select: text;
+                -moz-user-select: text;
+                user-select: text
+            }
+
+            .IntroduceHtml_introduce__content__AGQj0::-webkit-scrollbar {
+                display: none
+            }
+
+            .IntroduceHtml_introduce__content__AGQj0 * {
+                margin: 0
+            }
+
+            .IntroduceHtml_introduce__content__AGQj0 img {
+                max-width: 100%
+            }
+
+            .Main_template__t9QX6 {
+                width: 100%;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                position: relative;
+                background-color: #f4f4f4
+            }
+
+            .Main_template__image__l4wQN {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                position: relative
+            }
+
+            .Main_content__MC5q_ {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                background-color: #fefefe;
+                position: relative;
+                width: calc(100% - 28px);
+                top: -25px;
+                height: auto;
+                border-radius: 16px;
+                z-index: 100
+            }
+
+            .Main_content__host-img__3fO0S {
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border-radius: 50%;
+                position: relative;
+                bottom: 35px
+            }
+
+            .Main_content__host-name__5ligk {
+                font-family: 'Pretendard';
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 12px;
+                text-align: center;
+                letter-spacing: -.2px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #383535;
+                margin-top: 9px;
+                white-space: nowrap
+            }
+
+            .Main_content__title__2dJZx {
+                font-family: 'Pretendard';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 24px;
+                text-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 7px 12px 10px
+            }
+
+
+            .detail-socialing_content__6jFUF,
+            .detail-socialing_template__NkCnA {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column
+            }
+
+            .detail-socialing_content__6jFUF {
+                max-width: 600px;
+                width: 100%;
+                position: relative
+            }
+
+            .location-img-box,
+            .people-img-box {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                width: 532px;
+                margin-bottom: 15px;
+                color: #111;
+                font-family: 'Pretendard-Regular';
+            }
+
+            .people-img-box {
+                margin-bottom: 135px;
+            }
+
+            .location-img-box img,
+            .people-img-box img {
+                width: 30px;
+                height: 30px;
+                margin-right: 10px;
+            }
+            button {
+            font-family: 'Pretendard-Regular';
+            font-weight: 500;
+            font-size: 16.5px;
+            background-color: #e15358;
+            color: white;
+            width: 140px;
+            height: 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 0 20px;
         }
 
+<<<<<<< HEAD
+        button:hover {
+            background-color: #cd262b;
+        }
+=======
     </style>
 </head>
 <body>
@@ -47,8 +210,78 @@
 <button th:if="${session.loginMember != null} and ${session.loginMember.userId != groupInfo.ownerUserId}" th:onclick="|location.href='@{/chat(sessionUserId=${sessionUserId})}'|">채팅방 들어가기</button>
 <button th:if="${session.loginMember != null} and ${session.loginMember.userId == groupInfo.ownerUserId}" th:onclick="|location.href='@{/meetingUpdateForm(groupId=${groupInfo.groupId})}'|">모임 정보 수정</button>
 <button th:if="${session.loginMember != null} and ${session.loginMember.userId == groupInfo.ownerUserId}" th:onclick="|location.href='@{/deleteGroup(groupId=${groupInfo.groupId})}'|">모임 삭제</button>
+>>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
 
+        
+        .footer {
+            background-color: white;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+        }
+        </style>
+    </head>
 
+<body class="jsx-7f14353142cc8c26">
+    <header th:replace="/home.html :: header"></header>
+    <div id="__next">
+        <div class="__className_ff1e61">
+            <div class="detail-socialing_template__NkCnA">
+                <div class="detail-socialing_content__6jFUF">
+                    <div class="Main_template__t9QX6">
+                        <img alt="socialing-detail_image" th:src="@{${groupInfo.groupPicturePath}}" width="600"
+                            height="200" decoding="async" data-nimg="1" class="Main_template__image__l4wQN"
+                            loading="lazy" style="color:transparent" />
+                        <div class="Main_content__MC5q_">
+                            <div class="Main_content__host-img__3fO0S">
+                                <a href="/user-profile?id=559309">
+                                    <div class="SocialingHostImage_host__kz5xl">
+                                        <img alt="socialinghost" th:src="@{${memberInfo.picturePath}}" width="50"
+                                            height="50" decoding="async" data-nimg="1"
+                                            class="SocialingHostImage_host__image__NUYeg" loading="lazy"
+                                            style="color:transparent" />
+                                    </div>
+                                </a>
+                                <div class="Main_content__host-name__5ligk" th:text="${memberInfo.nickName}">닉네임</div>
+                            </div>
+                            <div class="Main_content__title__2dJZx" th:text="${groupInfo.groupName}">모임 이름
+                            </div>
+                        </div>
+                        <div class="IntroduceHtml_introduce__KLDMs">
+                            <div class="IntroduceHtml_introduce__content__AGQj0">
+                                <div th:text="${groupInfo.groupInfo}">
+                                    모임 소개
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="location-img-box">
+                            <img th:src="@{/icon/locationIcon.png}">
+                            <!-- sidoName와 sigoonName -->
+                            <div th:text="${groupInfo.sigoonName}" class="locationgroupInfo-box"></div>
+                        </div>
+                        <div class="people-img-box">
+                            <!-- groupNumberOfPeople -->
+                            <img th:src="@{/icon/peopleIcon.png}">
+                            <div class="people-box">모집 인원 : <span th:text="${groupInfo.groupNumberOfPeople}"
+                                    style="margin-right: 1px;"></span>명</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <button th:if="${session.loginMember == null}" th:onclick="|location.href='@{/login}'|" style="width: 200px;">로그인 후 모임 참여하기</button>
+        <button th:if="${session.loginMember != null} and ${session.loginMember.userId != groupInfo.ownerUserId}" th:onclick="|location.href='@{/meetingUpdateForm(groupId=${groupInfo.groupId})}'|">모임 참여하기</button>
+        <button th:if="${session.loginMember != null} and ${session.loginMember.userId == groupInfo.ownerUserId}" th:onclick="|location.href='@{/meetingUpdateForm(groupId=${groupInfo.groupId})}'|">모임 정보 수정</button>
+        <button th:if="${session.loginMember != null} and ${session.loginMember.userId == groupInfo.ownerUserId}" th:onclick="|location.href='@{/deleteGroup(groupId=${groupInfo.groupId})}'|">모임 삭제</button>
+    </div>
 </body>
+
 </html>

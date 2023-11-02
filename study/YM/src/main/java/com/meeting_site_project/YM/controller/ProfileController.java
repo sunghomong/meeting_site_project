@@ -1,6 +1,7 @@
 package com.meeting_site_project.YM.controller;
 
 
+import com.meeting_site_project.YM.Security.SHA256;
 import com.meeting_site_project.YM.service.ProfileService;
 import com.meeting_site_project.YM.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.security.NoSuchAlgorithmException;
 
 @Controller
 public class ProfileController {
@@ -44,7 +46,7 @@ public class ProfileController {
         Member member = profileService.selectById(userId);
         member.setUserInfo(member.getUserInfo().replace("<br>","\r\n"));
         model.addAttribute("member", member);
-        return "/profile/profileUpdateForm2";
+        return "/profile/profileUpdateForm";
     }
 
     @PostMapping("/profileUpdate")
@@ -67,10 +69,12 @@ public class ProfileController {
     }
 
     @PostMapping("/confirmPassword")
-    public String confirmPasswordSuccess(@Valid @ModelAttribute("password") ConfirmUserPassword confirmUserPassword, BindingResult bindingResult, HttpSession session) {
+    public String confirmPasswordSuccess(@Valid @ModelAttribute("password") ConfirmUserPassword confirmUserPassword, BindingResult bindingResult, HttpSession session) throws NoSuchAlgorithmException {
         if(bindingResult.hasErrors()) {
             return "profile/confirmPasswordForm"; // 에러가 있으면 로그인 폼으로 이동
         }
+        SHA256 sha256 = new SHA256();
+        confirmUserPassword.setUserPassword(sha256.encrypt(confirmUserPassword.getUserPassword()));
         AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
         Member member = profileService.selectByPassword(confirmUserPassword.getUserPassword(), authInfo.getUserId());
 

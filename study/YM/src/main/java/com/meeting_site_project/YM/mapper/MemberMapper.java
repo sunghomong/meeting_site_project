@@ -26,7 +26,8 @@ public interface MemberMapper {
     public Member selectById(String userId);
 
 
-    public List<Member> getMemberList();  //회원 전체 목록 조회
+    public List<Member> getMemberList(@Param("start") int start, @Param("end") int end );  //회원 전체 목록 조회
+    public int getTotal();
 
     Member selectMemberById(String userId); // 수정을 하기 위한 멤버 조회
 
@@ -77,7 +78,13 @@ public interface MemberMapper {
 
     List<Keyword> selectSecondKeywordList(String firstKeyword);
 
+    List<GroupInfo> selectOnedayKeywordByGroupList(@Param("firstKeyword") String firstKeyword,@Param("groupType") int groupType);
+
+    public void updateGroupKeyword(GroupInfo groupInfo);
+
     public void insertGroupByKeyword(GroupInfo groupInfo);
 
     public void deleteGroup(String groupId);
+
+    public List<Member> getSearchList(String userId);
 }

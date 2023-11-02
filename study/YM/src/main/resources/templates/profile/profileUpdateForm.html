@@ -1,71 +1,323 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>프로필 수정 폼</title>
+    <title>회원 프로필 수정</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
+
     <style>
-        .box {
-            width: 150px;
-            height: 150px;
-            border-radius: 70%;
-            overflow: hidden;
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
         }
+
+        @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+        .notosanskr * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+
+        .profile-box {
+            width: 220px;
+            height: 220px;
+            border-radius: 70%;
+        }
+
+
         .profile {
             width: 100%;
             height: 100%;
+            border-radius: 70%;
             object-fit: cover;
         }
-        .userInfo {
-            width: 300px;
-            height: 100px;
-            border: 1px solid #eaeaeadd;
-            background-color: #eaeaeadd;
-            border-radius: 30px;
+        #userInfo {
+            display: flex;
+            justify-content: center;
+            resize:none;
+            overflow:auto;
         }
-        textarea {
-        width: 100%;
-        height: 100%;
-        border: none;
-        resize: none;
-      }
+        .userInfo::-webkit-scrollbar {
+            display: none;
+            }
+        .userInfo {
+            font-family: 'Noto Sans KR', sans-serif;
+            width: 705px;
+            font-weight: bold;
+            color: #444;
+            font-size: 20px;
+            border: none;
+            margin: 50px auto;
+            outline: none;
+            height: auto;
+        }
+
+        #wrapper {
+            width: 100%;
+            background-color: #eeeeee99;
+            min-height: calc(100vh - 80px);
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content {
+            margin: 80px 0;
+            padding: 27px 0;
+            background-color: white;
+            width: 900px;
+            border-radius: 3px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-me {
+            font-family: 'GmarketSansMedium';
+            font-size: 30px;
+            color: #000000;
+            font-weight: normal;
+            margin: 0 40px;
+            padding-bottom: 25.4px;
+            border-bottom: 2px solid darkgray;
+        }
+
+        .info-box {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .left-box {
+            width: 400px;
+            flex-wrap: wrap;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .img-change{
+            display: flex;
+            align-items: center;
+        }
+        .info-text{
+            font-size: 16px;
+            font-family: 'GmarketSansMedium';
+            color: #444;
+            margin-right: 10px;
+            padding-left: 10px;
+        }
+        #picture {
+            width: 190px;
+        }
+        .right-box {
+            box-sizing: border-box;
+            width: 500px;
+            display: flex;
+            align-items: center;
+        }
+
+        .text {
+            font-family: 'GmarketSansMedium';
+            font-weight: bold;
+            font-size: 25px;
+            color: #000000;
+        }
+
+        .text-box {
+            width: 450px;
+        }
+
+        .text-input {
+            width: 380px;
+            font-size: 18px;
+            font-family: 'GmarketSansMedium';
+            color: #494949;
+            margin: 10px 15px;
+            padding-bottom: 3px;
+            border: none;
+            border-bottom: 0.5px solid #acacac;
+            outline: none;
+
+        }
+
+        .button-box {
+            text-align: center;
+        }
+
+        button {
+            width: 100px;
+            height: 45px;
+            border-radius: 20px;
+            border: none;
+            color: rgb(0, 0, 0);
+            background-color: #d4d4d4;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        button:hover {
+            background-color: #8e8e8e;
+        }
+
+        .delete-box {
+            display: none;
+            z-index: 1000;
+            position: fixed;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+
+
+        .user-delete {
+            z-index: 1001;
+            background-color: white;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Pretendard-Regular';
+            width: 500px;
+            height: 150px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .delete-words {
+            color: #8e8e8e;
+            font-size: 20px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #8e8e8e;
+            line-height: 50px;
+            padding: 20px 30px;
+        }
+
+        .confirm-delete {
+            line-height: 60px;
+            text-align: right;
+            padding-right: 20px;
+            color: #4e90f7;
+        }
+
+        .confirm-delete span {
+            cursor: pointer;
+            margin-left: 30px;
+        }
     </style>
 </head>
+
 <body>
-    <h1>프로필 수정</h1>
-    <form th:action th:object="${member}" method="post" enctype="multipart/form-data">
-    <div class="box" style="background: #BDBDBD;">
-        <img id="profileImage" class="profile" th:src="@{${member.picturePath}}" alt="프로필 이미지">
+    <div class="delete-box">
+        <div class="user-delete">
+            <div class="delete-words">정말로 회원 탈퇴 하시겠습니까?</div>
+            <div class="confirm-delete"><span class="cancle">취소</span><span class="ok"
+                    th:onclick="|location.href='@{/userDelete}'|">확인</span></div>
+        </div>
     </div>
-        <label for="picture">프로필 사진 변경 :</label>
-        <input type="file" id="picture" name="picture" onchange="displayImage(this)"><br>
-    <label th:for="userName">이름 :</label>
-    <input type="text" name="userName" th:field="*{userName}"><br>
-    <label th:for="nickName">닉네임 :</label>
-    <input type="text" name="nickName" th:field="*{nickName}"><br>
-    <label th:for="birthday">생일 :</label>
-    <input type="date" name="birthday" th:field="*{birthday}"><br>
-    <label th:for="userInfo">자기소개 :</label>
-    <div class="userInfo">
-    <textarea name="userInfo"  th:field="*{userInfo}" placeholder="자기소개를 입력해주세요."></textarea>
-    </div><br>
-        <label th:for="userMbti">MBTI :</label>
-        <input type="text" name="userMbti" th:field="*{userMbti}"><br>
-        <p>매력 점수 : [[${member.avgScore}]]</p><br>
-    <button type="submit">프로필 수정 완료</button>
-    </form>
+    <header th:replace="/home.html :: header"></header>
+
+    <div id="wrapper">
+        <div class="content">
+
+            <div class="about-me">프로필 수정</div>
+            <form th:action th:object="${member}" method="post" enctype="multipart/form-data">
+                <div class="info-box">
+                    <div class="left-box">
+                        <div class="profile-box" style="background: #BDBDBD;">
+                            <img id="profileImage" class="profile" th:src="@{${member.picturePath}}">
+                        </div>
+                        <div class="img-change">
+                            <div class="info-text">사진 변경</div>
+                            <input type="file" id="picture" name="picture" onchange="displayImage(this)">
+                        </div>
+                    </div>
+                    <div class="right-box">
+                        <div class="text-box">
+                            <div class="text">이름</div>
+                            <input class="text-input" type="text" name="userName" th:field="*{userName}">
+
+                            <div class="text">닉네임</div>
+                            <input class="text-input" type="text" name="nickName" th:field="*{nickName}">
+
+                            <div class="text">생일</div>
+                            <input class="text-input" type="date" name="birthday" th:field="*{birthday}">
+
+                            <div class="text">MBTI</div>
+                            <input class="text-input" type="text" name="userMbti" th:field="*{userMbti}">
+                        </div>
+                    </div>
+
+                </div>
+                <div id="userInfo">
+                    <textarea name="userInfo" th:field="*{userInfo}" class="userInfo"></textarea>
+                </div>
+                <div class="button-box">
+                    <button type="submit">프로필 수정 완료</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer th:replace="/home.html :: footer"></footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var deleteButton = document.querySelector(".button-box button:nth-child(3)");
+            var boxDeleteDiv = document.querySelector(".delete-box");
+            var cancelButton = document.querySelector(".delete-box .cancle");
 
 
-<script>
+            deleteButton.addEventListener("click", function () {
+                boxDeleteDiv.style.display = "block";
+            });
 
-    function displayImage(input) {
+            // 취소 버튼 클릭 시 .delete-box 숨김
+            cancelButton.addEventListener("click", function () {
+                boxDeleteDiv.style.display = "none";
+
+
+            });
+        });
+
+        function displayImage(input) {
             var file = input.files[0];
             var reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 var image = document.getElementById('profileImage');
                 image.src = e.target.result;
             }
             reader.readAsDataURL(file);
         }
-</script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+    var textArea = document.querySelector(".userInfo");
+
+    function adjustHeight() {
+        textArea.style.height = "auto";
+        textArea.style.height = (textArea.scrollHeight) + "px";
+    }
+
+    textArea.addEventListener("input", adjustHeight);
+
+    // 페이지 로드 시 초기 높이 설정
+    adjustHeight();
+});
+    </script>
+
 </body>
+
 </html>

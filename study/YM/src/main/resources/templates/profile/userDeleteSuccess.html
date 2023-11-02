@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>회원 탈퇴 완료</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
+</head>
+<style>
+    @font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+    .wrapper {
+        min-height: calc(100vh - 220px);
+        padding-top: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-family: 'NanumSquareNeo-Variable';
+    }
+    .complete {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .thankyou{
+        color: #666;
+        font-size: 20px;
+        margin-top: 20px;
+    }
+    button {
+            border: none;
+            width: 120px;
+            height: 50px;
+            background-color: #2490fc;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top : 35px;
+        }
+        span {
+            color: #333;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        button:hover {
+            background-color: #1c57b0;
+        }
+
+
+</style>
+
+<body>
+<header th:replace="/home.html :: header"></header>
+    <div class="wrapper">
+        <div class="content">
+            <div class="complete">
+                회원 탈퇴가 완료되었습니다.
+            </div>
+
+            <div class="thankyou">
+                <span>요즘뭐해</span>를 이용해주셔서 감사합니다.
+            </div>
+            <button onclick="location.href = /*[[@{/}]]*/ '/'">메인</button>
+        </div>
+    </div>
+
+<footer th:replace="/home.html :: footer"></footer>
+</body>
+
+</html>

@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>고객 문의 리스트</title>
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
 </head>
 <body>
+<header th:replace="/home.html :: header"></header>
 <h1>고객 문의 리스트</h1>
 <!-- 새션 userId 데이터 받고 데이터 보내 주기 -->
 <button th:onclick="|location.href='@{/FAQ/createAsk}'|">문의 하기</button> <!-- "문의 하기" 버튼 -->
@@ -39,7 +42,10 @@
     </tr>
     </tbody>
 </table>
+
 <a th:href="@{/}">메인</a>
+
+<footer th:replace="/home.html :: footer"></footer>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $("#filterButton").click(function() {

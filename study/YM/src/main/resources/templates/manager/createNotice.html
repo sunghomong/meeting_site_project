@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>공지사항 등록</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
     <script>
         $(document).ready(function () {
            $("#noticeForm").submit(function (event) {
@@ -35,6 +37,7 @@
     </script>
 </head>
 <body>
+<header th:replace="/home.html :: header"></header>
 <h1>공지사항 등록</h1>
 <form id="noticeForm" enctype="multipart/form-data">
     <label for="title">제목:</label>
@@ -48,6 +51,8 @@
     <br>
     <button type="submit">등록</button>
 </form>
+
+<footer th:replace="/home.html :: footer"></footer>
 </body>
 </html>
 
