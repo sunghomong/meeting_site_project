@@ -8,10 +8,9 @@
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
-<<<<<<< HEAD
         @font-face {
             font-family: 'SpoqaHanSansNeo-Regular';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regu lar.woff') format('woff');
             font-weight: normal;
             font-style: normal;
         }
@@ -120,21 +119,6 @@
             align-items: center;
             justify-content: space-around;
         }
-=======
-        * {
-          box-sizing: border-box;
-          margin: 0;
-          padding: 0;
-          border-radius: 5px;
-        }
-
-        body {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-height: 100vh;
-          margin: 20px;
->>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
 
         textarea {
             box-sizing: border-box;
@@ -218,125 +202,21 @@
         button {
             cursor: pointer;
             margin: 50px auto;
-            background-color: #000;
+            background-color: #333;
             color: white;
             width: 150px;
             line-height: 50px;
             border-radius: 50px;
+            font-weight: bold;
+        }
+        button:hover{
+            background-color: #000;
         }
 
         .clicked {
             background-color: #e15358;
             color: white;
         }
-
-        /* Button */
-        button{
-          font-size: 15px;
-          font-weight: bold;
-          cursor: pointer;
-          border: none;
-          background: rgb(155, 155, 226);
-          color: #fff;
-          width: 100%;
-          height: 100%;
-          margin: 20px 0;
-          padding: 15px 15px;
-          box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0), 0 3px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        button:hover {
-          background: rgb(75, 75, 241);
-          box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        /* Form */
-        .groupOut {
-          box-shadow: 0 0 20px rgb(155, 155, 226);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          min-width: 600px;
-        }
-
-        h1 {
-          margin: 20px 20px;
-          color: rgb(49, 49, 208);
-       }
-
-        form {
-          position: relative;
-          padding: 10px 30px;
-          min-width: 500px;
-        }
-
-        input {
-          color: rgba(0, 0, 0, 0.6);
-          font-size: 15px;
-          padding: 10px;
-          cursor: pointer;
-          }
-
-        #cssGroupForm > label {
-          display: block;
-          text-transform: uppercase;
-          font-size: 11px;
-          color: rgb(15, 15, 15);
-          margin: 8px 0 5px 0;
-          font-weight: bold;
-        }
-
-        #cssGroupForm > #groupNumberOfPeople {
-          width: 100%;
-          height: 30px;
-          border: 1px solid rgb(15, 15, 15);
-          box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        #cssGroupForm > #groupName, #cssGroupForm > #groupInfo {
-          width: 100%;
-          height: 40px;
-          padding: 10px;
-          color: rgba(0, 0, 0, 0.6);
-          border: 1px solid rgb(15, 15, 15);
-          box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
-       }
-
-       #cssGroupForm > #groupInfo {
-          resize: none;
-          height: 200px;
-       }
-
-       #cssGroupForm > select {
-          width: 100%;
-          height: 40px;
-          color: rgba(0, 0, 0, 0.6);
-          border: 1px solid rgb(15, 15, 15);
-          box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
-       }
-        ul {
-          list-style: none;
-          color: rgb(15, 15, 15);
-       }
-
-        ul > li {
-           cursor: pointer;
-       }
-       #cssMeetingForm {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-      }
-      #cssMeetingForm > label {
-          margin: 0 120px 0 5px;
-          font-weight: bold;
-      }
-      /* img */
-      #preview {
-          width: 440px;
-          height: 350px;
-          margin: 20px;
-      }
     </style>
 </head>
 <!-- OpenLayers 라이브러리를 사용하기 위한 CSS를 불러옵니다. -->
@@ -345,57 +225,11 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <body>
-<<<<<<< HEAD
     <header th:replace="/home.html :: header"></header>
 
     <div class="wrapper">
-=======
-<div class="groupOut">
-    <!-- 브이월드 행정구역 정보를 이용한 셀렉트 박스를 구현합니다. -->
-    <img scr="" id="preview" style="display: none;">
-    <h1>모임 등록</h1>
-    <form id="meetingForm" th:action method="post" th:object="${groupInfo}" enctype="multipart/form-data">
-        <input type="hidden" id="ownerUserId" name="ownerUserId" th:value="${ownerUserId}">
-        <!-- 모임 종류 -->
-        <div id="cssMeetingForm">
-            <input type="radio" id="meeting1" name="groupType" value="0" th:checked="${groupType == 0}"/>
-            <label for="meeting1">원데이 모임</label>
-            <input type="radio" id="meeting2" name="groupType" value="1" th:checked="${groupType == 1}"/>
-            <label for="meeting2">정기 모임</label><br>
-        </div>
-        <div id="cssGroupForm">
-            <!-- 모임 이름 -->
-            <label for="groupName">모임 이름</label>
-            <input type="text" id="groupName" name="groupName" th:field="*{groupName}"><br>
 
-            <!-- 모임 장소 -->
-            <label for="sidoName">시/도</label>
-            <select id="sidoName" name="sidoName" th:field="*{sidoName}">
-                <option value="">선택</option>
-            </select>
 
-            <label for="sigoonName">시/군</label>
-            <select id="sigoonName" name="sigoonName" th:field="*{sigoonName}">
-                <option value="">선택</option>
-            </select><br>
-
-            <!-- 모임 인원 -->
-            <label for="groupNumberOfPeople">모임 인원</label>
-            <input type="number" id="groupNumberOfPeople" name="groupNumberOfPeople" th:field="*{groupNumberOfPeople}"><br>
-
-            <!-- 모임 정보 -->
-            <label for="groupInfo">모임 소개</label>
-            <textarea id="groupInfo" name="groupInfo" th:field="*{groupInfo}"></textarea><br>
-
-            <ul id="firstKeyword">
-                <li th:each="keyword : ${keywords}" class="clickable-li" th:text="${keyword.firstKeyword}" th:attr="data-value=${keyword.firstKeyword}"></li>
-            </ul>
-            <ul id="secondKeyword">
->>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
-
-            </ul>
-
-<<<<<<< HEAD
         <div class="container">
             <div class="title">모임 등록</div>
             <div class="img-content">
@@ -447,19 +281,6 @@
                             </select>
                         </div>
                     </div>
-=======
-            <!-- 모임 대표 이미지 -->
-            <label for="picture">모임 대표 이미지</label>
-            <input type="file" id="picture" name="picture" th:accept="'image/*'"><br>
-
-            <button type="submit">전&nbsp;&nbsp;송</button>
-        </div>
-    </form>
-</div>
-<script>
-    // jQuery의 AJAX 요청에서 CORS를 지원합니다.
-    $.support.cors = true;
->>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
 
                     <!-- 모임 인원 -->
                     <div class="input-box">
@@ -650,40 +471,10 @@
             });
         });
 
-<<<<<<< HEAD
         
-=======
-        // 기존 hidden input 삭제
-        form.find("input[name='secondKeyword']").remove();
 
-        // form 데이터에 값을 추가
-        form.append("<input type='hidden' name='secondKeyword' value='" + secondKeyword + "'>");
-    });
-});
->>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
 
-// 업로드 사진 미리보기
-$('#picture').change(function () {
-            setImageFromFile(this, '#preview');
-        });
-
-<<<<<<< HEAD
     </script>
-=======
-        function setImageFromFile(input, expression) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var previewElement = $(expression);
-                    previewElement.attr('src', e.target.result);
-                    previewElement.css('display', 'block'); // 미리보기 이미지를 보이게 함
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-</script>
->>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
 </body>
 
 </html>

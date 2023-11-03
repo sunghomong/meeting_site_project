@@ -1,70 +1,251 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>고객 문의 리스트</title>
+    <title>공지사항 목록</title>
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
-</head>
-<body>
-<header th:replace="/home.html :: header"></header>
-<h1>고객 문의 리스트</h1>
-<!-- 새션 userId 데이터 받고 데이터 보내 주기 -->
-<button th:onclick="|location.href='@{/FAQ/createAsk}'|">문의 하기</button> <!-- "문의 하기" 버튼 -->
-<!-- 스타일을 설정하여 특정 상태에 따른 테이블 행을 숨기기/보이기 -->
-<table>
-    <thead>
-    <tr>
-        <th>글 작성자</th>
-        <th>글 제목</th>
-        <th>작성 일자</th>
-        <th>
-            <label for="statusFilter">상태:</label>
-            <select id="statusFilter">
-                <option value="all">전체</option>
-                <option value="미해결">미해결</option>
-                <option value="해결완료">해결완료</option>
-                <option value="처리중">처리 중</option>
-            </select>
-            <button id="filterButton">조회</button>
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="ask : ${askList}" th:id="askRow">
-        <td th:text="${ask.userId}">userId</td>
-        <td><a th:href="@{/FAQ/askDetail(askId=${ask.askId})}" th:text="${ask.subject}">글 제목</a></td>
-        <td th:text="${ask.createDate}">2023-10-22 10:00</td>
-        <td th:text="${ask.status}">미해결</td>
-    </tr>
-    <tr th:unless="${not #lists.isEmpty(askList)}">
-        <td colspan="7">등록된 문의가 없습니다.</td>
-    </tr>
-    </tbody>
-</table>
-
-<a th:href="@{/}">메인</a>
-
-<footer th:replace="/home.html :: footer"></footer>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $("#filterButton").click(function() {
-        var selectedStatus = $("#statusFilter").val();
-        if (selectedStatus === "all") {
-            // 모든 상태 행을 보이게 함
-            $("tr#askRow").show();
-        } else {
-            // 선택한 상태에 따라 필터링하여 해당 상태의 행만 보이게 함
-            $("tr#askRow").hide();
-            if (selectedStatus === "해결완료") {
-                // "해결" 상태만 선택
-                $("td:contains('해결완료')").closest("tr").show();
-            } else {
-                // 다른 상태 선택
-                $("td:contains('" + selectedStatus + "')").closest("tr").show();
-            }
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+    <script src=https://code.jquery.com/jquery-3.7.1.min.js></script>
+    <style>
+        @font-face {
+            font-family: 'SpoqaHanSansNeo-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
         }
-    });
-</script>
+
+        @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+        .notosanskr * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 400;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 700;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 300;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+        }
+
+        .nanumbarungothic * {
+            font-family: 'NanumBarunGothic', sans-serif;
+        }
+
+
+
+
+        .wrapper {
+            font-family: 'SpoqaHanSansNeo-Regular';
+            min-height: calc(100vh - 220px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            margin: 80px 0;
+        }
+
+
+
+        .title {
+            width: 900px;
+            text-align: left;
+            font-size: 25px;
+            font-weight: 500;
+            padding-left: 5px;
+            border-bottom: 2px solid #dfe4ea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ask {
+            display: flex;
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 500;
+            align-items: center;
+            text-align: center;
+            padding: 25px 0;
+            border-bottom: 2px solid #dfe4ea;
+            cursor: pointer;
+        }
+
+        .askuserId {
+            letter-spacing: 1px;
+            color: #727d9b;
+            width: 100px;
+            font-size: 14px;
+        }
+
+        .askTitle {
+            box-sizing: border-box;
+            width: 550px;
+            text-align: left;
+            padding-left: 40px;
+            text-overflow: ellipsis;
+        }
+
+        .askstatus {
+            color: #a0a0a0;
+            width: 100px;
+            font-size: 14px;
+        }
+
+        .createDate {
+            font-size: 14px;
+            color: #a0a0a0;
+            width: 150px;
+        }
+
+        .notice-detail {
+            width: 900px;
+            text-align: left;
+        }
+
+        .noticeContent-box {
+            box-sizing: border-box;
+            width: 900px;
+            padding: 75px 80px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .noticeContent-box>img {
+            margin: auto;
+            width: 400px;
+            height: 250px;
+            margin-bottom: 60px;
+        }
+
+        .no-ask {
+            text-align: center;
+            width: 900px;
+            font-size: 40px;
+            margin-top: 140px;
+            letter-spacing: 2px;
+        }
+
+        button {
+            margin-top: 40px;
+            font-size: 13px;
+            font-family: 'NanumBarunGothic';
+            cursor: pointer;
+            margin-right: 15px;
+            border: none;
+            background-color: #639eeb;
+            padding: 10px 15px;
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #4488df;
+        }
+
+        #askMenu {
+            background-color: #639eeb;
+            color: white;
+        }
+
+        #no-ask {
+            margin-bottom: 70px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header th:replace="/home.html :: header"></header>
+
+    <div class="wrapper">
+        <div th:if="${session.loginMember != null and session.loginMember.userAdmin == 1}">
+            <div th:replace="/manager/main.html :: sidebar"></div>
+        </div>
+        <div class="container">
+            <div class="title"><span style="border-bottom: 2px solid black; padding-bottom: 20px;">1:1 문의</span>
+                <select id="statusFilter">
+                    <option value="all">전체</option>
+                    <option value="미해결">미해결</option>
+                    <option value="해결완료">해결완료</option>
+                    <option value="처리중">처리 중</option>
+                </select>
+            </div>
+
+            <ul class="notices">
+                <li th:each="ask : ${askList}" class="ask"
+                    th:onclick="|location.href='@{/FAQ/askDetail(askId=${ask.askId})}'|">
+                    <div th:text="${ask.userId}" class="askuserId">공지</div>
+                    <div th:text="${ask.subject}" class="askTitle"></div>
+                    <div th:text="${#dates.format(ask.createDate, 'yyyy-MM-dd')}" class="createDate"></div>
+                    <div th:style="${ask.status == '미해결' ? 'color:  #a0a0a0;' : (ask.status == '해결완료' ? 'color: #e15358;' : 'color: #5778d1;')}"
+                        class="askstatus" th:text="${ask.status}"></div>
+                </li>
+            </ul>
+            <div th:unless="${not #lists.isEmpty(askList)}" class="no-ask">
+                등록된 문의가 없습니다.
+            </div>
+            <div style="display: none;" id="no-ask" class="no-ask">
+                등록된 문의가 없습니다.
+            </div>
+            <div style="text-align: right;">
+                <button th:onclick="|location.href='@{/FAQ/createAsk}'|">문의하기</button>
+            </div>
+        </div>
+
+    </div>
+    <footer th:replace="/home.html :: footer"></footer>
+    <script>
+        document.getElementById("statusFilter").addEventListener("change", function () {
+            var selectedStatus = this.value;
+            var askElements = document.querySelectorAll(".ask");
+            var noAskMessage = document.querySelector("#no-ask");
+
+            if (selectedStatus === "all") {
+                askElements.forEach(function (element) {
+                    element.style.display = "flex";
+                });
+            } else {
+                var found = false;
+
+                askElements.forEach(function (element) {
+                    var statusElement = element.querySelector(".askstatus");
+                    if (statusElement.innerText === selectedStatus) {
+                        element.style.display = "flex";
+                        found = true;
+                    } else {
+                        element.style.display = "none";
+                    }
+                });
+
+                if (!found) {
+                    noAskMessage.style.display = "block";
+                } else {
+                    noAskMessage.style.display = "none";
+                }
+            }
+        });
+    </script>
 </body>
+
 </html>

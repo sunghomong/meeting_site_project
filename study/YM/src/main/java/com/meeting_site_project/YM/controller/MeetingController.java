@@ -1,16 +1,10 @@
 package com.meeting_site_project.YM.controller;
 
-<<<<<<< HEAD
-import com.meeting_site_project.YM.service.CheckService;
-=======
+
 import com.meeting_site_project.YM.service.ChatService;
->>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
+import com.meeting_site_project.YM.service.CheckService;
 import com.meeting_site_project.YM.service.MeetingService;
-import com.meeting_site_project.YM.vo.AuthInfo;
-import com.meeting_site_project.YM.vo.ChatRoom;
-import com.meeting_site_project.YM.vo.GroupInfo;
-import com.meeting_site_project.YM.vo.Keyword;
-import com.meeting_site_project.YM.vo.Member;
+import com.meeting_site_project.YM.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,17 +31,11 @@ public class MeetingController {
     ChatService chatService;
 
     @Autowired
-<<<<<<< HEAD
-    public MeetingController(MeetingService meetingService, CheckService checkService) {
+    public MeetingController(MeetingService meetingService, CheckService checkService, ChatService chatService) {
         this.meetingService = meetingService;
         this.checkService = checkService;
-=======
-    public MeetingController(MeetingService meetingService, ChatService chatService) {
-        this.meetingService = meetingService;
         this.chatService = chatService;
->>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
     }
-
 
     @GetMapping("/onedayMtForm")
     public String onedayMeetingList(@RequestParam("number") int groupType, Model model) {

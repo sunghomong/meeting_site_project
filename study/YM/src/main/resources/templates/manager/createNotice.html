@@ -1,63 +1,216 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>공지사항 등록</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'SpoqaHanSansNeo-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 400;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 700;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 300;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .nanumbarungothic * {
+            font-family: 'NanumBarunGothic', sans-serif;
+        }
+
+        .wrapper {
+            font-family: 'SpoqaHanSansNeo-Regular';
+            min-height: calc(100vh - 220px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            margin: 60px 0 80px;
+            width: 700px;
+        }
+
+        .title {
+            text-align: left;
+            font-size: 25px;
+            font-weight: 400;
+            padding-left: 5px;
+            border-bottom: 2px solid #dfe4ea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            box-sizing: border-box;
+            width: 800px;
+            padding: 90px 30px 30px;
+        }
+
+        .form-box {
+            width: 500px;
+        }
+
+        .form-box>div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .input-text {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        #title {
+            min-height: 25px;
+            width: 200px;
+            height: 20px;
+            margin-left: 20px;
+            font-family: 'Pretendard-Regular';
+            border: 1px solid #CFCFCF;
+            border-radius: 5px;
+            padding-left: 5px;
+            width: 380px;
+        }
+
+        #content {
+            min-height: 100px;
+            border-radius: 5px;
+            margin-left: 20px;
+            font-family: 'Pretendard-Regular';
+            border: 1px solid #CFCFCF;
+            padding: 5px;
+            resize: none;
+            width: 380px;
+        }
+
+        #attachments {
+            margin-left: 20px;
+        }
+
+        button {
+            box-shadow: inset 0px 1px 0px 0px #ffffff;
+            background: linear-gradient(to bottom, #fbfbfb 5%, #f6f6f6 100%);
+            background-color: #ededed;
+            border-radius: 6px;
+            border: 1px solid #dcdcdc;
+            display: inline-block;
+            cursor: pointer;
+            color: #333333;
+            font-family: Arial;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 9px 24px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #ffffff;
+            margin: auto;
+        }
+
+        button:hover {
+            background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+            background-color: #f6f6f6;
+        }
+    </style>
+
+
     <script>
         $(document).ready(function () {
-           $("#noticeForm").submit(function (event) {
-               event.preventDefault(); // 기본 폼 제출 방지
+            $("#noticeForm").submit(function (event) {
+                event.preventDefault(); // 기본 폼 제출 방지
 
-               var formData = new FormData(); // FormData 객체 생성
+                var formData = new FormData(); // FormData 객체 생성
 
-               formData.append("title", $("#title").val()); // 제목 추가
-               formData.append("content", $("#content").val()); // 내용 추가
-               formData.append("attachments", $("#attachments")[0].files[0]); // 파일 추가
+                formData.append("title", $("#title").val()); // 제목 추가
+                formData.append("content", $("#content").val()); // 내용 추가
+                formData.append("attachments", $("#attachments")[0].files[0]); // 파일 추가
 
-               $.ajax({
-                   type: "POST",
-                   url: "/manager/createNotice",
-                   data: formData, // FormData 객체 사용
-                   processData: false, // 필수: FormData를 사용하기 때문에 false로 설정
-                   contentType: false, // 필수: FormData를 사용하기 때문에 false로 설정
-                   success: function (response) {
-                       alert("문의가 제출되었습니다.");
+                $.ajax({
+                    type: "POST",
+                    url: "/manager/createNotice",
+                    data: formData, // FormData 객체 사용
+                    processData: false, // 필수: FormData를 사용하기 때문에 false로 설정
+                    contentType: false, // 필수: FormData를 사용하기 때문에 false로 설정
+                    success: function (response) {
+                        alert("문의가 제출되었습니다.");
                         // 성공 후 페이지 이동 (예: 홈 페이지로 이동)
                         window.location.href = "/manager/noticeList";
-                   },
-                   error: function () {
-                       alert("문의 제출에 실패했습니다.");
-                   }
-               });
-           });
-       });
+                    },
+                    error: function () {
+                        alert("문의 제출에 실패했습니다.");
+                    }
+                });
+            });
+        });
     </script>
 </head>
+
 <body>
-<header th:replace="/home.html :: header"></header>
-<h1>공지사항 등록</h1>
-<form id="noticeForm" enctype="multipart/form-data">
-    <label for="title">제목:</label>
-    <input type="text" id="title" name="title" required>
-    <br>
-    <label for="content">내용:</label>
-    <textarea id="content" name="content" rows="4" cols="50" required></textarea>
-    <br>
-    <label for="attachments">첨부 파일 (선택):</label>
-    <input type="file" id="attachments" name="attachments">
-    <br>
-    <button type="submit">등록</button>
-</form>
-
-<footer th:replace="/home.html :: footer"></footer>
+    <header th:replace="/home.html :: header"></header>
+    <div class="wrapper">
+        <div class="container">
+            <div class="title"><span style="border-bottom: 2px solid black; padding-bottom: 20px;">공지사항 등록</span></div>
+            <form id="noticeForm" enctype="multipart/form-data">
+                <div class="form-box">
+                    <div>
+                        <div for="title" class="input-text">제목<span style="color: red;">*</span></div>
+                        <input type="text" id="title" name="title" required>
+                    </div>
+                    <br>
+                    <div>
+                        <div for="content" class="input-text" style="margin-bottom: 85px;">내용<span
+                                style="color: red;">*</span></div>
+                        <textarea id="content" name="content" rows="4" cols="50" required></textarea>
+                    </div>
+                    <br>
+                    <div>
+                        <div for="attachments" class="input-text">첨부 파일</div>
+                        <input type="file" id="attachments" name="attachments">
+                    </div>
+                    <br>
+                    <div style="text-align: center;">
+                        <button type="submit">등록</button>
+                    </div>
+                </div>
+        </div>
+        </form>
+    </div>
+    <footer th:replace="/home.html :: footer"></footer>
 </body>
+
 </html>
-
-
-
-
-
-

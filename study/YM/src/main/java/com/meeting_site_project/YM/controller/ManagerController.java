@@ -129,7 +129,6 @@ public class ManagerController {
     @GetMapping("/noticeList")
     public String noticeListFormForManager(HttpSession session,Model model) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("loginMember");
-        System.out.println(authInfo.getUserId());
 
         List<Notices> notices = managerService.selectNoticeListByUserId(authInfo.getUserId()); // 본인이 만든 공지 사항 리스트 확인 (관리자)
 
@@ -156,11 +155,11 @@ public class ManagerController {
 
         // UUID를 사용하여 고유한 askId 생성
         String uniqueNoticeId = UUID.randomUUID().toString();
-
+        notices.setContent(content.replace("\r\n","<br>"));
         notices.setUserId(authInfo.getUserId());
         notices.setNoticeId(uniqueNoticeId);
         notices.setTitle(title);
-        notices.setContent(content);
+
 
         managerService.insertNotice(notices,attachment);
 
@@ -168,6 +167,7 @@ public class ManagerController {
     @GetMapping("/getSearchList")
     @ResponseBody
     private List<Member> getSearchList(@RequestParam("userId") String userId) {
+        System.out.println(userId);
         List<Member> searchList = checkService.getSearchList(userId);
         System.out.println(searchList);
         return searchList;

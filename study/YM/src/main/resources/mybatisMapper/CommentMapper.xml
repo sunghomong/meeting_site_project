@@ -10,6 +10,6 @@
     </insert>
 
     <select id="selectCommentAsk" resultType="CommentAsk" parameterType="String">
-        SELECT * FROM commentAsk WHERE askId=#{askId}
+        SELECT * FROM commentAsk WHERE askId=#{askId} ORDER BY createDate DESC
     </select>
 </mapper>

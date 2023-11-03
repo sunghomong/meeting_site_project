@@ -1,108 +1,311 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>문의 상세 정보</title>
     <link href="/modalWindow.css" rel="stylesheet" type="text/css" />
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
-</head>
-<body>
-<header th:replace="/home.html :: header"></header>
+    <style>
+        @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-<h1>문의 상세 정보</h1>
-
-<div>
-    <p><strong>작성자:</strong> [[${askContent.userId}]]</p>
-    <p><strong>제목:</strong> [[${askContent.subject}]]</p>
-    <p><strong>내용:</strong> [[${askContent.content}]]</p>
-    <p><strong>작성 일자:</strong> [[${askContent.createDate}]]</p>
-    <p><strong>문의 상태:</strong> [[${askContent.status}]]</p>
-    <p th:if="${askContent.history != null}"><strong>수정 상태:</strong> [[${askContent.history}]]</p>
-</div>
-
-<div> <!--첨부파일 미리 보기-->
-    <img th:if="${askContent.attachmentName != null and #strings.endsWith(askContent.attachmentName, 'jpg') or #strings.endsWith(askContent.attachmentName, 'jpeg') or #strings.endsWith(askContent.attachmentName, 'png') or #strings.endsWith(askContent.attachmentName, 'gif')}"
-         th:src="@{${askContent.attachmentPath}}" alt="첨부 이미지">
-</div>
-<div th:if="${loginMemberUserId == askContent.userId}"> <!-- 세션에 저장된 본인의 아이디와 똑같을 경우에만 가능한 버튼 -->
-    <button th:onclick="|location.href='@{askEdit(askId=${askContent.askId})}'|" style="cursor: pointer;">수정 하기
-    </button>
-    <button type="button" th:attr="data-askId=${askContent.askId}" onclick="deleteAsk(this.getAttribute('data-askId'))" style="cursor: pointer;">삭제 하기</button>
-</div>
-<!-- 댓글 표시 부분 -->
-<div>
-    <h2>댓글</h2>
-    <div th:if="${commentAskList != null}" th:each="comment : ${commentAskList}">
-        <p><strong>작성자:</strong> [[${comment.userId}]]</p>
-        <p><strong>내용:</strong> [[${comment.content}]]</p>
-        <p><strong>작성 일자:</strong> [[${comment.createDate}]]</p>
-    </div>
-</div>
-<!-- 댓글 입력 폼 -->
-<div th:if="${loginMemberUserAdmin == 1}">  <!-- 관리자 권한일 경우에만 댓글 입력 가능 -->
-    <form method="post" th:action="@{/FAQ/addComment}">
-        <input type="hidden" name="askId" th:value="${askContent.askId}" />
-        <label for="content">댓글 내용 : </label>
-        <textarea id="content" name="content" rows="3" cols="50" required></textarea> <br>
-
-        <label for="status">상태 선택:</label>
-        <select id="status" name="status">
-            <option value="미해결">미해결</option>
-            <option value="해결완료">해결완료</option>
-            <option value="처리중">처리중</option>
-        </select>
-
-        <button type="submit">댓글 작성</button>
-    </form>
-</div>
-<a th:href="@{/}">메인</a>
-
-<div id="modalContainer" class="hidden">
-    <div id="modalContent">
-        <p style="color: red; font-size: 24px; text-align: center;">정말 삭제하시겠습니까?</p>
-        <button onclick="confirmDelete()">네</button>
-        <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
-        <input type="hidden" id="deleteAskId" name="askId" value="">
-    </div>
-</div>
-
-<footer th:replace="/home.html :: footer"></footer>
-<script type="text/javascript">
-
-    const modal = document.getElementById('modalContainer');
-    const modalCloseButton = document.getElementById('modalCloseButton');
-    const deleteAskId = document.getElementById('deleteAskId');
-
-   function deleteAsk(askId) {
-        // 삭제 버튼 클릭 시 모달 열기
-        modal.classList.remove('hidden'); // 모달창 오픈
-        var deleteAskId = document.getElementById('deleteAskId');
-        deleteAskId.value = askId; // 삭제할 아이디 저장
-    }
-
-
-    function confirmDelete() {
-        // "네" 버튼 클릭 시 삭제 로직 수행
-        var deleteAskId = document.getElementById('deleteAskId');
-        var askId = deleteAskId.value;
-        if (askId) {
-            fetch('askDelete/' + askId)
-                .then(response => {
-                    if (response.ok) {
-                        alert("삭제되었습니다.");
-                        window.location = '/FAQ/';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+        .notosanskr * {
+            font-family: 'Noto Sans KR', sans-serif;
         }
-    }
 
-    function cancelDelete() {
-        // "아니요" 버튼 클릭 시 모달 닫기
-        modal.classList.add('hidden');
-    }
-</script>
+        @font-face {
+            font-family: 'SpoqaHanSansNeo-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .wrapper {
+            font-family: 'SpoqaHanSansNeo-Regular';
+            min-height: calc(100vh - 220px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            margin: 80px 0;
+            min-width: 700px;
+        }
+
+        .title-box {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'SpoqaHanSansNeo-Regular';
+            align-items: flex-end;
+        }
+
+        .subject {
+            font-size: 32px;
+            font-family: Sans-Serif;
+            font-weight: bold;
+        }
+
+        .img-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 70px 0;
+        }
+
+        .img-box>img {
+            width: 400px;
+            height: 250px;
+        }
+
+        .history {
+            font-size: 14px;
+            margin-left: 10px;
+            color: rgb(101, 101, 101);
+        }
+
+        .userId {
+            margin-right: 20px;
+            font-family: Sans-Serif;
+            font-weight: 400;
+        }
+
+        .createDate {
+            margin-right: 20px;
+            font-weight: 400;
+            font-family: Sans-Serif;
+        }
+
+        .content {
+            width: 700px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 17px;
+            line-height: 27.2px;
+            font-weight: 500;
+        }
+
+        button {
+            background-color: #fefefe;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid #8d8d8d;
+            padding: 5px 10px;
+            margin-top: 20px;
+            margin-right: 15px;
+        }
+
+        button:hover {
+            background-color: #e6e5e5;
+
+        }
+
+        .comment-box {
+            padding-left: 10px;
+            margin: 70px 0;
+        }
+
+        .comment-count {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #99a2a7;
+            font-family: 'Noto Sans KR', sans-serif;
+            ;
+        }
+
+        .comment-user-box {
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            color: #888d94;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .comment-userId {
+            font-size: 16px;
+        }
+
+        .comment-createDate {
+            color: #333;
+            margin-left: 10px;
+            font-size: 12px;
+        }
+
+        .comment-write {
+            color: #454645;
+            font-weight: bold;
+        }
+
+        .comment-form {
+            display: flex;
+            justify-content: center;
+        }
+
+        .comment-form>form {
+            width: 680px;
+        }
+
+        #content {
+            border: 1px solid #a4a4a4;
+            background-color: #f6f6f6;
+            width: 680px;
+            resize: none;
+            color: #454645;
+            font-family: 'Noto Sans KR', sans-serif;
+            border-radius: 10px;
+            margin: 20px 0 30px; 
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        ::placeholder {
+            color: #454645;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        #status-words{
+            margin-right: 10px;
+            
+        }
+        #status{
+            width: 85px;
+            height: 20px;
+            margin-right: 15px;
+            text-align: center;
+            cursor: pointer;
+        }
+        select option {
+            cursor: pointer;
+        }
+        #comment-button{
+            margin: auto;
+            color: #7864c4;
+            width: 100px;
+            height: 40px;
+            font-weight: bold;
+        }
+        
+
+    </style>
+</head>
+
+<body>
+    <header th:replace="/home.html :: header"></header>
+    <div class="wrapper">
+        <div class="container">
+
+
+
+            <div class="title-box">
+                <div style="display: flex; align-items: flex-end;">
+                    <div class="subject"> [[${askContent.subject}]]</div>
+                    <div class="history" th:if="${askContent.history != null}">[[${askContent.history}]]</div>
+                </div>
+                <div style="display: flex;">
+                    <div class="userId">[[${askContent.userId}]]</div>
+                    <div class="createDate" th:text="${#dates.format(askContent.createDate, 'yyyy-MM-dd')}"></div>
+                    <div class="status"
+                        th:style="${askContent.status == '미해결' ? 'color:  #a0a0a0;' : (askContent.status == '해결완료' ? 'color: #e15358 ;' : 'color: #5778d1;')}">
+                        [[${askContent.status}]]</div>
+                </div>
+            </div>
+            <div class="img-box"> <!--첨부파일 미리 보기-->
+                <img th:if="${askContent.attachmentName != null}" th:src="@{${askContent.attachmentPath}}" alt="첨부 이미지">
+            </div>
+            <div class="content" th:utext="${askContent.content}"></div>
+
+            <div th:if="${loginMemberUserId == askContent.userId}"
+                style="display: flex; justify-content: flex-end; padding-right: 10px;">
+                <!-- 세션에 저장된 본인의 아이디와 똑같을 경우에만 가능한 버튼 -->
+                <button th:onclick="|location.href='@{askEdit(askId=${askContent.askId})}'|" style="cursor: pointer;">수정
+                    하기
+                </button>
+                <button type="button" th:attr="data-askId=${askContent.askId}"
+                    onclick="deleteAsk(this.getAttribute('data-askId'))" style="cursor: pointer;">삭제 하기</button>
+            </div>
+            <!-- 댓글 표시 부분 -->
+            <div class="comment-box">
+                <div class="comment-count">댓글 목록<span style="margin-left: 5px;"
+                        th:if="${commentAskList != null}">[[${#lists.size(commentAskList)}]]</span></div>
+                <div th:if="${commentAskList != null}" th:each="comment : ${commentAskList}"
+                    style="padding: 20px 30px 5px;">
+                    <div class="comment-user-box">
+                        <div class="comment-userId">[[${comment.userId}]]</div>
+                        <div class="comment-createDate"
+                            th:text="${#dates.format(comment.createDate, 'yy-MM-dd &nbspHH:mm')}"></div>
+                    </div>
+                    <div th:utext="${comment.content}"></div>
+                </div>
+            </div>
+            <!-- 댓글 입력 폼 -->
+            <div th:if="${loginMemberUserAdmin == 1}" class="comment-form"> <!-- 관리자 권한일 경우에만 댓글 입력 가능 -->
+                <form method="post" th:action="@{/FAQ/addComment}">
+                    <div class="comment-write">댓글쓰기</div>
+                    <input type="hidden" name="askId" th:value="${askContent.askId}" />
+                    <textarea id="content" name="content" rows="3" cols="50" placeholder="댓글 내용을 입력해주세요."
+                        required></textarea> <br>
+
+                    <div style="display: flex; justify-content: flex-end; align-items: center; margin-right: 5px;">
+                        <div id="status-words">상태 선택 : </div>
+                        <select id="status" name="status">
+                            <option value="미해결">미해결</option>
+                            <option value="해결완료">해결완료</option>
+                            <option value="처리중">처리중</option>
+                        </select>
+                        <div>
+                        <button id="comment-button" type="submit">댓글 작성</button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div id="modalContainer" class="hidden">
+                <div id="modalContent">
+                    <p style="color: red; font-size: 24px; text-align: center;">정말 삭제하시겠습니까?</p>
+                    <button onclick="confirmDelete()">네</button>
+                    <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
+                    <input type="hidden" id="deleteAskId" name="askId" value="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="/home.html :: footer"></footer>
+    <script type="text/javascript">
+
+        const modal = document.getElementById('modalContainer');
+        const modalCloseButton = document.getElementById('modalCloseButton');
+        const deleteAskId = document.getElementById('deleteAskId');
+
+        function deleteAsk(askId) {
+            // 삭제 버튼 클릭 시 모달 열기
+            modal.classList.remove('hidden'); // 모달창 오픈
+            var deleteAskId = document.getElementById('deleteAskId');
+            deleteAskId.value = askId; // 삭제할 아이디 저장
+        }
+
+
+        function confirmDelete() {
+            // "네" 버튼 클릭 시 삭제 로직 수행
+            var deleteAskId = document.getElementById('deleteAskId');
+            var askId = deleteAskId.value;
+            if (askId) {
+                fetch('askDelete/' + askId)
+                    .then(response => {
+                        if (response.ok) {
+                            alert("삭제되었습니다.");
+                            window.location = '/FAQ/';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        }
+
+        function cancelDelete() {
+            // "아니요" 버튼 클릭 시 모달 닫기
+            modal.classList.add('hidden');
+        }
+    </script>
 </body>
+
 </html>

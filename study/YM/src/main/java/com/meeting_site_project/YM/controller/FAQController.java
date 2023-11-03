@@ -73,7 +73,7 @@ public class FAQController {
     @PostMapping("createAsk")
     public void createAsk(@ModelAttribute("formData") AskContent askContent,
                           @RequestParam("attachments") MultipartFile attachments ) throws Exception {
-
+        askContent.setContent(askContent.getContent().replace("\r\n","<br>"));
         // UUID를 사용하여 고유한 askId 생성
         String uniqueAskId = UUID.randomUUID().toString();
         // askContent에 생성된 askId 설정
@@ -112,6 +112,7 @@ public class FAQController {
     public String askEditForm(@Valid @RequestParam("askId") String askId,Model model) {
 
         AskContent askContent = faQservice.selectAskListByAskId(askId);
+        askContent.setContent(askContent.getContent().replace("<br>","\r\n"));
 
         model.addAttribute("askContent",askContent);
         model.addAttribute("askId",askId);
@@ -129,6 +130,7 @@ public class FAQController {
             // 폼 데이터를 받아 처리하는 코드를 작성
             FAQservice.updateAskWithAttachments(askContent,attachments);
         } else {
+            askContent.setContent(askContent.getContent().replace("\r\n","<br>"));
             FAQservice.updateAsk(askContent);
         }
 
@@ -155,9 +157,9 @@ public class FAQController {
         // UUID를 사용하여 고유한 askId 생성
         String uniqueCommentId = UUID.randomUUID().toString();
         // askContent에 생성된 askId 설정
+        commentAsk.setContent(content.replace("<br>","\r\n"));
         commentAsk.setUserId(authInfo.getUserId());
         commentAsk.setCommentId(uniqueCommentId);
-        commentAsk.setContent(content);
         commentAsk.setAskId(askId);
 
         faQservice.insertCommentAsk(commentAsk); // 댓글 insert

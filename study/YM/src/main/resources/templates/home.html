@@ -7,19 +7,70 @@
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+        #wrapper {
+            min-height: calc(100vh - 220px);
+        }
 
-        #wrapper{
-        min-height: calc(100vh - 220px);
-<<<<<<< HEAD
-        
-=======
-        padding-top: 80px;
->>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
+        .banner {
+            width: 100%;
+            height: 750px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100% 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .banner-box {
+            padding-left: 10px;
+            min-width: 1050px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-family: 'Pretendard-Regular';
+        }
+
+        .banner-box>div {
+            margin-bottom: 210px;
+        }
+
+        .title {
+            color: #111;
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 61px;
+            margin-bottom: 32px;
+        }
+
+        .small-title {
+            color: #111;
+            display: flex;
+            align-items: center;
+            font-weight: 400;
+            font-size: 30px;
+            line-height: 24px;
+        }
+        .siteName {
+            font-weight: bold;
+            font-size: 32px;
         }
     </style>
 </head>
 
-<body  style="overflow-x: hidden">
+<body style="overflow-x: hidden">
     <header>
         <div class="MainHeader_header__WXxwu">
             <div class="MainHeader_header__top__gspE8">
@@ -37,12 +88,10 @@
                         th:href="@{/logout}">로그아웃</a>
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
-                    <a class="LinkOnClick_title__0WSZ9"
-                        th:href="@{/chat}">채팅하기</a>
+                    <a class="LinkOnClick_title__0WSZ9" th:href="@{/chat}">채팅하기</a>
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/chat/chatRoomList(userId=${session.loginMember.userId})}">채팅 리스트</a>
-                    <a class="LinkOnClick_title__0WSZ9"
-                        th:if="${session.loginMember != null}"
+                    <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/manager(userId=${session.loginMember.userId})}">관리자 페이지</a>
                 </div>
                 <div class="box" style="background: #BDBDBD;" th:if="${session.loginMember != null}">
@@ -54,9 +103,18 @@
     </header>
 
     <div id="wrapper">
-        <div class="banner" style="background-image: url('+@{/images/banner.jpg}+');">
-
+        <div class="banner" th:style="'background-image: url('+@{/images/banner.jpg}+');'">
+            <div class="banner-box">
+                <div>
+                    <div class="title">다양한 취향과 관심사로
+                        <br> 만나는 우리
+                    </div>
+                    <div class="small-title">관심사 기반 모임 커뮤니티, <sapn class="siteName">	&nbsp;요즘 뭐해?</sapn>
+                    </div>
+                </div>
+            </div>
         </div>
+
 
     </div>
     <footer class="Footer_footer__Dhw_9">
@@ -64,16 +122,9 @@
             <div class="Footer_info__iYhms">
                 <p class="Footer_info__subject__yTBPX">요즘 뭐해? 정보</p>
                 <p class="Footer_info__content__cu7zK"><a href="/notice">공지사항</a></p>
-                <p class="Footer_info__content__cu7zK"><a href="/event">이벤트</a></p>
-                <p class="Footer_info__content__cu7zK"><a href="/FAQ/list.html">자주 묻는 질문</a></p>
+                <p class="Footer_info__content__cu7zK"><a href="#">이벤트</a></p>
+                <p class="Footer_info__content__cu7zK"><a href="#">자주 묻는 질문</a></p>
                 <p class="Footer_info__content__cu7zK"><a href="/FAQ">1:1 문의</a></p>
-<<<<<<< HEAD
-=======
-                <p class="Footer_info__content__cu7zK"><a target="_blank" href="/notice/detail.html?id=311">제휴 및 입점
-                        문의</a></p>
-                <p class="Footer_info__content__cu7zK"><a target="_blank" rel="noreferrer"
-                        href="https://people.munto.kr/">채용</a></p>
->>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
             </div>
             <div class="Footer_sns__2wNzr">
                 <p class="Footer_sns__subject__v9us5">소셜 미디어</p>
