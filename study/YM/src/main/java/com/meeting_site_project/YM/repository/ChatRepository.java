@@ -6,6 +6,7 @@ import com.meeting_site_project.YM.vo.ChatRoom;
 import com.meeting_site_project.YM.vo.ChatRoomMembers;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,14 +25,6 @@ public class ChatRepository {
         chatMapper.insertChatRoom(chatRoom);
     }
 
-    public List<ChatRoom> selectChatRoomListByUserId(String userId) {
-        return chatMapper.selectChatRoomListByUserId(userId);
-    }
-
-    public int selectChatRoomCntByUserId(String userId) {
-        return chatMapper.selectChatRoomCntByUserId(userId);
-    }
-
     public ChatRoom selectChatRoomInfoByRoomId(String roomId) {
         return chatMapper.selectChatRoomInfoByRoomId(roomId);
 
@@ -48,16 +41,13 @@ public class ChatRepository {
     }
 
 
-    public List<ChatMessage> getLastChatMessagesByRoomId(String chatRoomId) {
-        return chatMapper.getLastChatMessagesByRoomId(chatRoomId);
-    }
-
-    public void insertChatRoomOwnerMember(ChatRoom chatRoom) {
+    public void insertChatRoomOwnerMember(ChatRoom chatRoom, String nickName) {
         ChatRoomMembers chatRoomMembers = new ChatRoomMembers();
 
         // UUID를 사용하여 고유한 chatRoomMembersId 생성
         String uniqueRoomUserId = UUID.randomUUID().toString();
 
+        chatRoomMembers.setNickName(nickName);
         chatRoomMembers.setRoomUserId(uniqueRoomUserId); // 고유값
         chatRoomMembers.setChatRoomId(chatRoom.getChatRoomId()); // 채팅방 ID
         chatRoomMembers.setUserId(chatRoom.getOwnerId()); // 채팅방장 ID
@@ -74,4 +64,92 @@ public class ChatRepository {
     public ChatRoom selectChatRoomByChatRoomId(String chatRoomId) {
         return chatMapper.selectChatRoomByChatRoomId(chatRoomId);
     }
+
+    public boolean selectChatMessageByUserIdWithChatRoomId(ChatMessage chatMessage) {
+        return chatMapper.selectChatMessageByUserIdWithChatRoomId(chatMessage);
+    }
+
+    public Date selectChatMembersByRoomIdWithUserId(ChatRoomMembers chatRoomMembers) {
+        return chatMapper.selectChatMembersByRoomIdWithUserId(chatRoomMembers);
+    }
+
+
+    public List<ChatMessage> selectChatMessageAfterInnerDateByChatRoomId(ChatRoomMembers chatRoomMembers) {
+        return chatMapper.selectChatMessageAfterInnerDateByChatRoomId(chatRoomMembers);
+    }
+
+    public String selectChatRoomIdByGroupId(String groupId) {
+        return chatMapper.selectChatRoomIdByGroupId(groupId);
+    }
+
+    public int selectChatMemberCntByChatRoomId(String chatRoomId) {
+        return chatMapper.selectChatMemberCntByChatRoomId(chatRoomId);
+    }
+
+    public void insertChatMemberCntByRoomId(String chatRoomId) {
+        chatMapper.insertChatMemberCntByRoomId(chatRoomId);
+    }
+
+    public void insertChatRoomMember(String userId, String chatRoomId, String nickName) {
+        ChatRoomMembers chatRoomMembers = new ChatRoomMembers();
+
+        // UUID를 사용하여 고유한 chatRoomMembersId 생성
+        String uniqueRoomUserId = UUID.randomUUID().toString();
+
+        chatRoomMembers.setNickName(nickName);
+        chatRoomMembers.setRoomUserId(uniqueRoomUserId); // 고유값
+        chatRoomMembers.setChatRoomId(chatRoomId); // 채팅방 ID
+        chatRoomMembers.setUserId(userId); // 채팅방장 ID
+        chatRoomMembers.setAdmin(0); // 0 = 채팅방 일반
+
+        chatMapper.insertChatRoomMembers(chatRoomMembers);
+    }
+
+    public boolean checkIsChatRoomMemberByUserIdAndChatRoomId(String userId, String chatRoomId) {
+        ChatRoomMembers chatRoomMembers = new ChatRoomMembers();
+
+        chatRoomMembers.setUserId(userId);
+        chatRoomMembers.setChatRoomId(chatRoomId);
+
+        return chatMapper.checkIsChatRoomMemberByUserIdAndChatRoomId(chatRoomMembers);
+    }
+
+    public ChatRoom selectChatRoomInfoByGroupId(String groupId) {
+        return chatMapper.selectChatRoomInfoByGroupId(groupId);
+    }
+
+    public void deleteChatMemeberByChatMessage(ChatMessage chatMessage) {
+        chatMapper.deleteChatMemeberByChatMessage(chatMessage);
+    }
+
+    public void subtractChatMemberCntByRoomId(String chatRoomId) {
+        chatMapper.subtractChatMemberCntByRoomId(chatRoomId);
+    }
+
+    public List<ChatMessage> selectChatMessageListByChatRoomId(String chatRoomId) {
+        return chatMapper.selectChatMessageListByChatRoomId(chatRoomId);
+    }
+
+    public void insertChatDateMessageByChatMessage(ChatMessage chatMessage) {
+        chatMapper.insertChatDateMessageByChatMessage(chatMessage);
+    }
+
+    public String selectChatOwnerIdByChatRoomId(String chatRoomId) {
+        return chatMapper.selectChatOwnerIdByChatRoomId(chatRoomId);
+    }
+
+    public List<ChatRoomMembers> selectChatRoomMemberListByGroupId(String groupId) {
+        return chatMapper.selectChatRoomMemberListByGroupId(groupId);
+    }
+
+    public ChatRoomMembers selectChatMemberByUserIdWithGroupId(String userId, String groupId) {
+        ChatRoomMembers chatRoomMember = new ChatRoomMembers();
+
+        chatRoomMember.setUserId(userId);
+        chatRoomMember.setChatRoomId(groupId);
+
+        return chatMapper.selectChatMemberByChatRoomMember(chatRoomMember);
+
+    }
+
 }

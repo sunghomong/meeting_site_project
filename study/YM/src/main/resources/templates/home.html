@@ -23,6 +23,7 @@
             min-height: calc(100vh - 220px);
         }
 
+<<<<<<< HEAD
         .banner {
             width: 100%;
             height: 750px;
@@ -66,6 +67,11 @@
         .siteName {
             font-weight: bold;
             font-size: 32px;
+=======
+        #wrapper{
+        min-height: calc(100vh - 220px);
+        padding-top: 80px;
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
         }
     </style>
 </head>
@@ -88,7 +94,10 @@
                         th:href="@{/logout}">로그아웃</a>
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
+<<<<<<< HEAD
                     <a class="LinkOnClick_title__0WSZ9" th:href="@{/chat}">채팅하기</a>
+=======
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/chat/chatRoomList(userId=${session.loginMember.userId})}">채팅 리스트</a>
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
@@ -125,6 +134,13 @@
                 <p class="Footer_info__content__cu7zK"><a href="#">이벤트</a></p>
                 <p class="Footer_info__content__cu7zK"><a href="#">자주 묻는 질문</a></p>
                 <p class="Footer_info__content__cu7zK"><a href="/FAQ">1:1 문의</a></p>
+<<<<<<< HEAD
+=======
+                <p class="Footer_info__content__cu7zK"><a target="_blank" href="/notice/detail.html?id=311">제휴 및 입점
+                        문의</a></p>
+                <p class="Footer_info__content__cu7zK"><a target="_blank" rel="noreferrer"
+                        href="https://people.munto.kr/">채용</a></p>
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
             </div>
             <div class="Footer_sns__2wNzr">
                 <p class="Footer_sns__subject__v9us5">소셜 미디어</p>

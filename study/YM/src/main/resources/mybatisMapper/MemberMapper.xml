@@ -135,7 +135,10 @@
         INSERT INTO groupByKeyword VALUES (#{groupId}, #{firstKeyword}, #{secondKeyword})
     </insert>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
     <update id="updateMeeting" parameterType="groupInfo">
         UPDATE groupInfo SET groupName=#{groupName},
         <if test="groupPicture != null">groupPicture=#{groupPicture},</if>
@@ -149,7 +152,7 @@
     </update>
 
     <delete id="deleteGroup" parameterType="String">
-        DELETE FROM groupInfo, groupByKeyword WHERE groupId=#{groupId}
+        DELETE FROM groupInfo WHERE groupId=#{groupId}
     </delete>
 
 </mapper>

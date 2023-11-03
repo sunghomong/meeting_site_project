@@ -5,39 +5,110 @@
 
 <mapper namespace="com.meeting_site_project.YM.mapper.ChatMapper">
 
-    <insert id="insertChatRoom" parameterType="ChatRoom">
+    <insert id="insertChatRoom" parameterType="ChatRoom"> <!-- 사용중 -->
         INSERT INTO chatRoom VALUES (#{chatRoomId}, #{groupId}, #{ownerId},#{chatRoomName},#{maxUserCnt},#{userCount})
     </insert>
 
-    <select id="selectChatRoomListByUserId" parameterType="String" resultType="ChatRoom">
-        SELECT * FROM chatRoom
-    </select>
-
-    <select id="selectChatRoomCntByUserId" parameterType="String" resultType="Int">
-        SELECT COUNT(*) FROM chatRoom
-    </select>
-
-    <select id="selectChatRoomInfoByRoomId" parameterType="String" resultType="ChatRoom">
+    <select id="selectChatRoomInfoByRoomId" parameterType="String" resultType="ChatRoom"> <!-- 사용 중 -->
         SELECT * FROM chatRoom WHERE chatRoomId=#{chatRoomId}
     </select>
 
-    <insert id="insertChatMessage" parameterType="ChatMessage">
-        INSERT INTO chatMessages VALUES (#{messageId},#{userId},#{chatRoomId}, #{content, jdbcType=CLOB}, #{sender},#{type},sysdate)
+    <!-- 메시지 추가 하는 쿼리 -->
+    <insert id="insertChatMessage" parameterType="ChatMessage"> <!-- 사용중 -->
+        INSERT INTO chatMessages VALUES (#{messageId},#{userId},#{chatRoomId}, #{content, jdbcType=CLOB}, #{sender},#{type},#{messageTime})
     </insert>
 
-    <select id="getLastChatMessagesByRoomId" parameterType="String" resultType="ChatMessage">
-        SELECT * FROM chatMessages WHERE chatRoomId=#{chatRoomId}
-    </select>
-
-    <insert id="insertChatRoomMembers" parameterType="ChatRoomMembers"> <!-- 채팅방에 참여한 회원 -->
-        INSERT INTO chatRoomMembers VALUES(#{roomUserId},#{userId},#{chatRoomId},#{admin})
+    <insert id="insertChatRoomMembers" parameterType="ChatRoomMembers"> <!-- 채팅방에 참여한 회원 --> <!-- 사용중 -->
+        INSERT INTO chatRoomMembers (roomUserId, userId, chatRoomId, admin, chatInnerTime,nickName)
+        VALUES (#{roomUserId}, #{userId}, #{chatRoomId}, #{admin}, sysdate,nickName=#{nickName})
     </insert><!-- admin 1(방장) , 0(일반)-->
 
-    <select id="selectChatRoomIdListByUserId" resultType="String">
+    <select id="selectChatRoomIdListByUserId" resultType="String"> <!-- 사용중 -->
         SELECT chatRoomId FROM chatRoomMembers WHERE userId=#{userId}
     </select>
 
-    <select id="selectChatRoomByChatRoomId" parameterType="String" resultType="ChatRoom">
+    <select id="selectChatRoomByChatRoomId" parameterType="String" resultType="ChatRoom"> <!-- 사용중 -->
         SELECT * FROM chatRoom WHERE chatRoomId=#{chatRoomId}
     </select>
+
+    <select id="selectChatMessageByUserIdWithChatRoomId" parameterType="ChatMessage" resultType="boolean"> <!-- 사용중 -->
+        SELECT
+        CASE WHEN COUNT(*) >= 1 THEN 1 ELSE 0 END AS result
+        FROM chatMessages
+        WHERE chatRoomId=#{chatRoomId} AND userId=#{userId}
+    </select>
+
+    <select id="selectChatMembersByRoomIdWithUserId" parameterType="ChatRoomMembers" resultType="java.util.Date"> <!-- 채팅방에 들어간 날짜 시간 조회 --> <!-- 사용중 -->
+        SELECT chatInnerTime FROM chatRoomMembers WHERE userId=#{userId} and chatRoomId=#{chatRoomId}
+    </select>
+
+    <select id="selectChatMessageAfterInnerDateByChatRoomId" parameterType="ChatRoomMembers" resultType="ChatMessage"> <!-- 사용중 -->
+        SELECT * FROM chatMessages
+        WHERE messageTime >= #{chatInnerTime} and chatRoomId=#{chatRoomId}
+        ORDER BY messageTime ASC
+    </select>
+
+    <!-- 모임 참여 버튼 클릭시 채팅방으로 이동하기 위한 roomId 전달 -->
+    <select id="selectChatRoomIdByGroupId" parameterType="String" resultType="String"> <!-- 사용중 -->
+        SELECT chatRoomId FROM chatRoom WHERE groupId=#{groupId}
+    </select>
+
+    <!-- 모임 참여 버튼 클릭시 채팅방에 현재 userId가 있는지 체크 -->
+    <select id="checkIsChatRoomMemberByUserIdAndChatRoomId" parameterType="ChatRoomMembers" resultType="boolean"> <!-- 사용중 -->
+        SELECT
+        CASE WHEN COUNT(*) >= 1 THEN 1 ELSE 0 END AS result
+        FROM chatRoomMembers
+        WHERE chatRoomId=#{chatRoomId} AND userId=#{userId}
+    </select>
+    <!-- 채팅방 현재 인원 수 조회 -->
+    <select id="selectChatMemberCntByChatRoomId" parameterType="String" resultType="int" > <!-- 사용중 -->
+        SELECT COUNT(*) FROM chatRoomMembers WHERE chatRoomId=#{chatRoomId}
+    </select>
+
+    <update id="insertChatMemberCntByRoomId" parameterType="String"> <!-- 사용중 -->
+        UPDATE chatRoom SET userCount = userCount + 1 WHERE chatRoomId = #{chatRoomId}
+    </update>
+
+    <!-- 그룹 아이디를 통해 채팅방 정보 조회 -->
+    <select id="selectChatRoomInfoByGroupId" parameterType="String" resultType="ChatRoom"> <!-- 사용중 -->
+        SELECT * FROM chatRoom WHERE groupId=#{groupId}
+    </select>
+
+    <!-- 나가기 버튼 클릭시 채팅방 회원 정보 삭제 -->
+    <delete id="deleteChatMemeberByChatMessage" parameterType="ChatMessage">
+        DELETE FROM chatRoomMembers WHERE userId=#{userId} and chatRoomId=#{chatRoomId}
+    </delete>
+
+    <update id="subtractChatMemberCntByRoomId" parameterType="String">
+        UPDATE chatRoom SET userCount = userCount - 1 WHERE chatRoomId = #{chatRoomId}
+    </update>
+
+    <!-- 년월일을 표시하기 위한 채팅 리스트 조회 -->
+    <select id="selectChatMessageListByChatRoomId" parameterType="String" resultType="ChatMessage">
+        SELECT * FROM chatMessages
+        WHERE chatRoomId=#{chatRoomId}
+        ORDER BY messageTime ASC
+    </select>
+
+    <!-- 날짜 텍스트를 기록하는 메시지 -->
+    <insert id="insertChatDateMessageByChatMessage" parameterType="ChatMessage">
+        INSERT INTO chatMessages (messageId,userId,chatRoomId, content, type, messageTime)
+        VALUES (#{messageId},#{userId},#{chatRoomId},#{content, jdbcType=CLOB},#{type},#{messageTime})
+    </insert>
+
+    <!-- 채팅방 방장 데이터 가져오기 -->
+    <select id="selectChatOwnerIdByChatRoomId" parameterType="String" resultType="String">
+        SELECT ownerId FROM chatRoom WHERE chatRoomId=#{chatRoomId}
+    </select>
+
+    <!-- 채팅방 회원들 전부 조회 -->
+    <select id="selectChatRoomMemberListByGroupId" parameterType="String" resultType="ChatRoomMembers">
+        SELECT * FROM chatRoomMembers WHERE groupId=#{groupId}
+    </select>
+
+    <!-- 채팅방 회원 한명을 조회-->
+    <select id="selectChatMemberByChatRoomMember" parameterType="ChatRoomMembers" resultType="ChatRoomMembers">
+        SELECT * FROM chatRoomMembers WHERE groupId=#{groupId} and userId=#{userId}
+    </select>
+
 </mapper>

@@ -225,6 +225,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <body>
+<<<<<<< HEAD
     <header th:replace="/home.html :: header"></header>
 
     <div class="wrapper">
@@ -281,47 +282,137 @@
                             </select>
                         </div>
                     </div>
+=======
+<header th:replace="/home.html :: header"></header>
 
-                    <!-- 모임 인원 -->
-                    <div class="input-box">
-                        <div class="label">모임 인원<span>*</span></div>
-                        <input type="number" id="groupNumberOfPeople" name="groupNumberOfPeople"
-                            th:field="*{groupNumberOfPeople}">
-                    </div>
-                    <!-- 모임 정보 -->
-                    <div class="input-box">
-                        <div class="label">모임 소개<span>*</span></div>
-                        <textarea id="groupInfo" name="groupInfo" th:field="*{groupInfo}"></textarea>
-                    </div>
-                    <div class="label">모임 키워드<span>*</span></div>
-                    <ul id="firstKeyword">
-                        <li th:each="keyword : ${keywords}" class="clickable-li" th:text="${keyword.firstKeyword}"
-                            th:attr="data-value=${keyword.firstKeyword}"></li>
-                    </ul>
-                    <ul id="secondKeyword">
+<div class="wrapper">
 
-                    </ul>
-                    <div class="button-box">
-                        <button type="submit">전송</button>
-                    </div>
+
+    <div class="container">
+        <div class="title">모임 등록</div>
+        <div class="img-content">
+            <div class="imgbox" style="background: #BDBDBD;">
+                <img src="" id="preview" class="groupimg" />
             </div>
         </div>
-        </form>
+        <!-- 브이월드 행정구역 정보를 이용한 셀렉트 박스를 구현합니다. -->
+        <div class="form-box">
+            <form id="meetingForm" th:action method="post" th:object="${groupInfo}" enctype="multipart/form-data">
+                <input type="hidden" id="ownerUserId" name="ownerUserId" th:value="${ownerUserId}">
+
+                <!-- 모임 이름 -->
+                <div class="input-box">
+                    <div class="label">모임 이름 <span>*</span></div>
+                    <input type="text" id="groupName" name="groupName" th:field="*{groupName}">
+                </div>
+
+                <!-- 모임 대표 이미지 -->
+                <div class="input-box">
+                    <div class="label">모임 대표 이미지<span>*</span></div>
+                    <input type="file" id="picture" name="picture">
+                </div>
+
+                <!-- 모임 종류 -->
+                <div class="radio-box">
+                    <div class="groupType-box">
+                        <input type="radio" id="meeting1" name="groupType" value="0"
+                               th:checked="${groupType == 0}" />
+                        <label for="meeting1">원데이 모임</label>
+                    </div>
+
+                    <div class="groupType-box">
+
+                        <input type="radio" id="meeting2" name="groupType" value="1"
+                               th:checked="${groupType == 1}" />
+                        <label for="meeting2">정기 모임</label>
+                    </div>
+                </div>
+                <!-- 모임 장소 -->
+                <div class="select-box">
+                    <div class="label">모임 장소<span>*</span></div>
+                    <div class="location-box">
+                        <select id="sidoName" name="sidoName" th:field="*{sidoName}">
+                            <option value="">선택</option>
+                        </select>
+                        <select id="sigoonName" name="sigoonName" th:field="*{sigoonName}">
+                            <option value="">선택</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 모임 인원 -->
+                <div class="input-box">
+                    <div class="label">모임 인원<span>*</span></div>
+                    <input type="number" id="groupNumberOfPeople" name="groupNumberOfPeople"
+                           th:field="*{groupNumberOfPeople}">
+                </div>
+                <!-- 모임 정보 -->
+                <div class="input-box">
+                    <div class="label">모임 소개<span>*</span></div>
+                    <textarea id="groupInfo" name="groupInfo" th:field="*{groupInfo}"></textarea>
+                </div>
+                <div class="label">모임 키워드<span>*</span></div>
+                <ul id="firstKeyword">
+                    <li th:each="keyword : ${keywords}" class="clickable-li" th:text="${keyword.firstKeyword}"
+                        th:attr="data-value=${keyword.firstKeyword}"></li>
+                </ul>
+                <ul id="secondKeyword">
+
+                </ul>
+                <div class="button-box">
+                    <button type="submit">전송</button>
+                </div>
+        </div>
     </div>
+    </form>
+</div>
 
-    <script>
-        $(document).ready(function () {
-        $('#preview').hide(); // 페이지가 로드될 때 이미지를 숨깁니다.
-    });
-        // jQuery의 AJAX 요청에서 CORS를 지원합니다.
-        $.support.cors = true;
+<script>
+    $(document).ready(function () {
+    $('#preview').hide(); // 페이지가 로드될 때 이미지를 숨깁니다.
+});
+    // jQuery의 AJAX 요청에서 CORS를 지원합니다.
+    $.support.cors = true;
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
 
-        // 페이지가 로딩될 때 실행됩니다.
-        $(function () {
-            // 첫 번째 AJAX 요청으로 시/도 목록을 가져옵니다.
+    // 페이지가 로딩될 때 실행됩니다.
+    $(function () {
+        // 첫 번째 AJAX 요청으로 시/도 목록을 가져옵니다.
+        $.ajax({
+            type: "get",
+            url: "https://api.vworld.kr/req/data?key=CEB52025-E065-364C-9DBA-44880E3B02B8&domain=http://localhost:8080&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIDO_INFO",
+            async: false,
+            dataType: 'jsonp',
+            success: function (data) {
+                let html = "<option>선택</option>";
+
+                // 받아온 데이터를 기반으로 옵션을 생성합니다.
+                data.response.result.featureCollection.features.forEach(function (f) {
+                    let 행정구역코드 = f.properties.ctprvn_cd;
+                    let 행정구역명 = f.properties.ctp_kor_nm;
+
+                    // 옵션 태그를 생성하여 추가합니다.
+                    html += `<option value="${행정구역명}">${행정구역명}</option>`
+                })
+
+                // 생성된 옵션 태그를 첫 번째 셀렉트 박스에 추가합니다.
+                $('#sidoName').html(html);
+            },
+            error: function (xhr, stat, err) { }
+        });
+
+        // 첫 번째 셀렉트 박스에서 값이 변경될 때 실행됩니다.
+        $(document).on("change", "#sidoName", function () {
+            // 선택된 값(시/도 코드)을 가져옵니다.
+            let thisVal = $(this).val();
+            console.log(thisVal);
+
+
+            // 두 번째 AJAX 요청으로 시/군 목록을 가져옵니다.
             $.ajax({
                 type: "get",
-                url: "https://api.vworld.kr/req/data?key=CEB52025-E065-364C-9DBA-44880E3B02B8&domain=http://localhost:8080&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIDO_INFO",
+                url: "https://api.vworld.kr/req/data?key=CEB52025-E065-364C-9DBA-44880E3B02B8&domain=http://localhost:8080&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIGG_INFO",
+                data: { attrfilter: 'full_nm:like:' + thisVal },
                 async: false,
                 dataType: 'jsonp',
                 success: function (data) {
@@ -329,58 +420,22 @@
 
                     // 받아온 데이터를 기반으로 옵션을 생성합니다.
                     data.response.result.featureCollection.features.forEach(function (f) {
-                        let 행정구역코드 = f.properties.ctprvn_cd;
-                        let 행정구역명 = f.properties.ctp_kor_nm;
+                        let 행정구역코드 = f.properties.sig_cd;
+                        let 행정구역명 = f.properties.sig_kor_nm;
 
                         // 옵션 태그를 생성하여 추가합니다.
                         html += `<option value="${행정구역명}">${행정구역명}</option>`
                     })
 
-                    // 생성된 옵션 태그를 첫 번째 셀렉트 박스에 추가합니다.
-                    $('#sidoName').html(html);
+                    // 생성된 옵션 태그를 두 번째 셀렉트 박스에 추가합니다.
+                    $('#sigoonName').html(html);
                 },
                 error: function (xhr, stat, err) { }
             });
-
-            // 첫 번째 셀렉트 박스에서 값이 변경될 때 실행됩니다.
-            $(document).on("change", "#sidoName", function () {
-                // 선택된 값(시/도 코드)을 가져옵니다.
-                let thisVal = $(this).val();
-                console.log(thisVal);
-
-
-                // 두 번째 AJAX 요청으로 시/군 목록을 가져옵니다.
-                $.ajax({
-                    type: "get",
-                    url: "https://api.vworld.kr/req/data?key=CEB52025-E065-364C-9DBA-44880E3B02B8&domain=http://localhost:8080&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIGG_INFO",
-                    data: { attrfilter: 'full_nm:like:' + thisVal },
-                    async: false,
-                    dataType: 'jsonp',
-                    success: function (data) {
-                        let html = "<option>선택</option>";
-
-                        // 받아온 데이터를 기반으로 옵션을 생성합니다.
-                        data.response.result.featureCollection.features.forEach(function (f) {
-                            let 행정구역코드 = f.properties.sig_cd;
-                            let 행정구역명 = f.properties.sig_kor_nm;
-
-                            // 옵션 태그를 생성하여 추가합니다.
-                            html += `<option value="${행정구역명}">${행정구역명}</option>`
-                        })
-
-                        // 생성된 옵션 태그를 두 번째 셀렉트 박스에 추가합니다.
-                        $('#sigoonName').html(html);
-                    },
-                    error: function (xhr, stat, err) { }
-                });
-            });
-        })
-
-        $('#picture').change(function () {
-            setImageFromFile(this, '#preview');
-            $('#preview').show();
         });
+    })
 
+<<<<<<< HEAD
         function setImageFromFile(input, expression) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -475,6 +530,107 @@
 
 
     </script>
+=======
+    $('#picture').change(function () {
+        setImageFromFile(this, '#preview');
+        $('#preview').show();
+    });
+
+    function setImageFromFile(input, expression) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $(expression).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(document).ready(function () {
+        var form = $("#meetingForm"); // 폼 엘리먼트를 변수에 저장
+        $(document).on("click", ".clickable-li", function () {
+            var firstKeyword = $(this).data("value");
+            // 기존 hidden input 삭제
+            form.find("input[name='firstKeyword']").remove();
+
+            // form 데이터에 값을 추가
+            form.append("<input type='hidden' name='firstKeyword' value='" + firstKeyword + "'>");
+
+
+
+            // Ajax 요청
+            $.ajax({
+                type: "POST",
+                url: "/keywordRequest",
+                data: { firstKeyword: firstKeyword },
+                success: function (response) {
+                    console.log("서버 응답:", response);
+
+                    var ulElement = $("#secondKeyword");
+
+                    // 첫 번째 li 클릭 시 #secondKeyword 내부의 li 요소를 모두 제거
+                    ulElement.empty();
+
+                    response.forEach(function (keyword) {
+                        ulElement
+                            .append("<li class='secondKeyword'>" + keyword.secondKeyword + "</li>");
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // 오류 발생 시 실행되는 함수
+                    console.error("오류 발생:", error);
+                }
+            });
+        });
+
+        // 두 번째 li 클릭 이벤트 핸들러
+        $(document).on("click", "#secondKeyword li", function () {
+
+            var secondKeyword = $(this).text(); // 두 번째 li의 텍스트 값을 가져옵니다.
+
+
+            // 기존 hidden input 삭제
+            form.find("input[name='secondKeyword']").remove();
+
+            // form 데이터에 값을 추가
+            form.append("<input type='hidden' name='secondKeyword' value='" + secondKeyword + "'>");
+
+
+        });
+    });
+
+    $('#picture').change(function () {
+        setImageFromFile(this, '#preview');
+    });
+
+    function setImageFromFile(input, expression) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $(expression).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $(document).ready(function () {
+        $(document).on("click", ".clickable-li", function () {
+            $(".clickable-li").removeClass("clicked"); // 모든 clickable 요소의 clicked 클래스를 제거
+            $(this).addClass("clicked"); // 클릭된 요소에 clicked 클래스를 추가
+        });
+
+        $(document).on("click", ".secondKeyword", function () {
+            $(".secondKeyword").removeClass("clicked"); // 모든 clickable 요소의 clicked 클래스를 제거
+            $(this).addClass("clicked"); // 클릭된 요소에 clicked 클래스를 추가
+        });
+    });
+
+
+
+
+</script>
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
 </body>
 
 </html>

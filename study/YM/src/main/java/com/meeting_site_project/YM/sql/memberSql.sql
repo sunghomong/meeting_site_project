@@ -54,8 +54,8 @@ groupId nvarchar2(50),
 firstKeyword nvarchar2(30),
 secondKeyword nvarchar2(30),
 PRIMARY KEY (groupId),
-FOREIGN KEY (groupId)
-REFERENCES groupInfo(groupId)
+CONSTRAINT groupByKeyword_FK_PK_groupId FOREIGN KEY(groupId) REFERENCES groupInfo (groupId)
+ON DELETE CASCADE
 );
 -- 키워드 테이블 ------------------------------------
 CREATE TABLE keyword (

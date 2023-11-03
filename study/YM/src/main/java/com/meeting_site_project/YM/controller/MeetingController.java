@@ -1,6 +1,9 @@
 package com.meeting_site_project.YM.controller;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
 import com.meeting_site_project.YM.service.ChatService;
 import com.meeting_site_project.YM.service.CheckService;
 import com.meeting_site_project.YM.service.MeetingService;
@@ -31,7 +34,11 @@ public class MeetingController {
     ChatService chatService;
 
     @Autowired
+<<<<<<< HEAD
     public MeetingController(MeetingService meetingService, CheckService checkService, ChatService chatService) {
+=======
+    public MeetingController(MeetingService meetingService, CheckService checkService,ChatService chatService) {
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
         this.meetingService = meetingService;
         this.checkService = checkService;
         this.chatService = chatService;
@@ -81,10 +88,10 @@ public class MeetingController {
 
 
     @PostMapping("/firstMeeting")
-    public String firstMeeting(@Valid @ModelAttribute("groupInfo") GroupInfo groupInfo, BindingResult bindingResult , Model model, MultipartFile picture) throws Exception {
+    public String firstMeeting(@Valid @ModelAttribute("groupInfo") GroupInfo groupInfo, BindingResult bindingResult , Model model, MultipartFile picture,HttpSession session) throws Exception {
         meetingService.insertFirstMeeting(groupInfo, picture);
         meetingService.insertGroupByKeyword(groupInfo);
-
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("loginMember");
         // 채팅방 생성
         ChatRoom chatRoom = new ChatRoom();
 
@@ -99,14 +106,9 @@ public class MeetingController {
         chatRoom.setUserCount(1); // 채팅방 인원수 1 자동적으로 증가 (방장)
 
         chatService.insertChatRoom(chatRoom); // 채팅방 생성
-        chatService.insertChatRoomOwnerMember(chatRoom); // chatRoom 데이터 가지고 멤버 생성
+        chatService.insertChatRoomOwnerMember(chatRoom,authInfo.getNickName()); // chatRoom 데이터 가지고 멤버 생성
 
-
-        if (groupInfo.getGroupType() == 0) {
-            return "redirect:/onedayMtForm?number=0";
-        }
-
-        return "redirect:/regulardayMtForm?number=1";
+        return "redirect:/chat/chatRoom?chatRoomId=" + uniqueChatRoomId;
     }
 
     @GetMapping("/meetingView")
@@ -115,7 +117,10 @@ public class MeetingController {
         GroupInfo groupInfo = meetingService.selectGroupInfoById(groupId);
 
         Member member = checkService.selectMemberById(groupInfo.getOwnerUserId());
+        // 현재 채팅 참여 인원수 보여주기
+        ChatRoom chatRoomInfo = chatService.selectChatRoomInfoByGroupId(groupId); // 채팅방 정보 가져오기
 
+        model.addAttribute("chatRoomInfo", chatRoomInfo);
         model.addAttribute("memberInfo", member);
         model.addAttribute("groupInfo", groupInfo);
 
@@ -153,6 +158,21 @@ public class MeetingController {
         return "redirect:/";
     }
 
+    @GetMapping("/moveChatRoom")
+    public String moveChatRoom(@RequestParam("chatRoomId") String chatRoomId,HttpSession session) {
 
+        return "redirect:/chat/chatRoom?chatRoomId=" + chatRoomId;
+    }
 
+    @GetMapping("/meetingManager")
+    public String meetingManagerView(@RequestParam("groupId") String groupId,Model model) {
+
+//        GroupInfo groupInfo = meetingService.selectGroupInfoById(groupId); // 모임 정보 조회
+//        ChatRoom chatRoom = chatService.selectChatRoomInfoByGroupId(groupId); // 채팅방 정보 조회
+        List<ChatRoomMembers> chatRoomMemberList = chatService.selectChatRoomMemberListByGroupId(groupId); // 채팅방 회원들 조회
+
+        model.addAttribute("chatRoomMemberList",chatRoomMemberList);
+
+        return "/meetingManager";
+    }
 }
