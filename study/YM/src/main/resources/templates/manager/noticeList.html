@@ -1,33 +1,272 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>본인 공지 사항 목록</title>
+    <title>공지사항 목록</title>
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
-</head>
-<body>
-<header th:replace="/home.html :: header"></header>
-<h1>본인 작성 공지 사항 목록</h1>
-<button th:onclick="|location.href='@{/manager/createNotice(userId=${userId})}'|">공지 사항 등록</button> <!-- "공지 사항 등록" 버튼 -->
-<table>
-    <thead>
-    <tr>
-        <th>제목</th>
-        <th>작성일</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="notice : ${notices}">
-        <td><a th:href="@{/notice/noticeDetail(noticeId=${notice.noticeId})}" th:text="${notice.title}">공지사항 제목</a></td>
-        <td th:text="${notice.createDate}">작성일</td>
-    </tr>
-    <tr th:unless="${not #lists.isEmpty(notices)}">
-        <td colspan="7">등록된 공지 사항이 없습니다.</td>
-    </tr>
-    </tbody>
-</table>
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+    <script src=https://code.jquery.com/jquery-3.7.1.min.js></script>
+    <style>
+        @font-face {
+            font-family: 'SpoqaHanSansNeo-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-<footer th:replace="/home.html :: footer"></footer>
+        @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+        .notosanskr * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 400;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 700;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf') format('truetype')
+        }
+
+        @font-face {
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 300;
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+            src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
+        }
+
+        .nanumbarungothic * {
+            font-family: 'NanumBarunGothic', sans-serif;
+        }
+
+
+
+
+        .wrapper {
+            font-family: 'SpoqaHanSansNeo-Regular';
+            min-height: calc(100vh - 220px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            margin: 80px 0 130px;
+        }
+
+
+
+        .title {
+            text-align: left;
+            font-size: 25px;
+            font-weight: 500;
+            padding-left: 5px;
+            border-bottom: 2px solid #dfe4ea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notice {
+            display: flex;
+            font-family: 'NanumBarunGothic';
+            font-style: normal;
+            font-weight: 500;
+            align-items: center;
+            text-align: center;
+            padding: 25px 0;
+            border-bottom: 2px solid #dfe4ea;
+            cursor: pointer;
+        }
+
+        .No {
+            letter-spacing: 1px;
+            color: #727d9b;
+            width: 100px;
+            font-size: 14px;
+        }
+
+        .noticeTitle {
+            box-sizing: border-box;
+            width: 550px;
+            text-align: left;
+            padding-left: 40px;
+            text-overflow: ellipsis;
+        }
+
+        .userId {
+            color: #a0a0a0;
+            width: 100px;
+            font-size: 14px;
+        }
+
+        .createDate {
+            font-size: 14px;
+            color: #a0a0a0;
+            width: 150px;
+        }
+
+        .notice-detail {
+            width: 900px;
+            text-align: left;
+        }
+
+        .noticeContent-box {
+            box-sizing: border-box;
+            width: 900px;
+            padding: 75px 80px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .noticeContent-box>img {
+            margin: auto;
+            width: 400px;
+            height: 250px;
+            margin-bottom: 60px;
+        }
+
+        .no-notice {
+            text-align: center;
+            width: 900px;
+            font-size: 40px;
+            margin-top: 140px;
+            letter-spacing: 2px;
+        }
+
+        button {
+            margin-bottom: 11px;
+            font-size: 13px;
+            font-family: 'NanumBarunGothic';
+            cursor: pointer;
+            margin-right: 15px;
+            border: none;
+            background-color: #639eeb;
+            padding: 10px 15px;
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #4488df;
+        }
+
+        #noticeMenu {
+            background-color: #639eeb;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header th:replace="/home.html :: header"></header>
+
+    <div class="wrapper">
+        <div th:replace="/manager/main.html :: sidebar"></div>
+        <div class="container">
+            <div class="title"><span style="border-bottom: 2px solid black; padding-bottom: 20px;">공지사항</span>
+                <button th:onclick="|location.href='@{/manager/createNotice(userId=${userId})}'|">공지 사항 등록</button>
+                <!-- "공지 사항 등록" 버튼 -->
+            </div>
+
+            <ul class="notices">
+                <li th:each="notice : ${notices}" th:attr="data-value=${notice.noticeId}" class="notice">
+                    <div class="No">공지</div>
+                    <div th:text="${notice.title}" class="noticeTitle"></div>
+                    <div th:text="${notice.userId}" class="userId"></div>
+                    <div th:text="${#dates.format(notice.createDate, 'yyyy-MM-dd')}" class="createDate"></div>
+                </li>
+            </ul>
+        
+            <div th:unless="${not #lists.isEmpty(notices)}" class="no-notice">
+                등록된 공지 사항이 없습니다.
+            </div>
+        </div>
+
+    </div>
+    <footer th:replace="/home.html :: footer"></footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var noticeElements = document.querySelectorAll('.notice');
+            var lastClickedLi = null;
+
+            noticeElements.forEach(function (notice) {
+                notice.addEventListener('click', function () {
+                    var noticeId = notice.getAttribute('data-value');
+
+                    // 이미 열린 div가 있다면 삭제
+                    var noticeContentbox = document.querySelector('.noticeContent-box');
+                    if (noticeContentbox) {
+                        noticeContentbox.parentElement.removeChild(noticeContentbox);
+                    }
+
+                    // 다른 li 요소들의 스타일을 초기화
+                    var allNoticeElements = document.querySelectorAll('.notice');
+                    allNoticeElements.forEach(function (noticeElement) {
+                        noticeElement.style.transition = 'transform 0.4s';
+                        noticeElement.style.transform = 'translateY(0)';
+                    });
+
+                    if (lastClickedLi === notice) {
+                        lastClickedLi = null;
+                        return;
+                    }
+                    lastClickedLi = notice;
+
+                    // AJAX 요청
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', '/notice/noticeDetail?noticeId=' + noticeId, true);
+                    xhr.onload = function () {
+                        if (xhr.status >= 200 && xhr.status < 400) {
+                            // 성공적으로 데이터를 받아왔을 때 실행할 코드
+                            var notices = JSON.parse(xhr.responseText);
+
+                            console.log(notices.attachmentPath);
+
+                            var attachmentImg = document.createElement('img');
+                            attachmentImg.src = notices.attachmentPath; // 경로에서 '/static'를 제거합니다.
+                            attachmentImg.classList.add('attachmentPath-box'); // 새로운 클래스 추가
+
+                            var detailDiv = document.createElement('div');
+                            detailDiv.classList.add('notice-detail'); // 새로운 클래스 추가
+                            detailDiv.innerHTML = notices.content; // responseData에서 실제 데이터의 위치에 따라 수정 필요
+
+                            var parentDiv = document.createElement('div');
+                            parentDiv.classList.add('noticeContent-box'); // 새로운 클래스 추가
+                            parentDiv.appendChild(attachmentImg);
+                            parentDiv.appendChild(detailDiv);
+
+                            notice.insertAdjacentElement('afterend', parentDiv);
+
+                            // 나머지 li들을 아래로 내리는 작업
+                            var nextSibling = notice.nextElementSibling;
+                            while (nextSibling) {
+                                if (nextSibling !== parentDiv) { // parentDiv가 아닌 경우에만 translateY 적용
+                                    nextSibling.style.transition = 'transform 0.4s'; // 1초 동안의 transition 효과
+                                    nextSibling.style.transform = 'translateY(100%)';
+                                }
+                                nextSibling = nextSibling.nextElementSibling;
+                            }
+                        }
+                    };
+                    xhr.send();
+                });
+            });
+        });
+
+    </script>
 </body>
+
 </html>

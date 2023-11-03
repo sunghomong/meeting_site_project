@@ -17,7 +17,7 @@
         .side {
            position: fixed;
             top: 50%;
-            left: 5%;
+            left: 3%;
             transform: translate(0, -50%);
             font-family: 'Pretendard-Regular';
             text-align: center;
@@ -32,7 +32,6 @@
             background: linear-gradient(90deg, rgba(104,200,237,1) 0%, rgba(114,186,243,1) 50%, rgba(110,168,244,1) 100%);
         }
         .menu {
-            padding: 3px;
             cursor: pointer;
             border: 1px solid #dcdcdc;
             border-top: none;
@@ -41,6 +40,6 @@
         }
         .menu:hover{
             color: white;
-            background-color: #4e97f7;
+            background-color: #639eeb;
         }
         

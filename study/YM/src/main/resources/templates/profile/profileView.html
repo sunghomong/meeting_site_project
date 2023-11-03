@@ -223,7 +223,7 @@
         </div>
             <div  id="userInfo" class="userInfo" th:utext="${member.userInfo}"></div>
             <div class="button-box">
-            <button th:onclick="|location.href='@{/profileUpdate(userId=${member.userId})}'|">프로필 수정</button>
+                <button th:onclick="|location.href='@{/profileUpdate(userId=${member.userId})}'|">프로필 수정</button>
             <button th:onclick="|location.href='@{/confirmPassword}'|">비밀번호 변경</button>
             <button>회원 탈퇴</button>
         </div>

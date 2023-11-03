@@ -1,5 +1,9 @@
 package com.meeting_site_project.YM.controller;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
 import com.meeting_site_project.YM.service.ChatService;
 import com.meeting_site_project.YM.service.CheckService;
 import com.meeting_site_project.YM.service.MeetingService;
@@ -30,12 +34,15 @@ public class MeetingController {
     ChatService chatService;
 
     @Autowired
+<<<<<<< HEAD
+    public MeetingController(MeetingService meetingService, CheckService checkService, ChatService chatService) {
+=======
     public MeetingController(MeetingService meetingService, CheckService checkService,ChatService chatService) {
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
         this.meetingService = meetingService;
         this.checkService = checkService;
         this.chatService = chatService;
     }
-
 
     @GetMapping("/onedayMtForm")
     public String onedayMeetingList(@RequestParam("number") int groupType, Model model) {

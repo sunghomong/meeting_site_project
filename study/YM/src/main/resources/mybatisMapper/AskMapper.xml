@@ -14,7 +14,7 @@
     </select>
 
     <update id="updateAsk" parameterType="AskContent"> <!-- ask 수정 기능 -->
-        UPDATE askList set subject=#{subject},content=#{content},attachmentName=#{attachmentName},attachmentPath=#{attachmentPath},history='수정' where askId = #{askId}
+        UPDATE askList set subject=#{subject},content=#{content},attachmentName=#{attachmentName},attachmentPath=#{attachmentPath},history='(수정됨)' where askId = #{askId}
     </update>
 
     <delete id="deleteAskByAskId" parameterType="String"> <!-- ask 삭제 기능 -->

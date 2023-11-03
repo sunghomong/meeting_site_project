@@ -45,7 +45,7 @@
 
 <body>
 <header th:replace="/home.html :: header"></header>
-<h1>공지 사항 수정</h1>
+<h1>문의 사항 수정</h1>
 <form id="askForm" enctype="multipart/form-data" th:if="${askContent != null}">
     <input type="hidden" id="askId" name="askId" th:value="${askContent.askId}"/>
     <div>

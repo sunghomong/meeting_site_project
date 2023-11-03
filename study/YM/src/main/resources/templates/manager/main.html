@@ -6,21 +6,34 @@
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
     <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+<<<<<<< HEAD
+    <style>
+        .wrapper {
+            min-height: calc(100vh);
+        }
+    </style>
+
+=======
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
 </head>
 <body>
     <header th:replace="/home.html :: header"></header>
-
+<div class="wrapper">
     <div id="side" class="side" th:fragment="sidebar">
         <div class="header">MANAGER MENU</div>
-        <div onclick="location.href='/manager/memberList'" class="menu">회원 관리</div>
+        <div onclick="location.href='/manager/memberList'" class="menu" id="memberListMenu">회원 관리</div>
         <div onclick="location.href='/manager/groupList'" class="menu">모임 관리</div>
         <div onclick="location.href='/manager/keyWordList'" class="menu">키워드 관리</div>
-        <div onclick="location.href='/manager/askList'" class="menu">고객 문의</div>
-        <div onclick="location.href='/manager/noticeList'" class="menu">공지 사항 관리</div>
+        <div onclick="location.href='/FAQ'" class="menu" id="askMenu">고객 문의</div>
+        <div onclick="location.href='/manager/noticeList'" class="menu" id="noticeMenu">공지 사항 관리</div>
         <div onclick="location.href='/'" class="menu">메인</div>
     </div>
 </div>
 
 <footer th:replace="/home.html :: footer"></footer>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
 </body>
 </html>
