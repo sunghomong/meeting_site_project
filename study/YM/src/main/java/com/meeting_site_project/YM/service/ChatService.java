@@ -4,10 +4,12 @@ package com.meeting_site_project.YM.service;
 import com.meeting_site_project.YM.repository.ChatRepository;
 import com.meeting_site_project.YM.vo.ChatMessage;
 import com.meeting_site_project.YM.vo.ChatRoom;
+import com.meeting_site_project.YM.vo.ChatRoomMembers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,10 +43,6 @@ public class ChatService {
 
     }
 
-    public int selectChatRoomCntByUserId(String userId) {
-        return chatRepository.selectChatRoomCntByUserId(userId);
-    }
-
     public ChatRoom selectChatRoomInfoByRoomId(String roomId) {
         return  chatRepository.selectChatRoomInfoByRoomId(roomId);
     }
@@ -53,12 +51,85 @@ public class ChatService {
         chatRepository.insertChatMessage(chatMessage);
     }
 
-
-    public List<ChatMessage> getLastChatMessagesByRoomId(String chatRoomId) {
-        return chatRepository.getLastChatMessagesByRoomId(chatRoomId);
+    public void insertChatRoomOwnerMember(ChatRoom chatRoom, String nickName) {
+        chatRepository.insertChatRoomOwnerMember(chatRoom,nickName);
     }
 
-    public void insertChatRoomOwnerMember(ChatRoom chatRoom) {
-        chatRepository.insertChatRoomOwnerMember(chatRoom);
+    public boolean selectChatMessageByUserIdWithChatRoomId(ChatMessage chatMessage) {
+        return chatRepository.selectChatMessageByUserIdWithChatRoomId(chatMessage);
+    }
+
+    public Date selectChatMembersByRoomIdWithUserId(String chatRoomId, String userId) {
+
+        ChatRoomMembers chatRoomMembers = new ChatRoomMembers();
+
+        chatRoomMembers.setChatRoomId(chatRoomId);
+        chatRoomMembers.setUserId(userId);
+
+        return chatRepository.selectChatMembersByRoomIdWithUserId(chatRoomMembers);
+    }
+
+    public List<ChatMessage> selectChatMessageAfterInnerDateByChatRoomId(Date innerDate, String chatRoomId) {
+
+        ChatRoomMembers chatRoomMembers = new ChatRoomMembers();
+
+        chatRoomMembers.setChatInnerTime(innerDate);
+        chatRoomMembers.setChatRoomId(chatRoomId);
+
+        return chatRepository.selectChatMessageAfterInnerDateByChatRoomId(chatRoomMembers);
+    }
+
+
+    public void insertChatMemberCntByRoomId(String chatRoomId) {
+        chatRepository.insertChatMemberCntByRoomId(chatRoomId);
+    }
+
+    public void insertChatRoomMember(String userId, String chatRoomId,String nickName) {
+        chatRepository.insertChatRoomMember(userId,chatRoomId,nickName);
+    }
+
+    public boolean checkIsChatRoomMemberByUserIdAndChatRoomId(String userId, String chatRoomId) {
+        return chatRepository.checkIsChatRoomMemberByUserIdAndChatRoomId(userId,chatRoomId);
+    }
+
+    public ChatRoom selectChatRoomInfoByGroupId(String groupId) {
+        return chatRepository.selectChatRoomInfoByGroupId(groupId);
+    }
+
+    public void deleteChatMemeberByChatMessage(ChatMessage chatMessage) {
+        chatRepository.deleteChatMemeberByChatMessage(chatMessage);
+    }
+
+    public void subtractChatMemberCntByRoomId(String chatRoomId) {
+        chatRepository.subtractChatMemberCntByRoomId(chatRoomId);
+    }
+
+    public ChatMessage isChatMessageDateByChatMessage(ChatMessage chatMessage) {
+
+        List<ChatMessage> chatMessageList = chatRepository.selectChatMessageListByChatRoomId(chatMessage.getChatRoomId());
+
+        if (!chatMessageList.isEmpty()) {
+            // 가장 최근의 메시지를 이전 메시지로 간주
+            return chatMessageList.get(chatMessageList.size() - 1);
+        } else {
+            return null;
+        }
+
+    }
+
+    public void insertChatDateMessageByChatMessage(ChatMessage chatMessage) {
+        chatRepository.insertChatDateMessageByChatMessage(chatMessage);
+    }
+
+    public String selectChatOwnerIdByChatRoomId(String chatRoomId) {
+        return chatRepository.selectChatOwnerIdByChatRoomId(chatRoomId);
+    }
+
+    public List<ChatRoomMembers> selectChatRoomMemberListByGroupId(String groupId) {
+        return chatRepository.selectChatRoomMemberListByGroupId(groupId);
+    }
+
+    public ChatRoomMembers selectChatMemberByUserIdWithGroupId(String userId, String groupId) {
+        return chatRepository.selectChatMemberByUserIdWithGroupId(userId,groupId);
     }
 }

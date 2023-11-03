@@ -34,6 +34,7 @@ CREATE TABLE chatRoomMembers ( -- 채팅방에 속해 있는 멤버들 조회
     userId NVARCHAR2(20), -- member 테이블의 userId (외래키)
     chatRoomId NVARCHAR2(50), -- chatRoom 테이블의 chatRoomId(외래키)
     admin NUMBER,
+    chatInnerTime DATE,
     CONSTRAINT chatRoomMembers_FK_PK_userId FOREIGN KEY(userId) REFERENCES member(userId)
     ON DELETE CASCADE,
     CONSTRAINT chatRoomMembers_FK_PK_chatRoomId FOREIGN KEY(chatRoomId) REFERENCES chatRoom(chatRoomId)

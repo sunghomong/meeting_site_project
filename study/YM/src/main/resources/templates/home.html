@@ -10,11 +10,7 @@
 
         #wrapper{
         min-height: calc(100vh - 220px);
-<<<<<<< HEAD
-        
-=======
         padding-top: 80px;
->>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
         }
     </style>
 </head>
@@ -37,8 +33,6 @@
                         th:href="@{/logout}">로그아웃</a>
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
-                    <a class="LinkOnClick_title__0WSZ9"
-                        th:href="@{/chat}">채팅하기</a>
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/chat/chatRoomList(userId=${session.loginMember.userId})}">채팅 리스트</a>
                     <a class="LinkOnClick_title__0WSZ9"
@@ -67,13 +61,10 @@
                 <p class="Footer_info__content__cu7zK"><a href="/event">이벤트</a></p>
                 <p class="Footer_info__content__cu7zK"><a href="/FAQ/list.html">자주 묻는 질문</a></p>
                 <p class="Footer_info__content__cu7zK"><a href="/FAQ">1:1 문의</a></p>
-<<<<<<< HEAD
-=======
                 <p class="Footer_info__content__cu7zK"><a target="_blank" href="/notice/detail.html?id=311">제휴 및 입점
                         문의</a></p>
                 <p class="Footer_info__content__cu7zK"><a target="_blank" rel="noreferrer"
                         href="https://people.munto.kr/">채용</a></p>
->>>>>>> ce9c89312d4beadd5c39a18c44985858a25c95c3
             </div>
             <div class="Footer_sns__2wNzr">
                 <p class="Footer_sns__subject__v9us5">소셜 미디어</p>

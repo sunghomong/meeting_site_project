@@ -22,6 +22,9 @@
         <td>
             <button th:attr="data-chatRoomId=${chatRoom.chatRoomId}" onclick="joinChatRoom(this.getAttribute('data-chatRoomId'))" style="cursor: pointer;">대화방 참여</button>
         </td>
+        <td th:if="${session.loginMember != null and session.loginMember.userId == chatRoom.ownerId}">
+            <button th:attr="data-groupId=${chatRoom.groupId}" onclick="chatManager(this.getAttribute('data-groupId'))" style="cursor: pointer;">채팅방 관리</button>
+        </td>
     </tr>
     <tr th:unless="${not #lists.isEmpty(chatRoomList)}">
         <td colspan="7">참여한 채팅이 없습니다.</td>
@@ -34,6 +37,12 @@
     // WebSocket 클라이언트와 사용자 이름 관련 변수
     var userId = null;
 
+    function chatManager(groupId) {
+        // groupId 이용하여 관리 페이지 URL을 생성
+        var manageChatRoomUrl = '/chat/manage?groupId=' + groupId;
+        window.location.href = manageChatRoomUrl; // 채팅방 관리 페이지로 이동
+    }
+
     function joinChatRoom(chatRoomId) {
         userId = document.querySelector('#userId').value; // userName 값 저장 --> userId 값 저장
 
@@ -42,7 +51,7 @@
             window.location.href = '/chat/chatRoom?chatRoomId=' + chatRoomId; // 경로 이동
 
         } else {
-            alert("로그인이 필요합니다,");
+            alert('로그인이 필요합니다');
             window.location.href = '/login';
         }
 

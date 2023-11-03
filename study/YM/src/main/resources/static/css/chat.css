@@ -224,7 +224,10 @@ button.accent {
 #chat-page .chat-message p {
     color: #43464b;
 }
-
+#message-time {
+    float: right;
+    font-size: 10px;
+}
 #messageForm .input-group input {
     float: left;
     width: calc(100% - 85px);
