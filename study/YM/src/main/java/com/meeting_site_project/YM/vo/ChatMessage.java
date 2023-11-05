@@ -24,7 +24,7 @@ public class ChatMessage {
     private Date messageTime;
 
     public enum MessageType {
-        CHAT, LEAVE, JOIN
+        CHAT, LEAVE, JOIN, DELETE
     }
 
 

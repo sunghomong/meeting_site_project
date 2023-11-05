@@ -241,8 +241,10 @@ button.accent {
 }
 
 .chat-header {
-    text-align: center;
-    padding: 15px;
+    display: flex;
+    justify-content: space-between; /* 요소를 왼쪽, 가운데, 오른쪽으로 정렬 */
+    align-items: center; /* 요소를 세로 중앙으로 정렬 */
+    padding: 15px 20px;
     border-bottom: 1px solid #ececec;
 }
 
@@ -251,6 +253,14 @@ button.accent {
     font-weight: 500;
 }
 
+.chat-header .fa-solid fa-arrow-left{
+   margin-left: 10px;
+   font-size: 20px;
+}
+
+.chat-header #exitChatRoom:hover{
+    background-color: #dfdfdf;
+}
 .connecting {
     padding-top: 5px;
     text-align: center;

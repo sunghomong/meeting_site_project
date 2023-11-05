@@ -31,15 +31,5 @@ public class NoticeController {
         return "/notice/noticeList";
     }
 
-//    @GetMapping("noticeDetail")
-//    public String showNoticeDetail(@RequestParam("noticeId") String noticeId,Model model) {
-//
-//        Notices notices = noticeService.selectNoticeByNoticeId(noticeId);
-//
-//        model.addAttribute("notice",notices);
-//
-//        return "/notice/noticeDetail";
-//    }
-
 
 }

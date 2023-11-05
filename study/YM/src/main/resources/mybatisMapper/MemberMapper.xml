@@ -135,10 +135,6 @@
         INSERT INTO groupByKeyword VALUES (#{groupId}, #{firstKeyword}, #{secondKeyword})
     </insert>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
     <update id="updateMeeting" parameterType="groupInfo">
         UPDATE groupInfo SET groupName=#{groupName},
         <if test="groupPicture != null">groupPicture=#{groupPicture},</if>
@@ -155,4 +151,8 @@
         DELETE FROM groupInfo WHERE groupId=#{groupId}
     </delete>
 
+    <!-- 그룹의 owner변경 -->
+    <update id="updateGroupOwnerIdByUserIdAndGroupId" >
+        UPDATE groupInfo SET ownerUserId=#{userId} WHERE groupId=#{groupId}
+    </update>
 </mapper>

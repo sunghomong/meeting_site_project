@@ -1,5 +1,6 @@
 package com.meeting_site_project.YM.repository;
 
+import com.meeting_site_project.YM.mapper.ChatMapper;
 import com.meeting_site_project.YM.mapper.MemberMapper;
 import com.meeting_site_project.YM.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,12 @@ import java.util.List;
 public class MybatisRepository implements Repository {
 
     MemberMapper memberMapper;
+    ChatMapper chatMapper;
 
     @Autowired
-    public MybatisRepository(MemberMapper memberMapper) {
+    public MybatisRepository(MemberMapper memberMapper,ChatMapper chatMapper) {
         this.memberMapper = memberMapper;
+        this.chatMapper = chatMapper;
     }
 
     // JoinMember 객체를 받아서 데이터베이스에 회원 정보를 추가하는 메서드
@@ -156,4 +159,9 @@ public class MybatisRepository implements Repository {
     }
 
 
+    public void updateGroupOwnerIdByUserIdAndGroupId(String groupId, String userId) {
+        memberMapper.updateGroupOwnerIdByUserIdAndGroupId(groupId,userId);
+        // group방장 업데이트 동시에 채팅방 방장도 업데이트
+        chatMapper.updateChatRoomOwnerIdByUserIdAndGroupId(groupId,userId);
+    }
 }

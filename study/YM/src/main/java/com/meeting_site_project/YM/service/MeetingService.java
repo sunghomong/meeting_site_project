@@ -125,4 +125,7 @@ public class MeetingService {
         return mybatisRepository.selectOnedayKeywordByGroupList(firstKeyword, groupType);
     }
 
+    public void updateGroupOwnerIdByUserIdAndGroupId(String groupId, String userId) {
+        mybatisRepository.updateGroupOwnerIdByUserIdAndGroupId(groupId,userId);
+    }
 }
