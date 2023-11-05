@@ -195,7 +195,7 @@
             <ul class="notices">
                 <li th:each="ask : ${askList}" class="ask"
                     th:onclick="|location.href='@{/FAQ/askDetail(askId=${ask.askId})}'|">
-                    <div th:text="${ask.userId}" class="askuserId">공지</div>
+                    <div th:text="${ask.nickName}" class="askuserId">공지</div>
                     <div th:text="${ask.subject}" class="askTitle"></div>
                     <div th:text="${#dates.format(ask.createDate, 'yyyy-MM-dd')}" class="createDate"></div>
                     <div th:style="${ask.status == '미해결' ? 'color:  #a0a0a0;' : (ask.status == '해결완료' ? 'color: #e15358;' : 'color: #5778d1;')}"

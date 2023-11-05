@@ -6,12 +6,20 @@
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
     <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+<<<<<<< HEAD
+
+=======
+>>>>>>> e2e95671750987846a00f4547513e8a272e01742
     <style>
         .wrapper {
             min-height: calc(100vh);
         }
     </style>
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> e2e95671750987846a00f4547513e8a272e01742
 </head>
 <body>
     <header th:replace="/home.html :: header"></header>
@@ -19,8 +27,7 @@
     <div id="side" class="side" th:fragment="sidebar">
         <div class="header">MANAGER MENU</div>
         <div onclick="location.href='/manager/memberList'" class="menu" id="memberListMenu">회원 관리</div>
-        <div onclick="location.href='/manager/groupList'" class="menu">모임 관리</div>
-        <div onclick="location.href='/manager/keyWordList'" class="menu">키워드 관리</div>
+        <div onclick="location.href='/manager/keyWordList'" class="menu" id="keywordListMenu">키워드 관리</div>
         <div onclick="location.href='/FAQ'" class="menu" id="askMenu">고객 문의</div>
         <div onclick="location.href='/manager/noticeList'" class="menu" id="noticeMenu">공지 사항 관리</div>
         <div onclick="location.href='/'" class="menu">메인</div>
@@ -28,5 +35,9 @@
 </div>
 
 <footer th:replace="/home.html :: footer"></footer>
+<<<<<<< HEAD
+
+=======
+>>>>>>> e2e95671750987846a00f4547513e8a272e01742
 </body>
 </html>

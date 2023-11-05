@@ -24,14 +24,14 @@ CREATE TABLE chatRoom(
     ON DELETE CASCADE,
     CONSTRAINT chatRoom_FK_PK_ownerId FOREIGN KEY(ownerId) REFERENCES member(userId)
     ON DELETE CASCADE,
-    CONSTRAINT chatRoom_Pk PRIMARY KEY (chatId)
+    CONSTRAINT chatRoom_Pk PRIMARY KEY (chatRoomId)
 );
 
 -- member가 속해 있는 채팅 room 들은 어떻게 분리??
 
 CREATE TABLE chatRoomMembers ( -- 채팅방에 속해 있는 멤버들 조회
     roomUserId NVARCHAR2(50), -- 고유의 채팅방에 속한 유저 id (기본키)
-    userId NVARCHAR2(20), -- member 테이블의 userId (외래키)
+    userId VARCHAR(20), -- member 테이블의 userId (외래키)
     chatRoomId NVARCHAR2(50), -- chatRoom 테이블의 chatRoomId(외래키)
     admin NUMBER,
     chatInnerTime DATE,

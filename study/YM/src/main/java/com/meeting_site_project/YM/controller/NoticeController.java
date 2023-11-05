@@ -24,6 +24,7 @@ public class NoticeController {
     @GetMapping("")
     public String showNoticeListForm(Model model) {
 
+
         List<Notices> notices = noticeService.selectNoticeList();
 
         model.addAttribute("notices",notices);

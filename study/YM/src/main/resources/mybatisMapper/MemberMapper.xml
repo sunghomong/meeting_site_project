@@ -57,12 +57,17 @@
 
 
     <!-- 관리자를 위한 쿼리 문 -->
-    <select id="getMemberList" resultType="member"> <!-- 전체 회원 조회를 위한 SELECT문 (관리자) -->
-        SELECT userId, userName, nickName, signDate, userAdmin, emailId, emailDomain FROM
-        (
-        SELECT ROWNUM num, userId, userName, nickName, signDate, userAdmin, emailId, emailDomain
-        FROM (SELECT * FROM member ORDER BY signDate DESC))
-        WHERE num between #{start} and #{end}
+    <select id="getMemberListWithPaging" resultType="Member">
+        <![CDATA[
+        select *
+        from (
+            select
+            rownum rn, userId, userName, nickName, signDate, userAdmin, emailId, emailDomain
+            from member
+            where rownum  <= #{pageNum} * #{amount}
+        )
+        where rn > (#{pageNum} - 1) * #{amount}
+	]]>
     </select>
 
     <select id="getTotal" resultType="int">
@@ -84,7 +89,7 @@
         INSERT INTO askList VALUES (#{askId}, #{userId}, #{subject}, #{content}, sysdate,'미해결',#{attachmentName},#{attachmentPath},'','')
     </insert>
     <select id="selectAskDetailByAskId" resultType="askContent" parameterType="String">
-        SELECT * FROM askList WHERE askId=#{askId}
+        SELECT * FROM askList a JOIN member m ON a.userId = m.userId WHERE a.askId=#{askId}
     </select>
 
 

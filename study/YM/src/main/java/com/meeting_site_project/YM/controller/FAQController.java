@@ -44,6 +44,7 @@ public class FAQController {
     public String showAskListForm(@ModelAttribute("loginInfo") LoginCommand loginCommand, HttpServletRequest request, HttpSession session, Model model) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
 
+
         if (authInfo != null) { // 로그인 정보가 있을시
             model.addAttribute("userId", authInfo.getUserId());
         }
@@ -87,6 +88,7 @@ public class FAQController {
     public String askDetail(@RequestParam("askId") String askId,HttpSession session,Model model) {
 
         AuthInfo authInfo = (AuthInfo) session.getAttribute("loginMember");
+
 
         if (authInfo != null) { // 로그인 정보가 있다면
             String loginMemberUserId = authInfo.getUserId();
@@ -160,6 +162,7 @@ public class FAQController {
         commentAsk.setContent(content.replace("<br>","\r\n"));
         commentAsk.setUserId(authInfo.getUserId());
         commentAsk.setCommentId(uniqueCommentId);
+        commentAsk.setContent(content);
         commentAsk.setAskId(askId);
 
         faQservice.insertCommentAsk(commentAsk); // 댓글 insert

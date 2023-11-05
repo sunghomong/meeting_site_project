@@ -12,6 +12,7 @@ public class LogoutController {
     @GetMapping("/logout")
     public String logout(HttpSession session){
 
+
         session.invalidate(); // 세션 무효화. 즉, 로그아웃 처리
 
         return "redirect:/"; // 홈 화면으로 이동

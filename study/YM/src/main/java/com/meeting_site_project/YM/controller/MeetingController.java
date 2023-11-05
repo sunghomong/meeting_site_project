@@ -31,7 +31,12 @@ public class MeetingController {
     ChatService chatService;
 
     @Autowired
+<<<<<<< HEAD
+    public MeetingController(MeetingService meetingService, CheckService checkService, ChatService chatService) {
+
+=======
     public MeetingController(MeetingService meetingService, CheckService checkService,ChatService chatService) {
+>>>>>>> e2e95671750987846a00f4547513e8a272e01742
         this.meetingService = meetingService;
         this.checkService = checkService;
         this.chatService = chatService;
@@ -122,8 +127,13 @@ public class MeetingController {
     }
 
     @GetMapping("/meetingUpdateForm")
-    public String meetingUpdateForm(@RequestParam String groupId,  Model model) {
+    public String meetingUpdateForm(@RequestParam String groupId,  Model model, HttpSession session) {
+
         GroupInfo groupInfo = meetingService.selectGroupInfoById(groupId);
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if (authInfo == null || authInfo.getUserId() != groupInfo.getOwnerUserId()) {
+            return "redirect:/login";
+        }
         List<Keyword> keywords = meetingService.selectFirstKeywordList();
         List<Keyword> secondKeywords = meetingService.selectSecondKeywordList(groupInfo.getFirstKeyword());
         model.addAttribute("groupInfo", groupInfo);
@@ -145,7 +155,11 @@ public class MeetingController {
     }
 
     @GetMapping("deleteGroup")
-    public String deleteGroup(@RequestParam String groupId) {
+    public String deleteGroup(@RequestParam String groupId, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if (authInfo == null) {
+            return "redirect:/login";
+        }
 
         meetingService.deleteGroup(groupId);
 
@@ -154,12 +168,20 @@ public class MeetingController {
 
     @GetMapping("/moveChatRoom")
     public String moveChatRoom(@RequestParam("chatRoomId") String chatRoomId,HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if (authInfo == null) {
+            return "redirect:/login";
+        }
 
         return "redirect:/chat/chatRoom?chatRoomId=" + chatRoomId;
     }
 
     @GetMapping("/meetingManager")
-    public String meetingManagerView(@RequestParam("groupId") String groupId,Model model) {
+    public String meetingManagerView(@RequestParam("groupId") String groupId,Model model, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if (authInfo == null) {
+            return "redirect:/login";
+        }
 
         ChatRoom chatRoom = chatService.selectChatRoomInfoByGroupId(groupId);
         List<ChatRoomMembers> chatRoomMemberList = chatService.selectChatRoomMemberListByChatRoomId(chatRoom.getChatRoomId()); // 채팅방 회원들 조회

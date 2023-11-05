@@ -1,7 +1,7 @@
 package com.meeting_site_project.YM.controller;
 
 import com.meeting_site_project.YM.service.KeyWordService;
-import com.meeting_site_project.YM.vo.KeyWordDTO;
+import com.meeting_site_project.YM.vo.AuthInfo;
 import com.meeting_site_project.YM.vo.Keyword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,9 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +26,11 @@ public class KeyWordController {
     }
 
     @GetMapping("/manager/keyWordList")
-    public String keyWordListForm(Model model) {
+    public String keyWordListForm(Model model, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if (authInfo == null || authInfo.getUserAdmin() == 0) {
+            return "redirect:/login";
+        }
 
         // 주 키워드와 보조 키워드를 별도의 목록으로 관리합니다.
         List<String> firstKeyWords = new ArrayList<>();
@@ -83,7 +86,11 @@ public class KeyWordController {
     }
 
     @GetMapping("/manager/firstKeywordDelete/{firstKeyWord}")
-    public String deleteFirstKeyWord(@PathVariable("firstKeyWord") String firstKeyWord) {
+    public String deleteFirstKeyWord(@PathVariable("firstKeyWord") String firstKeyWord, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if (authInfo == null || authInfo.getUserAdmin() == 0) {
+            return "redirect:/login";
+        }
 
         keyWordService.deleteKeyWordByFirstKeyWord(firstKeyWord); // 주 키워드 , 보조 키워드 함께 삭제
 

@@ -18,6 +18,19 @@ CONSTRAINT member_pk PRIMARY KEY (userId)
 
 -- 모임 테이블 ------------------------------------
 CREATE TABLE groupInfo (
+<<<<<<< HEAD
+groupId nvarchar2(50) PRIMARY KEY,
+ownerUserId VARCHAR(20),
+sidoName nvarchar2(30),
+sigoonName nvarchar2(30),
+groupName nvarchar2(30),
+groupInfo nvarchar2(100),
+groupNumberOfPeople number, -- 제한수
+groupPicture nvarchar2(100),
+groupPicturePath NVARCHAR2(500),
+groupType number,
+regDate DATE DEFAULT sysdate
+=======
 groupId NVARCHAR2(50),
 ownerUserId VARCHAR(20),
 sidoName NVARCHAR2(30),
@@ -32,6 +45,7 @@ regDate DATE DEFAULT sysdate,
 CONSTRAINT groupInfo_Pk PRIMARY KEY (groupId),
 CONSTRAINT groupInfo_FK_PK_ownerUserId FOREIGN KEY(ownerUserId) REFERENCES member(userId)
 ON DELETE CASCADE
+>>>>>>> e2e95671750987846a00f4547513e8a272e01742
 );
 
 -- 고객 문의를 위한 테이블
@@ -71,8 +85,13 @@ CONSTRAINT keyword_Pk PRIMARY KEY (firstKeyword)
 CREATE TABLE notices (
 noticeId NVARCHAR2(40),  -- 고유한 공지 사항 ID (기본키)
 userId VARCHAR(20),  -- 외래 키로 member 테이블의 userId 참조
+<<<<<<< HEAD
+title nvarchar2(30), -- 공지 사항의 제목
+content nvarchar2(500), -- 공지 사항의 내용
+=======
 title NVARCHAR2(30), -- 공지 사항의 제목
 content NVARCHAR2(500), -- 공지 사항의 내용
+>>>>>>> e2e95671750987846a00f4547513e8a272e01742
 createDate DATE DEFAULT sysdate, -- 생성 일자
 attachmentName NVARCHAR2(100) DEFAULT NULL, -- 첨부 파일 이름
 attachmentPath NVARCHAR2(300) DEFAULT NULL, -- 첨부 파일 경로
@@ -83,7 +102,7 @@ CONSTRAINT notices_PK PRIMARY KEY (noticeId)
 -- 고객 문의 댓글 테이블 -------------------------------------------
 CREATE TABLE commentAsk (
 commentId NVARCHAR2(40), -- 고유한 comment 댓글 ID (기본키)
-userId nvarchar2(100), -- 외래 키로 member 테이블의 userId 참조
+userId VARCHAR(20), -- 외래 키로 member 테이블의 userId 참조
 askId NVARCHAR2(40), -- 외래 키로 askList 테이블의 askId 참조
 content nvarchar2(500), -- 댓글 내용
 createDate DATE DEFAULT sysdate,

@@ -1,10 +1,231 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Keyword List</title>
-    <link href="/modalWindow.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
 </head>
+<style>
+    @font-face {
+        font-family: 'Pretendard-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    #modalContainer.hidden {
+        display: none;
+    }
+
+    .wrapper {
+        min-height: calc(100vh - 220px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        font-family: 'Pretendard-Regular';
+        margin: 80px 0 130px;
+        width: 500px;
+    }
+
+
+    #keywordListMenu {
+        background-color: #639eeb;
+        color: white;
+    }
+
+    .title {
+        text-align: left;
+        font-size: 25px;
+        font-weight: 500;
+        padding-left: 5px;
+        border-bottom: 2px solid #dfe4ea;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .firstKeyword-ul {
+        margin: 0 25px;
+        box-sizing: border-box;
+        padding: 20px 20px 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 200px;
+        border: 1px solid #b0b0b0;
+        border-radius: 10px;
+    }
+
+    .firstKeyword-ul>li {
+        border: 1px solid #ac9ae8;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 10px;
+        margin-bottom: 15px;
+        color: #8366e1;
+    }
+
+    .firstKeyword-ul a {
+        color: #8366e1;
+    }
+
+    .keyword-box {
+        display: flex;
+    }
+
+    #subKeywordsList {
+        margin: 0 25px;
+        box-sizing: border-box;
+        padding: 20px 20px 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 200px;
+        border: 1px solid #b0b0b0;
+        border-radius: 10px;
+        min-height: 475.4px;
+    }
+
+    #subKeywordsList>li {
+        border: 1px solid #ac9ae8;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 10px;
+        margin-bottom: 15px;
+        color: #8366e1;
+    }
+    #subKeywordsList span {
+        cursor: pointer;
+    }
+
+    #subKeywordsList a {
+        color: #8366e1;
+    }
+
+    .button-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .button-box>button {
+        margin-top: 40px;
+        font-family: 'Pretendard-Regular';
+        padding: 15px 20px;
+        font-size: 20px;
+        color: #f1f1f1;
+        border: none;
+        border-radius: 10px;
+        background-color: #390ec8;
+        cursor: pointer;
+    }
+
+    .button-box>button:hover {
+        background-color: #3e0dde;
+    }
+
+    .add-keyword {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40px;
+    }
+
+    #firstKeywordForm>input {
+        height: 25px;
+        font-family: 'Pretendard-Regular';
+        border: 1px solid #CFCFCF;
+        border-radius: 5px;
+        padding-left: 5px;
+        width: 150px;
+        margin-right: 10px;
+    }
+
+    #firstKeywordForm>button {
+        margin-right: 5px;
+        font-family: 'Pretendard-Regular';
+        padding: 8px 15px;
+        color: #f1f1f1;
+        border: none;
+        border-radius: 5px;
+        background-color: #390ec8;
+        cursor: pointer;
+    }
+
+    #firstKeywordForm>button:hover {
+        background-color: #3e0dde;
+    }
+    #modalContainer {
+            z-index: 1000;
+            position: fixed;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #modalContent {
+            z-index: 1001;
+            background-color: white;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Pretendard-Regular';
+            width: 500px;
+            height: 180px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .delete-words {
+            color: #8e8e8e;
+            font-size: 20px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #8e8e8e;
+            line-height: 40px;
+            padding: 20px 30px;
+        }
+
+        .confirm-delete {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 60px;
+            padding-right: 20px;
+            color: #4e90f7;
+        }
+
+        .confirm-delete>button {
+            border: none;
+            background-color: white;
+            color: #4e90f7;
+            cursor: pointer;
+            margin-left: 30px;
+            font-family: 'Pretendard-Regular';
+            font-size: 16px;
+        }
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
@@ -26,15 +247,15 @@
                 data: JSON.stringify(data), // JSON 데이터로 설정
                 contentType: "application/json", // JSON 데이터라고 서버에 알림
                 success: function (response) {
-                        console.log(response);
-                        if (response === "duplicate") {
-                            alert("이미 존재하는 데이터입니다."); // 중복 메시지 표시
-                        } else {
-                            alert("정상적으로 추가되었습니다.");
-                            window.location.href = "/manager/keyWordList";
-                        }
-                    },
-                        error: function (xhr) {
+                    console.log(response);
+                    if (response === "duplicate") {
+                        alert("이미 존재하는 데이터입니다."); // 중복 메시지 표시
+                    } else {
+                        alert("정상적으로 추가되었습니다.");
+                        window.location.href = "/manager/keyWordList";
+                    }
+                },
+                error: function (xhr) {
                     if (xhr.status === 409) {
                         alert("이미 존재하는 데이터입니다.");
                     } else {
@@ -62,15 +283,15 @@
                 data: JSON.stringify(data), // JSON 데이터로 설정
                 contentType: "application/json", // JSON 데이터라고 서버에 알림
                 success: function (response) {
-                        console.log(response);
-                        if (response === "duplicate") {
-                            alert("이미 존재하는 데이터입니다."); // 중복 메시지 표시
-                        } else {
-                            alert("정상적으로 추가되었습니다.");
-                            window.location.href = "/manager/keyWordList";
-                        }
-                    },
-                        error: function (xhr) {
+                    console.log(response);
+                    if (response === "duplicate") {
+                        alert("이미 존재하는 데이터입니다."); // 중복 메시지 표시
+                    } else {
+                        alert("정상적으로 추가되었습니다.");
+                        window.location.href = "/manager/keyWordList";
+                    }
+                },
+                error: function (xhr) {
                     if (xhr.status === 409) {
                         alert("이미 존재하는 데이터입니다.");
                     } else {
@@ -81,64 +302,100 @@
         });
     });
 </script>
+
 <body>
-<h1>Keyword List</h1>
-<h2>주 키워드</h2>
-<ul>
-    <li th:each="firstKeyWord : ${firstKeyWords}">
-        <a href="#" th:text="${firstKeyWord}" th:attr="data-keyword=${firstKeyWord}" onclick="loadSubKeywords(this.getAttribute('data-keyword')); return false;"></a>
-        <button type="button" th:attr="data-firstKeyWord=${firstKeyWord}" onclick="deleteFirstKeyword(this.getAttribute('data-firstKeyWord'))" style="cursor: pointer;">삭제</button>
-    </li>
-</ul>
-<button type="button" id="addFirstKeyWord">주 키워드 추가</button>
-<form id="firstKeywordForm" style="display:none;">
-    <input type="text" id="firstKeyWord" name="firstKeyword" placeholder="주 키워드 입력" required>
-    <input type="text" id="secondKeyWord" name="secondKeyword" placeholder="보조 키워드 입력" required>
-    <button type="submit" id="addFirstKeyWordAndSecondKeyWord">추가</button>
-    <button type="button" id="cancelFirstKeywordFormButton">취소</button>
-</form>
-<script>
-    document.getElementById("addFirstKeyWord").addEventListener("click", function () {
-    var form = document.getElementById("firstKeywordForm");
-
-        // form을 보이게 하고, 버튼은 감춥니다.
-        form.style.display = "block";
-        this.style.display = "none"; // this는 현재 클릭한 버튼을 나타냅니다.
-    });
-    document.getElementById("cancelFirstKeywordFormButton").addEventListener("click", function () {
-        var form = document.getElementById("firstKeywordForm");
-        var button = document.getElementById("addFirstKeyWord");
-
-        form.style.display = "none";
-        button.style.display = "block";
-    });
-</script>
-<!-- h2 태그 id = subKeywordsList "보조 키워드"-->
-<ul id="subKeywordsList">
-    <!-- 여기에 보조 키워드가 동적으로 추가 -->
-</ul>
-<form id="keywordForm" style="display:none;">
-    <ul>
-        <li th:each="firstKeyWord : ${firstKeyWords}">
-            <label>
-                <input type="radio" name="firstKeyword" class="radio-firstKeyword" th:value="${firstKeyWord}" th:text="${firstKeyWord}">
-            </label>
-        </li>
-    </ul>
-    <input type="text" id="secondKeyword" name="secondKeyword" placeholder="보조 키워드 입력" required>
-    <button type="submit" id="submitButton">추가</button>
-    <button type="button" id="cancelFormButton">취소</button>
-</form>
-<button type="button" id="addFormButton">보조 키워드 추가</button>
-
-<div id="modalContainer" class="hidden">
-    <div id="modalContent">
-        <p style="color: red; font-size: 24px; text-align: center;">부 키워드가 존재한다면 같이 삭제될 수 있습니다. 정말 삭제하시겠습니까? </p>
-        <button onclick="confirmDelete()">네</button>
-        <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
-        <input type="hidden" id="deleteFirstKeyWord" name="firstKeyWord" value="">
+    <div id="modalContainer" class="hidden">
+        <div id="modalContent">
+            <p class="delete-words">보조 키워드가 존재한다면 같이 삭제될 수 있습니다.<br> 정말 삭제하시겠습니까?</p>
+            <div class="confirm-delete">
+                <button id="modalCloseButton" onclick="cancelDelete()">취소</button>
+                <button onclick="confirmDelete()">확인</button>
+            </div>
+            <input type="hidden" id="deleteFirstKeyWord" name="firstKeyWord" value="">
+        </div>
     </div>
-</div>
+
+    <header th:replace="/home.html :: header"></header>
+    <div class="wrapper">
+        <div th:replace="/manager/main.html :: sidebar"></div>
+        <div class="container">
+            <div class="title"><span style="border-bottom: 2px solid black; padding-bottom: 20px;">키워드 목록</span>
+            </div>
+            <div class="keyword-box">
+                <div>
+                    <div style="text-align: center; margin: 30px 0 15px; font-size: 20px;">주 키워드</div>
+                    <ul class="firstKeyword-ul">
+                        <li th:each="firstKeyWord : ${firstKeyWords}">
+                            <a href="#" th:text="${firstKeyWord}" th:attr="data-keyword=${firstKeyWord}"
+                                onclick="loadSubKeywords(this.getAttribute('data-keyword')); return false;"></a>
+                            <span th:attr="data-firstKeyWord=${firstKeyWord}"
+                                onclick="deleteFirstKeyword(this.getAttribute('data-firstKeyWord'))"
+                                style="cursor: pointer;">X</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div style="text-align: center; margin: 30px 0 15px; font-size: 20px">보조 키워드</div>
+                    <ul id="subKeywordsList">
+                        <!-- 여기에 보조 키워드가 동적으로 추가 -->
+                    </ul>
+                </div>
+            </div>
+            <div class="button-box">
+                <button type="button" id="addFirstKeyWord">키워드 추가</button>
+            </div>
+            <div class="add-keyword">
+                <form id="firstKeywordForm" style="display:none;">
+                    <input type="text" id="firstKeyWord" name="firstKeyword" placeholder="주 키워드 입력" required>
+                    <input type="text" id="secondKeyWord" name="secondKeyword" placeholder="보조 키워드 입력" required>
+                    <button type="submit" id="addFirstKeyWordAndSecondKeyWord">추가</button>
+                    <button type="button" id="cancelFirstKeywordFormButton">취소</button>
+                </form>
+            </div>
+            <script>
+                document.getElementById("addFirstKeyWord").addEventListener("click", function () {
+                    var form = document.getElementById("firstKeywordForm");
+
+                    // form을 보이게 하고, 버튼은 감춥니다.
+                    form.style.display = "block";
+                    this.style.display = "none"; // this는 현재 클릭한 버튼을 나타냅니다.
+                });
+                document.getElementById("cancelFirstKeywordFormButton").addEventListener("click", function () {
+                    var form = document.getElementById("firstKeywordForm");
+                    var button = document.getElementById("addFirstKeyWord");
+
+                    form.style.display = "none";
+                    button.style.display = "block";
+                });
+            </script>
+            <!-- h2 태그 id = subKeywordsList "보조 키워드"-->
+            <form id="keywordForm" style="display:none;">
+                <ul>
+                    <li th:each="firstKeyWord : ${firstKeyWords}">
+                        <label>
+                            <input type="radio" name="firstKeyword" class="radio-firstKeyword"
+                                th:value="${firstKeyWord}" th:text="${firstKeyWord}">
+                        </label>
+                    </li>
+                </ul>
+                <input type="text" id="secondKeyword" name="secondKeyword" placeholder="보조 키워드 입력" required>
+                <button type="submit" id="submitButton">추가</button>
+                <button type="button" id="cancelFormButton">취소</button>
+            </form>
+            <!-- <button type="button" id="addFormButton">보조 키워드 추가</button> -->
+
+            <div id="modalContainer" class="hidden">
+                <div id="modalContent">
+                    <p style="color: red; font-size: 24px; text-align: center;">부 키워드가 존재한다면 같이 삭제될 수 있습니다. 정말 삭제하시겠습니까?
+                    </p>
+                    <button onclick="confirmDelete()">네</button>
+                    <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
+                    <input type="hidden" id="deleteFirstKeyWord" name="firstKeyWord" value="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="/home.html :: footer"></footer>
 </body>
 <script>
     const modal = document.getElementById('modalContainer');
@@ -152,7 +409,7 @@
         deleteFirstKeyWord.value = firstKeyWord; // 삭제할 아이디 저장
     }
 
-        function confirmDelete() {
+    function confirmDelete() {
         // "네" 버튼 클릭 시 삭제 로직 수행
         var deleteFirstKeyWord = document.getElementById('deleteFirstKeyWord');
         var firstKeyWord = deleteFirstKeyWord.value;
@@ -195,22 +452,22 @@
         // "보조 키워드" 제목을 한 번만 생성
         if (!subKeywordsTitle) {
             subKeywordsTitle = document.createElement("h2");
-            subKeywordsTitle.textContent = "보조 키워드";
+            subKeywordsTitle.textContent = "";
             var subKeywordsList = document.getElementById("subKeywordsList");
             subKeywordsList.parentElement.insertBefore(subKeywordsTitle, subKeywordsList);
         }
 
-            subKeywords.forEach(function (subKeyword) {
+        subKeywords.forEach(function (subKeyword) {
             var li = document.createElement("li");
             var span = document.createElement("span");
             span.textContent = subKeyword;
             li.appendChild(span);
 
             // 삭제 버튼 추가
-            var deleteSecondButton = document.createElement("button");
-            deleteSecondButton.textContent = "삭제";
-            deleteSecondButton.onclick = function() {
-                    var subKeywordToDelete = subKeyword;
+            var deleteSecondButton = document.createElement("span");
+            deleteSecondButton.textContent = "X";
+            deleteSecondButton.onclick = function () {
+                var subKeywordToDelete = subKeyword;
 
                 // Ajax를 사용하여 서버에 삭제 요청을 보냅니다.
                 $.ajax({
@@ -261,4 +518,5 @@
 
 
 </script>
+
 </html>

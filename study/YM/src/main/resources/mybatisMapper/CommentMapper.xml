@@ -10,6 +10,6 @@
     </insert>
 
     <select id="selectCommentAsk" resultType="CommentAsk" parameterType="String">
-        SELECT * FROM commentAsk WHERE askId=#{askId} ORDER BY createDate DESC
+        SELECT * FROM commentAsk c JOIN member m ON c.userId = m.userId WHERE c.askId=#{askId} ORDER BY createDate ASC
     </select>
 </mapper>

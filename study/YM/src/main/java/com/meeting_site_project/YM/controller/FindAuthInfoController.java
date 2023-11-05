@@ -2,10 +2,7 @@ package com.meeting_site_project.YM.controller;
 
 import com.meeting_site_project.YM.Security.SHA256;
 import com.meeting_site_project.YM.service.FindAuthInfoService;
-import com.meeting_site_project.YM.vo.ChangePassword;
-import com.meeting_site_project.YM.vo.FindId;
-import com.meeting_site_project.YM.vo.FindPassword;
-import com.meeting_site_project.YM.vo.Member;
+import com.meeting_site_project.YM.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
 
@@ -30,7 +28,12 @@ public class FindAuthInfoController {
     }
 
     @GetMapping("/findId")
-    public String findIdForm(@ModelAttribute("findId") FindId FindId) {
+    public String findIdForm(@ModelAttribute("findId") FindId FindId, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if (authInfo != null) {
+            return "redirect:/login";
+        }
+
         return "/findAuthInfo/findIdForm";
     }
 
@@ -54,7 +57,11 @@ public class FindAuthInfoController {
         return "/findAuthInfo/findIdSuccess";
     }
     @GetMapping("/findPassword")
-    public String findPasswordForm(@ModelAttribute("findPassword") FindPassword findPassword) {
+    public String findPasswordForm(@ModelAttribute("findPassword") FindPassword findPassword, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if (authInfo != null) {
+            return "redirect:/login";
+        }
         return "/findAuthInfo/findPasswordForm";
     }
     @PostMapping("/findPassword")

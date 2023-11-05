@@ -36,8 +36,8 @@ public class MybatisRepository implements Repository {
     }
 
 
-    public List<Member> getMemberList(int start,int end ) { // 전체 회원 조회를 위한 (관리자)
-        return memberMapper.getMemberList(start, end);
+    public List<Member> getMemberListWithPaging(Criteria cri ) { // 전체 회원 조회를 위한 (관리자)
+        return memberMapper.getMemberListWithPaging(cri);
     }
 
     public int getTotal() {
