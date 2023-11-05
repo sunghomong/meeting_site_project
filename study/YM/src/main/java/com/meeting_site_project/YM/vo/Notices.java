@@ -12,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Notices {
 
+    private String nickName;
     private String noticeId; // 공지 사항 ID (기본키)
     private String userId; // 외래 키로 member 테이블의 user_id 참조
     private String title; // 공지 사항의 제목

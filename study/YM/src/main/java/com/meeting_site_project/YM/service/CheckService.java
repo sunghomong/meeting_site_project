@@ -2,6 +2,7 @@ package com.meeting_site_project.YM.service;
 
 import com.meeting_site_project.YM.repository.MybatisRepository;
 import com.meeting_site_project.YM.vo.AskContent;
+import com.meeting_site_project.YM.vo.Criteria;
 import com.meeting_site_project.YM.vo.Member;
 import com.meeting_site_project.YM.vo.Notices;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,8 @@ public class CheckService {
         this.mybatisRepository = mybatisRepository;
     }
 
-    public List<Member> findMembers(int start, int end ) { // 전체 회원 목록 조회
-        return mybatisRepository.getMemberList(start, end);
+    public List<Member> getMemberListWithPaging(Criteria cri) { // 전체 회원 목록 조회
+        return mybatisRepository.getMemberListWithPaging(cri);
     }
 
     public int getTotal() {

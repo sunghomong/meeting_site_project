@@ -26,7 +26,7 @@ public interface MemberMapper {
     public Member selectById(String userId);
 
 
-    public List<Member> getMemberList(@Param("start") int start, @Param("end") int end );  //회원 전체 목록 조회
+    public List<Member> getMemberListWithPaging(Criteria cri);
     public int getTotal();
 
     Member selectMemberById(String userId); // 수정을 하기 위한 멤버 조회

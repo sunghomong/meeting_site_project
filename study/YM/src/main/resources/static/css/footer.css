@@ -1,10 +1,10 @@
 .Footer_footer__Dhw_9 {
+    min-width: 1080px;
     width: 100%;
     padding: 40px 0;
     background-color: #2d2d2d;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     height : 160px;
-
 }
 
 
@@ -17,6 +17,7 @@
 }
 
 .Footer_container__5d2_x {
+    min-width: 1080px;
     width: 100%;
     max-width: 1189px;
     display: flex;

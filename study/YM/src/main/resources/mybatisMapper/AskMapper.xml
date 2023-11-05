@@ -6,11 +6,11 @@
 <mapper namespace="com.meeting_site_project.YM.mapper.AskMapper">
 
     <select id="selectAskList" resultType="askContent"> <!-- 고객 문의 조회를 위한 SELECT문 -->
-        SELECT * FROM askList ORDER BY createDate DESC
+        SELECT * FROM askList a JOIN member m ON a.userId = m.userId ORDER BY createDate DESC
     </select>
 
     <select id="selectAskListByAskId" resultType="AskContent" parameterType="String"> <!-- askId를 통한 상세 조회 -->
-        SELECT * FROM askList WHERE askId=#{askId}
+        SELECT * FROM askList a JOIN member m ON a.userId = m.userId WHERE a.askId=#{askId}
     </select>
 
     <update id="updateAsk" parameterType="AskContent"> <!-- ask 수정 기능 -->

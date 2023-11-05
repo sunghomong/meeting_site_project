@@ -3,10 +3,18 @@
 
 <head>
     <title>문의 상세 정보</title>
-    <link href="/modalWindow.css" rel="stylesheet" type="text/css" />
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
     <style>
+        @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
         @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
         .notosanskr * {
@@ -34,10 +42,12 @@
         }
 
         .title-box {
+            padding-bottom: 20px;
             display: flex;
             justify-content: space-between;
             font-family: 'SpoqaHanSansNeo-Regular';
             align-items: flex-end;
+            border-bottom: 2px solid #dfe4ea;
         }
 
         .subject {
@@ -84,7 +94,7 @@
             font-weight: 500;
         }
 
-        button {
+        .wrapper button {
             background-color: #fefefe;
             cursor: pointer;
             border-radius: 5px;
@@ -120,6 +130,7 @@
             font-size: 14px;
             margin-bottom: 10px;
         }
+
         .comment-userId {
             font-size: 16px;
         }
@@ -152,7 +163,7 @@
             color: #454645;
             font-family: 'Noto Sans KR', sans-serif;
             border-radius: 10px;
-            margin: 20px 0 30px; 
+            margin: 20px 0 30px;
             box-sizing: border-box;
             padding: 20px;
         }
@@ -161,33 +172,106 @@
             color: #454645;
             font-family: 'Noto Sans KR', sans-serif;
         }
-        #status-words{
+
+        #status-words {
             margin-right: 10px;
-            
+
         }
-        #status{
+
+        #status {
             width: 85px;
             height: 20px;
             margin-right: 15px;
             text-align: center;
             cursor: pointer;
         }
+
         select option {
             cursor: pointer;
         }
-        #comment-button{
+
+        #comment-button {
             margin: auto;
             color: #7864c4;
             width: 100px;
             height: 40px;
             font-weight: bold;
         }
-        
 
+        #modalContainer.hidden {
+            display: none;
+        }
+
+        #memberListMenu {
+            background-color: #639eeb;
+            color: white;
+        }
+
+        #modalContainer {
+            z-index: 1000;
+            position: fixed;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #modalContent {
+            z-index: 1001;
+            background-color: white;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Pretendard-Regular';
+            width: 500px;
+            height: 150px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .delete-words {
+            color: #8e8e8e;
+            font-size: 20px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #8e8e8e;
+            line-height: 50px;
+            padding: 20px 30px;
+        }
+
+        .confirm-delete {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 60px;
+            padding-right: 20px;
+            color: #4e90f7;
+        }
+
+        .confirm-delete>button {
+            border: none;
+            background-color: white;
+            color: #4e90f7;
+            cursor: pointer;
+            margin-left: 30px;
+            font-family: 'Pretendard-Regular';
+            font-size: 16px;
+        }
     </style>
 </head>
 
 <body>
+    <div id="modalContainer" class="hidden">
+        <div id="modalContent">
+            <p class="delete-words">정말 삭제하시겠습니까?</p>
+            <div class="confirm-delete">
+                <button id="modalCloseButton" onclick="cancelDelete()">취소</button>
+                <button onclick="confirmDelete()">확인</button>
+            </div>
+            <input type="hidden" id="deleteAskId" name="askId" value="">
+        </div>
+    </div>
     <header th:replace="/home.html :: header"></header>
     <div class="wrapper">
         <div class="container">
@@ -200,7 +284,7 @@
                     <div class="history" th:if="${askContent.history != null}">[[${askContent.history}]]</div>
                 </div>
                 <div style="display: flex;">
-                    <div class="userId">[[${askContent.userId}]]</div>
+                    <div class="userId">[[${askContent.nickName}]]</div>
                     <div class="createDate" th:text="${#dates.format(askContent.createDate, 'yyyy-MM-dd')}"></div>
                     <div class="status"
                         th:style="${askContent.status == '미해결' ? 'color:  #a0a0a0;' : (askContent.status == '해결완료' ? 'color: #e15358 ;' : 'color: #5778d1;')}">
@@ -228,7 +312,7 @@
                 <div th:if="${commentAskList != null}" th:each="comment : ${commentAskList}"
                     style="padding: 20px 30px 5px;">
                     <div class="comment-user-box">
-                        <div class="comment-userId">[[${comment.userId}]]</div>
+                        <div class="comment-userId">[[${comment.nickName}]]</div>
                         <div class="comment-createDate"
                             th:text="${#dates.format(comment.createDate, 'yy-MM-dd &nbspHH:mm')}"></div>
                     </div>
@@ -251,21 +335,14 @@
                             <option value="처리중">처리중</option>
                         </select>
                         <div>
-                        <button id="comment-button" type="submit">댓글 작성</button>
-                    </div>
+                            <button id="comment-button" type="submit">댓글 작성</button>
+                        </div>
                     </div>
                 </form>
             </div>
 
 
-            <div id="modalContainer" class="hidden">
-                <div id="modalContent">
-                    <p style="color: red; font-size: 24px; text-align: center;">정말 삭제하시겠습니까?</p>
-                    <button onclick="confirmDelete()">네</button>
-                    <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
-                    <input type="hidden" id="deleteAskId" name="askId" value="">
-                </div>
-            </div>
+
         </div>
     </div>
     <footer th:replace="/home.html :: footer"></footer>

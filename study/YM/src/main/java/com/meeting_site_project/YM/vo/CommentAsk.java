@@ -11,6 +11,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentAsk {
+
+    private String nickName;
     private String commentId;
     private String userId;
     private String askId;

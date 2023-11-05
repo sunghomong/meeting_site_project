@@ -3,12 +3,21 @@
 
 <head>
     <title>회원 조회 페이지</title>
-    <link href="/modalWindow.css" rel="stylesheet" type="text/css" />
+
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
     <link th:href="@{/css/sidebar.css}" rel="stylesheet">
     <script src=https://code.jquery.com/jquery-3.7.1.min.js></script>
     <style>
+        @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
         @font-face {
             font-family: 'GmarketSansMedium';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
@@ -52,9 +61,9 @@
 
         td {
             font-size: 14px;
-            width: 100px;
+            min-width: 80px;
             color: #222;
-            padding: 10px;
+            padding: 12px 10px;
         }
 
         tr {
@@ -111,17 +120,110 @@
             margin-right: 15px;
         }
 
+        #modalContainer.hidden {
+            display: none;
+        }
+
         #memberListMenu {
             background-color: #639eeb;
             color: white;
+        }
+
+        #modalContainer {
+            z-index: 1000;
+            position: fixed;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #modalContent {
+            z-index: 1001;
+            background-color: white;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Pretendard-Regular';
+            width: 500px;
+            height: 150px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .delete-words {
+            color: #8e8e8e;
+            font-size: 20px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #8e8e8e;
+            line-height: 50px;
+            padding: 20px 30px;
+        }
+
+        .confirm-delete {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 60px;
+            padding-right: 20px;
+            color: #4e90f7;
+        }
+
+        .confirm-delete>button {
+            border: none;
+            background-color: white;
+            color: #4e90f7;
+            cursor: pointer;
+            margin-left: 30px;
+            font-family: 'Pretendard-Regular';
+            font-size: 16px;
+        }
+
+        .page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+        }
+
+        .active a {
+            color: #000;
+
+        }
+
+        .navigation {
+            margin-top: 50px;
+        }
+
+        .userAdmin {
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
+    <div id="modalContainer" class="hidden">
+        <div id="modalContent">
+            <div class="delete-words">정말 삭제하시겠습니까?</div>
+            <div class="confirm-delete">
+                <button id="modalCloseButton" onclick="cancelDelete()">취소</button>
+                <button onclick="confirmDelete()">확인</button>
+            </div>
+            <input type="hidden" id="deleteUserId" name="userid" value="">
+        </div>
+    </div>
     <header th:replace="/home.html :: header"></header>
 
     <div class="wrapper">
+
         <div th:replace="/manager/main.html :: sidebar"></div>
 
 
@@ -140,8 +242,8 @@
                         <th>이름</th>
                         <th style="width: 150px;">닉네임</th>
                         <th style="width: 160px;">가입 날짜</th>
-                        <th>권한</th>
-                        <th style="width: 150px;">이메일</th>
+                        <th style="width: 180px;">권한</th>
+                        <th style="width: 160px;">이메일</th>
                         <th>관리</th>
                     </tr>
                 </thead>
@@ -151,12 +253,13 @@
                         <td th:text="${member.userName}">이름</td>
                         <td th:text="${member.nickName}">닉네임</td>
                         <td th:text="${#dates.format(member.signDate, 'yyyy년-MM월-dd일')}">가입 날짜</td>
-                        <td th:text="${member.userAdmin}">권한</td>
+                        <td>
+                            <input class="userAdmin" type="radio" th:checked="${member.userAdmin == 0}" value="0">일반회원
+                            <input class="userAdmin" type="radio" th:checked="${member.userAdmin == 1}" value="1"
+                                style="margin-left: 5px;">관리자
+                        </td>
                         <td><span th:text="${member.emailId}"></span>@<span th:text="${member.emailDomain}"></span></td>
                         <td>
-                            <button th:onclick="|location.href='@{memberEdit(userid=${member.userId})}'|"
-                                style="cursor: pointer; margin-bottom: 3px;">수정
-                            </button>
                             <button type="button" th:attr="data-userid=${member.userId}"
                                 onclick="deleteMember(this.getAttribute('data-userid'))"
                                 style="cursor: pointer;">삭제</button>
@@ -166,22 +269,94 @@
                 </tbody>
             </table>
 
+
+            <nav class="page navigation">
+                <ul class="pagination">
+                    <th:block th:if="${pageMaker.prev}">
+                        <li class="paginate_button previous">
+                            <a class="page-link"
+                                th:href="@{/manager/memberList(pageNum=${pageMaker.startPage - 1})}">&lt;&lt;</a>
+                        </li>
+                    </th:block>
+                    <th:block th:if="${pageMaker.cri.pageNum > 1}">
+                        <li class="paginate_button">
+                            <a class="page-link"
+                                th:href="@{/manager/memberList(pageNum=${pageMaker.cri.pageNum - 1})}">&lt;</a>
+                        </li>
+                    </th:block>
+                    <th:block th:each="num : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
+                        <li class="paginate_button" th:classappend="${num == pageMaker.cri.pageNum} ? 'active'">
+                            <a class="page-link" th:href="@{/manager/memberList(pageNum=${num})}">[[${num}]]</a>
+                        </li>
+                    </th:block>
+                    <th:block th:if="${pageMaker.realEnd > pageMaker.cri.pageNum}">
+                        <li class="paginate_button">
+                            <a class="page-link"
+                                th:href="@{/manager/memberList(pageNum=${pageMaker.cri.pageNum + 1})}">&gt;</a>
+                        </li>
+                    </th:block>
+                    <th:block th:if="${pageMaker.next}">
+                        <li class="paginate_button next">
+                            <a class="page-link"
+                                th:href="@{/manager/memberList(pageNum=${pageMaker.endPage + 1})}">&gt;&gt;</a>
+                        </li>
+                    </th:block>
+                </ul>
+            </nav>
+
+            <form id='actionForm' action="/manager/memberList" method="get">
+                <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+                <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+            </form>
+
+
+
+
+            <!-- /.page -->
         </div>
     </div>
 
     </div>
-    <div id="modalContainer" class="hidden">
-        <div id="modalContent">
-            <p style="color: red; font-size: 24px; text-align: center;">정말 삭제하시겠습니까?</p>
-            <button onclick="confirmDelete()">네</button>
-            <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
-            <input type="hidden" id="deleteUserId" name="userid" value="">
-        </div>
-    </div>
+
     <footer th:replace="/home.html :: footer"></footer>
 
 
     <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.userAdmin').on('change', function () {
+                // 같은 tr 안에 있는 라디오 버튼을 모두 찾습니다.
+                var radiosInSameRow = $(this).closest('tr').find('.userAdmin');
+
+                // 같은 tr 안에 있는 라디오 버튼의 체크를 모두 해제합니다.
+                radiosInSameRow.prop('checked', false);
+
+                // 선택한 라디오 버튼을 체크합니다.
+                $(this).prop('checked', true);
+
+                var userId = $(this).closest('tr').find('td:nth-child(1)').text(); // 해당 라인의 userId 가져오기
+                var userAdmin = $(this).val(); // 라디오 버튼의 value 값 가져오기
+
+                $.ajax({
+                    type: 'POST', // 또는 GET, 필요에 따라 변경
+                    url: '/manager/memberEdit', // 컨트롤러 URL 수정 필요
+                    data: { userId: userId, userAdmin: userAdmin },
+                    success: function (result) {
+                        // AJAX 요청이 성공했을 때의 처리
+                        console.log(result); // 서버에서 받은 응답을 로그에 출력 (디버깅용)
+                    },
+                    error: function (error) {
+                        // AJAX 요청이 실패했을 때의 처리
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+
+        var actionForm = $('#actionForm'); $('.paginate_button a').on('click', function (e) {
+
+            actionForm.find('input[name="pageNum"]').val($(this).attr('href')); actionForm.submit();
+        });
 
         function editMember(event) {
             // 수정 페이지로 이동하는 이벤트
@@ -225,6 +400,7 @@
                 data: { userId: userId },
                 success: function (result) {
                     $('#userListTable tbody').empty(); // tbody만 비우도록 수정
+                    $('.navigation').empty();
 
                     if (result.length >= 1) {
                         result.forEach(function (item) {
@@ -236,7 +412,6 @@
                             str += "<td>" + item.userAdmin + "</td>";
                             str += "<td>" + item.emailId + "@" + item.emailDomain + "</td>";
                             str += "<td>"
-                                + "<button onclick='editMember(event)' style='cursor: pointer;'>수정</button>"
                                 + "<button type='button' data-userid='" + item.userId + "' onclick='deleteMember(this.getAttribute(\"data-userid\"))' style='cursor: pointer;'>삭제</button>"
                                 + "<input type='hidden' name='userid' value='" + item.userid + "'>"
                                 + "</td>";

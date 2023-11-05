@@ -19,8 +19,8 @@
     </insert>
 
     <insert id="insertChatRoomMembers" parameterType="ChatRoomMembers"> <!-- 채팅방에 참여한 회원 --> <!-- 사용중 -->
-        INSERT INTO chatRoomMembers (roomUserId, userId, chatRoomId, admin, chatInnerTime,nickName)
-        VALUES (#{roomUserId}, #{userId}, #{chatRoomId}, #{admin}, sysdate,nickName=#{nickName})
+        INSERT INTO chatRoomMembers (roomUserId, userId, chatRoomId, admin, chatInnerTime, nickName)
+        VALUES (#{roomUserId}, #{userId}, #{chatRoomId}, #{admin}, sysdate, #{nickName})
     </insert><!-- admin 1(방장) , 0(일반)-->
 
     <select id="selectChatRoomIdListByUserId" resultType="String"> <!-- 사용중 -->

@@ -26,6 +26,7 @@ public class JoinController {
     // 회원가입 페이지로 이동하는 요청에 대한 핸들러 메서드
     @GetMapping("/join")
     public String loginForm(@ModelAttribute("joinMember") JoinMember joinMember, HttpSession session) {
+
         AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
         if(authInfo != null) {
             return "redirect:/";

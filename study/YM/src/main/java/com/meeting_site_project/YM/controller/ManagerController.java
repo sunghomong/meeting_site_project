@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,9 +25,6 @@ import java.util.UUID;
 @RequestMapping("/manager")
 public class ManagerController {
 
-    private static int pageSIZE = 10;
-    public static int totalRecord = 0;
-    public static int totalPage = 1;
 
     CheckService checkService;
 
@@ -48,66 +44,40 @@ public class ManagerController {
 
     @GetMapping("")
     public String createForm(@RequestParam("userId") String userId, HttpSession session) {
-        session.setAttribute("userId",userId);
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if(authInfo == null || authInfo.getUserAdmin() == 0) {
+            return "redirect:/";
+        }
+        session.setAttribute("userId", userId);
 
-        return "/manager/main";
+        return "redirect:/manager/memberList";
     }
 
 
     @GetMapping("memberList")
-    public String getMemberList(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, Model model) { // 전체 회원을 조회하기 위한 컨트롤러
-        // 페이징 처리
-        totalRecord = checkService.getTotal();
-        totalPage = totalRecord / pageSIZE;
+    public String getMemberList(Criteria cri, Model model, HttpSession session) { // 전체 회원을 조회하기 위한 컨트롤러
 
-        if(totalRecord % pageSIZE != 0 ) {  // 나머지 페이지가 있을 경우 페이지 수 +1
-            totalPage++;
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if(authInfo == null || authInfo.getUserAdmin() == 0) {
+            return "redirect:/";
         }
 
-        System.out.println("pageNum : " + pageNum);
-
-        int start = (pageNum-1)*pageSIZE+1;
-        int end = start + pageSIZE - 1;
-        System.out.println("시작 레코드 : " + start);
-        System.out.println("끝 레코드 : " + end);
-        System.out.println("-----------------------------");
-
-        List<Member> memberList = checkService.findMembers(start, end); // service에서 멤버를 불러옴
+        int totalMember = checkService.getTotal();
+        List<Member> memberList = checkService.getMemberListWithPaging(cri); // service에서 멤버를 불러옴
 
         model.addAttribute("memberList", memberList); // model 객체로 memberList를 보내줌
-        model.addAttribute("totalPage", totalPage);
-        model.addAttribute("pageNum", pageNum);
+        model.addAttribute("pageMaker", new PageDTO(cri, totalMember));
+
         return "manager/memberList";
     }
 
 
-    @GetMapping("memberEdit")
-    public String editMemberPage(@RequestParam("userid") String userId, Model model) {
-        // 특정 회원을 수정하는 페이지로 이동하는 로직을 구현
-        // 데이터베이스에서 userId에 해당하는 회원 정보를 가져오는 로직을 구현
-
-        Member member = checkService.selectMemberById(userId);
-
-        model.addAttribute("member",member);
-
-        return "manager/memberEdit"; // 수정 페이지로 이동
-    }
-
-    @PostMapping("/memberEdit")
-    public String editMemberAdmin(@RequestParam("userId") String userId, @RequestParam("userAdmin") int userAdmin) {   // 수정된 데이터를 처리하는 핸들러
-        // 수정된 데이터를 저장 또는 업데이트하는 로직을 구현
-        HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put("userId", userId);
-        parameters.put("userAdmin", userAdmin);
-
-        updateService.updateMemberAdmin(parameters);
-
-        return "redirect:/manager/memberList"; // 수정 후 회원 리스트로 이동
-    }
-
-
     @GetMapping("delete/{userId}")
-    public String deleteMember(@PathVariable("userId") String userId) {
+    public String deleteMember(@PathVariable("userId") String userId, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if(authInfo == null || authInfo.getUserAdmin() == 0) {
+            return "redirect:/";
+        }
         // 특정 회원을 삭제하는 로직을 구현
 
         deleteService.deleteMemberById(userId);
@@ -115,20 +85,14 @@ public class ManagerController {
         return "redirect:/manager/memberList"; // 특정 회원 삭제 후 회원 목록 페이지로 리다이렉트
     }
 
-    @GetMapping("/groupList")
-    public String groupListForm(Model model){ // 모임 리스트를 보여주는 form 으로 이동하는 로직 구현
-
-//        checkService.selectGroupList();
-
-
-//        model.addAttribute("groupList",groupList);
-
-        return "/manager/groupList";
-    }
 
     @GetMapping("/noticeList")
     public String noticeListFormForManager(HttpSession session,Model model) {
+
         AuthInfo authInfo = (AuthInfo) session.getAttribute("loginMember");
+        if(authInfo == null || authInfo.getUserAdmin() == 0) {
+            return "redirect:/";
+        }
 
         List<Notices> notices = managerService.selectNoticeListByUserId(authInfo.getUserId()); // 본인이 만든 공지 사항 리스트 확인 (관리자)
 
@@ -138,7 +102,11 @@ public class ManagerController {
     }
 
     @GetMapping("createNotice")
-    public String createNoticeForm() {
+    public String createNoticeForm(HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if(authInfo == null || authInfo.getUserAdmin() == 0) {
+            return "redirect:/";
+        }
 
         return "/manager/createNotice";
     }
@@ -167,9 +135,10 @@ public class ManagerController {
     @GetMapping("/getSearchList")
     @ResponseBody
     private List<Member> getSearchList(@RequestParam("userId") String userId) {
-        System.out.println(userId);
+
+
         List<Member> searchList = checkService.getSearchList(userId);
-        System.out.println(searchList);
+
         return searchList;
     }
 

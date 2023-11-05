@@ -11,6 +11,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AskContent {
+
+    private String nickName;
     private String askId; // 문의 ID
     private String userId; // 회원 ID
     private String subject; // 글 제목

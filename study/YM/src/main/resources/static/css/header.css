@@ -11,6 +11,7 @@
 
         }
 .MainHeader_header__WXxwu {
+    min-width: 1080px;
     width: 100vw;
     background-color: #fff;
     margin: 0 auto;
@@ -81,6 +82,7 @@
     margin-bottom: -12px
 }
 .MainHeader_header__top__gspE8 {
+    min-width: 1080px;
     width: calc(100% - 28px);
     width: 1169px;
     display: flex;
@@ -138,6 +140,7 @@
 }
 
 .MainHeader_header__content__WRkIy {
+    
     display: flex;
     line-height: 50px;
     justify-content: center;

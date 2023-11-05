@@ -29,7 +29,11 @@ public class UserDeleteController {
     }
 
     @GetMapping("/userDelete")
-    public String userDelete(@ModelAttribute("password")ConfirmUserPassword confirmUserPassword) {
+    public String userDelete(@ModelAttribute("password")ConfirmUserPassword confirmUserPassword, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+        if (authInfo == null) {
+            return "redirect:/login";
+        }
 
         return "/profile/userDeleteForm";
     }

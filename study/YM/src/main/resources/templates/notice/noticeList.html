@@ -149,7 +149,7 @@
                 <li th:each="notice : ${notices}" th:attr="data-value=${notice.noticeId}" class="notice">
                     <div class="No">공지</div>
                     <div th:text="${notice.title}" class="noticeTitle"></div>
-                    <div th:text="${notice.userId}" class="userId"></div>
+                    <div th:text="${notice.nickName}" class="userId"></div>
                     <div th:text="${#dates.format(notice.createDate, 'yyyy-MM-dd')}" class="createDate"></div>
                 </li>
             </ul>

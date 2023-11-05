@@ -17,16 +17,16 @@
 
         @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-.notosanskr * { 
- font-family: 'Noto Sans KR', sans-serif;
-}
+        .notosanskr * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
 
-@font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
 
 
         .profile-box {
@@ -68,7 +68,7 @@
             background-color: white;
             width: 900px;
             border-radius: 3px;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
         }
 
         .about-me {
@@ -80,33 +80,39 @@
             padding-bottom: 25.4px;
             border-bottom: 2px solid darkgray;
         }
+
         .info-box {
             margin-top: 40px;
             display: flex;
             justify-content: center;
         }
-        .left-box{
+
+        .left-box {
             width: 400px;
 
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         .right-box {
-        box-sizing: border-box;
+            box-sizing: border-box;
             width: 500px;
             display: flex;
             align-items: center;
         }
+
         .text {
             font-family: 'GmarketSansMedium';
             font-weight: bold;
             font-size: 25px;
             color: #000000;
         }
+
         .text-box {
             width: 450px;
         }
+
         .info-text {
             width: 380px;
             font-size: 18px;
@@ -116,6 +122,7 @@
             padding-bottom: 3px;
             border-bottom: 0.5px solid #acacac;
         }
+
         .button-box {
             text-align: center;
         }
@@ -132,6 +139,7 @@
             cursor: pointer;
             margin: 0 10px;
         }
+
         button:hover {
             background-color: #8e8e8e;
         }
@@ -147,7 +155,7 @@
             background-color: rgba(0, 0, 0, 0.5);
         }
 
-        
+
 
         .user-delete {
             z-index: 1001;
@@ -171,19 +179,18 @@
             line-height: 50px;
             padding: 20px 30px;
         }
+
         .confirm-delete {
             line-height: 60px;
             text-align: right;
             padding-right: 20px;
             color: #4e90f7;
         }
+
         .confirm-delete span {
             cursor: pointer;
             margin-left: 30px;
         }
-
-
-
     </style>
 </head>
 
@@ -191,7 +198,8 @@
     <div class="delete-box">
         <div class="user-delete">
             <div class="delete-words">정말로 회원 탈퇴 하시겠습니까?</div>
-            <div class="confirm-delete"><span class="cancle">취소</span><span class="ok" th:onclick="|location.href='@{/userDelete}'|">확인</span></div>
+            <div class="confirm-delete"><span class="cancle">취소</span><span class="ok"
+                    th:onclick="|location.href='@{/userDelete}'|">확인</span></div>
         </div>
     </div>
     <header th:replace="/home.html :: header"></header>
@@ -200,56 +208,56 @@
         <div class="content">
             <div class="about-me">프로필</div>
             <div class="info-box">
-            <div class="left-box">
+                <div class="left-box">
                     <div class="profile-box" style="background: #BDBDBD;">
                         <img class="profile" th:src="@{${member.picturePath}}">
                     </div>
-            </div>
-            <div class="right-box">
-                <div class="text-box">
-                <div class="text">이름</div>
-                <div class="info-text" th:text="${member.userName}">이름</div>
+                </div>
+                <div class="right-box">
+                    <div class="text-box">
+                        <div class="text">이름</div>
+                        <div class="info-text" th:text="${member.userName}">이름</div>
 
-                <div class="text">닉네임</div>
-                <div class="info-text" th:text="${member.nickName}">닉네임</div>
+                        <div class="text">닉네임</div>
+                        <div class="info-text" th:text="${member.nickName}">닉네임</div>
 
-                <div class="text">생일</div>
-                <div class="info-text" th:text="${member.birthday}">생일</div>
+                        <div class="text">생일</div>
+                        <div class="info-text" th:text="${member.birthday}">생일</div>
 
-                <div class="text">MBTI</div>
-                <div class="info-text" th:text="${#strings.toUpperCase(member.userMbti)}">MBTI</div>
+                        <div class="text">MBTI</div>
+                        <div class="info-text" th:text="${#strings.toUpperCase(member.userMbti)}">MBTI</div>
+                    </div>
                 </div>
             </div>
-        </div>
-            <div  id="userInfo" class="userInfo" th:utext="${member.userInfo}"></div>
+            <div id="userInfo" class="userInfo" th:utext="${member.userInfo}"></div>
             <div class="button-box">
                 <button th:onclick="|location.href='@{/profileUpdate(userId=${member.userId})}'|">프로필 수정</button>
-            <button th:onclick="|location.href='@{/confirmPassword}'|">비밀번호 변경</button>
-            <button>회원 탈퇴</button>
-        </div>
+                <button th:onclick="|location.href='@{/confirmPassword}'|">비밀번호 변경</button>
+                <button>회원 탈퇴</button>
+            </div>
         </div>
     </div>
 
     <footer th:replace="/home.html :: footer"></footer>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var deleteButton = document.querySelector(".button-box button:nth-child(3)");
-        var boxDeleteDiv = document.querySelector(".delete-box");
-        var cancelButton = document.querySelector(".delete-box .cancle");
-        
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var deleteButton = document.querySelector(".button-box button:nth-child(3)");
+            var boxDeleteDiv = document.querySelector(".delete-box");
+            var cancelButton = document.querySelector(".delete-box .cancle");
 
-        deleteButton.addEventListener("click", function() {
-            boxDeleteDiv.style.display = "block";    
+
+            deleteButton.addEventListener("click", function () {
+                boxDeleteDiv.style.display = "block";
+            });
+
+            // 취소 버튼 클릭 시 .delete-box 숨김
+            cancelButton.addEventListener("click", function () {
+                boxDeleteDiv.style.display = "none";
+
+
+            });
         });
-
-        // 취소 버튼 클릭 시 .delete-box 숨김
-        cancelButton.addEventListener("click", function() {
-        boxDeleteDiv.style.display = "none";    
-
-        
-    });
-    });
-</script>
+    </script>
 
 </body>
 

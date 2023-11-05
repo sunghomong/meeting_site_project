@@ -13,17 +13,26 @@
             font-weight: 400;
             font-style: normal;
         }
+
         @font-face {
-    font-family: 'NanumSquareNeo-Variable';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
+            font-family: 'NanumSquareNeo-Variable';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'NPSfontBold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+
         #wrapper {
             min-height: calc(100vh - 220px);
         }
 
-<<<<<<< HEAD
+
         .banner {
             width: 100%;
             height: 750px;
@@ -42,6 +51,113 @@
             display: flex;
             align-items: center;
             font-family: 'Pretendard-Regular';
+        }
+
+        .second-banner {
+            background-color: #f4f4f4;
+            width: 100%;
+            height: 650px;
+            display: flex;
+            justify-content: center;
+            font-family: 'Pretendard-Regular';
+        }
+
+        .second-banner-box-img {
+            width: 50%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100% 100%;
+        }
+
+        .second-banner-box-text {
+            margin-top: 10px;
+            width: 35%;
+            height: 100%;
+        }
+
+        .second-title {
+            color: #111;
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 61px;
+            margin-top: 180px;
+        }
+
+        .T {
+            font-family: 'NPSfontBold';
+            color: #111;
+            font-weight: 700;
+            font-size: 30px;
+            line-height: 50px;
+            margin-top: 60px;
+
+            padding-right: 70px;
+            text-align: right;
+        }
+
+        .thirdBanner {
+            background-color: #e6e1e1;
+            width: 100%;
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .third-banner-box-img {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100% 100%;
+            width: 55%;
+            height: 100%;
+        }
+
+        .third-banner-box-text {
+            width: 45%;
+            height: 100%;
+            font-family: 'Pretendard-Regular';
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .third-banner-box-text-title {
+            color: #111;
+            font-weight: 700;
+            font-size: 42px;
+            line-height: 61px;
+            margin-bottom: 30px;
+        }
+
+        .third-banner-box-text-subtitle {
+            color: #111;
+            display: flex;
+            align-items: center;
+            font-weight: 400;
+            font-size: 30px;
+            line-height: 24px;
+            margin-bottom: 100px;
+        }
+
+        .third-banner-box-text-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .third-banner-box-text-button button{
+            width: 300px;
+            cursor: pointer;
+            background-color: #f43630;
+            font-size: 20px;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 35px;
+            color: white;
+            
+        }
+        .third-banner-box-text-button button:hover{
+            background-color: #cd262b;
         }
 
         .banner-box>div {
@@ -64,14 +180,10 @@
             font-size: 30px;
             line-height: 24px;
         }
+
         .siteName {
             font-weight: bold;
             font-size: 32px;
-=======
-        #wrapper{
-        min-height: calc(100vh - 220px);
-        padding-top: 80px;
->>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
         }
     </style>
 </head>
@@ -94,10 +206,8 @@
                         th:href="@{/logout}">로그아웃</a>
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
-<<<<<<< HEAD
                     <a class="LinkOnClick_title__0WSZ9" th:href="@{/chat}">채팅하기</a>
-=======
->>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
+
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/chat/chatRoomList(userId=${session.loginMember.userId})}">채팅 리스트</a>
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
@@ -118,9 +228,41 @@
                     <div class="title">다양한 취향과 관심사로
                         <br> 만나는 우리
                     </div>
-                    <div class="small-title">관심사 기반 모임 커뮤니티, <sapn class="siteName">	&nbsp;요즘 뭐해?</sapn>
+                    <div class="small-title">관심사 기반 모임 커뮤니티, <sapn class="siteName"> &nbsp;요즘 뭐해?</sapn>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="second-banner">
+            <div class="second-banner-box-img" th:style="'background-image: url('+@{/images/secondBanner.png}+');'">
+
+            </div>
+            <div class="second-banner-box-text">
+                <div class="second-title">
+                    나와 맞는 MBTI를 골라<br> 다양한 만남
+                </div>
+                <div class="T">
+                    너... T야..?
+                </div>
+            </div>
+        </div>
+        <div class="thirdBanner">
+            <div class="third-banner-box-text">
+                <div>
+                    <div class="third-banner-box-text-title">
+                        언제 어디서나<br>
+                        관심사로 연결되는 새로운 세상
+                    </div>
+                    <div class="third-banner-box-text-subtitle">
+                        <span style="font-weight: bold;">요즘 뭐해?</span>에서 취향이 통하는 친구를 만나요
+                    </div>
+                    <div class="third-banner-box-text-button">
+                        <button onclick="location.href = /*[[@{/login}]]*/ '/login'">지금 시작하기</button>
+                    </div>
+                </div>
+            </div>
+            <div class="third-banner-box-img" th:style="'background-image: url('+@{/images/thirdBanner.png}+');'">
+
             </div>
         </div>
 
@@ -134,13 +276,7 @@
                 <p class="Footer_info__content__cu7zK"><a href="#">이벤트</a></p>
                 <p class="Footer_info__content__cu7zK"><a href="#">자주 묻는 질문</a></p>
                 <p class="Footer_info__content__cu7zK"><a href="/FAQ">1:1 문의</a></p>
-<<<<<<< HEAD
-=======
-                <p class="Footer_info__content__cu7zK"><a target="_blank" href="/notice/detail.html?id=311">제휴 및 입점
-                        문의</a></p>
-                <p class="Footer_info__content__cu7zK"><a target="_blank" rel="noreferrer"
-                        href="https://people.munto.kr/">채용</a></p>
->>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
+
             </div>
             <div class="Footer_sns__2wNzr">
                 <p class="Footer_sns__subject__v9us5">소셜 미디어</p>
@@ -153,13 +289,12 @@
             </div>
             <div class="Footer_company__pBIS1">
                 <p class="Footer_company__title__VlrEE">주식회사 요즘 뭐해?</p>
-                <p class="Footer_company__content__QXWHT">대표 : 이미리 | 개인정보관리책임자 : 이미리 <br />이메일 : munto@munto.kr | 대표번호 :
-                    070-7606-4793<br />주소 : 서울시 강남구 테헤란로 503 하이브로빌딩<br />사업자등록번호 : 846-86-01452 | 통신판매 : 제
-                    2022-서울강남-00623<br />고객센터 : <a class="Footer_kakaoLink__1y_id" target="_self"
-                        href="https://pf.kakao.com/_kxgljxl/chat">@카카오톡채널</a> | 운영 시간 : (월~일) 오전 11:00 ~ 오후 5:00</p>
-                <p class="Footer_company__info__dONPJ"><a target="_self" href="/policyV2">이용약관</a> | <a target="_self"
-                        href="/privacyV2">개인정보처리방침</a> | <a target="_self"
-                        href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=8468601452">사업자정보확인</a></p>
+                <p class="Footer_company__content__QXWHT">대표 : 조성호 | 개인정보관리책임자 : 정지윤 <br />이메일 : YJMH@naver.com | 대표번호 :
+                    010-6608-2032<br />경기도 수원시 팔달구 매산로1가 11-12 아이메카 7층 그린컴퓨터아카데미 수원<br />사업자등록번호 : ###-##-####<br />고객센터
+                    : <a class="Footer_kakaoLink__1y_id" target="_self" href="https://open.kakao.com/o/gVOSHCtf">카카오톡
+                        채널</a> | 운영 시간 : (월~금) 오전 09:30 ~ 오후 5:50</p>
+                <p class="Footer_company__info__dONPJ"><a target="_self" href="#">이용약관</a> | <a target="_self"
+                        href="#">개인정보처리방침</a> | <a target="_self" href="#">사업자정보확인</a></p>
             </div>
         </div>
     </footer>

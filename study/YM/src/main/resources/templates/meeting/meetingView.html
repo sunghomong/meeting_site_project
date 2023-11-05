@@ -181,14 +181,7 @@
             margin: 0 20px;
         }
 
-<<<<<<< HEAD
-        
-=======
-        button:hover {
-            background-color: #cd262b;
-        }
 
->>>>>>> 5f40671eae6f66650ecf2bb836ba9e3b60fae15d
         .footer {
             background-color: white;
             position: fixed;
@@ -247,11 +240,8 @@
                         <div class="people-img-box">
                             <!-- groupNumberOfPeople -->
                             <img th:src="@{/icon/peopleIcon.png}">
-                            <div class="people-box">모집 인원 : <span th:text="${groupInfo.groupNumberOfPeople}"
-                                    style="margin-right: 1px;"></span>명</div><br><br>
-                            <img th:src="@{/icon/peopleIcon.png}">
-                            <div class="people-box">현재 인원 : <span th:text="${chatRoomInfo.userCount}"
-                                                                  style="margin-right: 1px;"></span>명</div>
+                            <div class="people-box">모임 인원 <!--<span th:text="${chatRoomInfo.userCount}" style="margin-left:10px"></span>--> / <span th:text="${groupInfo.groupNumberOfPeople}"
+                                    style="margin-right: 1px;"><br><br>
                         </div>
                     </div>
                 </div>
