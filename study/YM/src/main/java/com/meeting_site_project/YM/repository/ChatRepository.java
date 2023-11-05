@@ -138,18 +138,20 @@ public class ChatRepository {
         return chatMapper.selectChatOwnerIdByChatRoomId(chatRoomId);
     }
 
-    public List<ChatRoomMembers> selectChatRoomMemberListByGroupId(String groupId) {
-        return chatMapper.selectChatRoomMemberListByGroupId(groupId);
+    public List<ChatRoomMembers> selectChatRoomMemberListByChatRoomId(String chatRoomId) {
+        return chatMapper.selectChatRoomMemberListByChatRoomId(chatRoomId);
     }
 
-    public ChatRoomMembers selectChatMemberByUserIdWithGroupId(String userId, String groupId) {
-        ChatRoomMembers chatRoomMember = new ChatRoomMembers();
 
-        chatRoomMember.setUserId(userId);
-        chatRoomMember.setChatRoomId(groupId);
-
-        return chatMapper.selectChatMemberByChatRoomMember(chatRoomMember);
-
+    public void updateChatRoomMemberAdminByRoomUserId(String roomUserId, int admin) {
+        chatMapper.updateChatRoomMemberAdminByRoomUserId(roomUserId,admin);
     }
 
+    public String selectGroupIdWhereChatRoomByChatRoomId(String chatRoomId) {
+        return chatMapper.selectGroupIdWhereChatRoomByChatRoomId(chatRoomId);
+    }
+
+    public ChatRoomMembers selectChatRoomMemberByUserIdAndChatRoomId(String userId, String chatRoomId) {
+        return chatMapper.selectChatRoomMemberByUserIdAndChatRoomId(userId,chatRoomId);
+    }
 }

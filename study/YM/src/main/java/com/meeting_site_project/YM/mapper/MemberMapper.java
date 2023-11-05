@@ -87,4 +87,6 @@ public interface MemberMapper {
     public void deleteGroup(String groupId);
 
     public List<Member> getSearchList(String userId);
+
+    void updateGroupOwnerIdByUserIdAndGroupId(@Param("groupId") String groupId, @Param("userId") String userId);
 }

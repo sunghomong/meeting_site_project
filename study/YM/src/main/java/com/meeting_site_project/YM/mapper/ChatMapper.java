@@ -4,6 +4,7 @@ import com.meeting_site_project.YM.vo.ChatMessage;
 import com.meeting_site_project.YM.vo.ChatRoom;
 import com.meeting_site_project.YM.vo.ChatRoomMembers;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -50,7 +51,13 @@ public interface ChatMapper {
 
     String selectChatOwnerIdByChatRoomId(String chatRoomId);
 
-    List<ChatRoomMembers> selectChatRoomMemberListByGroupId(String groupId);
+    List<ChatRoomMembers> selectChatRoomMemberListByChatRoomId(String chatRoomId);
 
-    ChatRoomMembers selectChatMemberByChatRoomMember(ChatRoomMembers chatRoomMembers);
+    void updateChatRoomMemberAdminByRoomUserId(@Param("roomUserId") String roomUserId,@Param("admin") int admin);
+
+    void updateChatRoomOwnerIdByUserIdAndGroupId(@Param("groupId") String groupId, @Param("userId") String userId);
+
+    String selectGroupIdWhereChatRoomByChatRoomId(String chatRoomId);
+
+    ChatRoomMembers selectChatRoomMemberByUserIdAndChatRoomId(@Param("userId") String userId, @Param("chatRoomId") String chatRoomId);
 }

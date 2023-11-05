@@ -101,14 +101,28 @@
         SELECT ownerId FROM chatRoom WHERE chatRoomId=#{chatRoomId}
     </select>
 
-    <!-- 채팅방 회원들 전부 조회 -->
-    <select id="selectChatRoomMemberListByGroupId" parameterType="String" resultType="ChatRoomMembers">
-        SELECT * FROM chatRoomMembers WHERE groupId=#{groupId}
+    <!-- 채팅방 회원들 전부 조회 chatRoomId 가져와야함 -->
+    <select id="selectChatRoomMemberListByChatRoomId" parameterType="String" resultType="ChatRoomMembers">
+        SELECT * FROM chatRoomMembers WHERE chatRoomId=#{chatRoomId}
     </select>
 
-    <!-- 채팅방 회원 한명을 조회-->
-    <select id="selectChatMemberByChatRoomMember" parameterType="ChatRoomMembers" resultType="ChatRoomMembers">
-        SELECT * FROM chatRoomMembers WHERE groupId=#{groupId} and userId=#{userId}
+
+    <!-- 채팅방 회원의 권한 수정 -->
+    <update id="updateChatRoomMemberAdminByRoomUserId">
+        UPDATE chatRoomMembers SET admin=#{admin} WHERE roomUserId=#{roomUserId}
+    </update>
+
+    <!-- 채팅방 방장 변경 -->
+    <update id="updateChatRoomOwnerIdByUserIdAndGroupId" >
+        UPDATE chatRoom SET ownerId=#{userId} WHERE groupId=#{groupId}
+    </update>
+
+    <!-- 그룹 아이디 가져오기 -->
+    <select id="selectGroupIdWhereChatRoomByChatRoomId" parameterType="String" resultType="String">
+        SELECT groupId FROM chatRoom WHERE chatRoomId=#{chatRoomId}
     </select>
 
+    <select id="selectChatRoomMemberByUserIdAndChatRoomId" resultType="ChatRoomMembers">
+        SELECT * FROM chatRoomMembers WHERE userId=#{userId} and chatRoomId=#{chatRoomId}
+    </select>
 </mapper>

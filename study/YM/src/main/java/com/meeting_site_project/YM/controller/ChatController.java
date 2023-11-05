@@ -16,16 +16,11 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class ChatController {
@@ -159,12 +154,41 @@ public class ChatController {
         }
 
         // 회원 정보 삭제
-        chatService.deleteChatMemeberByChatMessage(chatMessage);
+        chatService.deleteChatMemeberByChatMessage(chatMessage); // userId,chatRoomId 이용
         // 채팅방 회원 수 -1
         chatService.subtractChatMemberCntByRoomId(chatRoomId);
 
     }
 
+    @PostMapping("/chat/deleteChatMember")
+    public void delteChatMemeber(@RequestParam("chatRoomId") String chatRoomId,
+                                 @RequestParam("userId") String userId,
+                                 @RequestParam("messageTime") Date messageTime) { // 필요한 데이터 userId,chatRoomId
+        System.out.println("chatRoomId = " + chatRoomId);
+        ChatMessage chatMessage = new ChatMessage();
+
+        ChatRoomMembers chatRoomMember = chatService.selectChatRoomMemberByUserIdAndChatRoomId(userId,chatRoomId);
+        // UUID를 사용하여 고유한 askId 생성
+        String uniqueMessageId = UUID.randomUUID().toString();
+
+        chatMessage.setSender(chatRoomMember.getNickName());
+        chatMessage.setContent(chatRoomMember.getNickName() + "님이 추방 당하셨습니다.");
+        chatMessage.setMessageId(uniqueMessageId);
+        chatMessage.setChatRoomId(chatRoomId);
+        chatMessage.setUserId(userId);
+        chatMessage.setMessageTime(messageTime);
+        chatMessage.setType(ChatMessage.MessageType.DELETE);
+
+        chatService.insertChatMessage(chatMessage);
+
+        simpMessagingTemplate.convertAndSend("/topic/chatRoom/" + chatRoomId, chatMessage);
+
+        // 채팅방 회원 수 -1
+        chatService.subtractChatMemberCntByRoomId(chatRoomId);
+        // 회원 정보 삭제
+        chatService.deleteChatMemeberByChatMessage(chatMessage); // userId,chatRoomId 이용
+
+    }
 
     // 채팅 폼을 보여주는 페이지로 이동
     @GetMapping("/chat")
@@ -211,7 +235,7 @@ public class ChatController {
 
         model.addAttribute("userWasInChatRoom", finallyResult); // 회원이 전에 들어온적이 있는지 판단
         model.addAttribute("chatRoom",chatRoom);
-        model.addAttribute("userName",authInfo.getUserName());
+        model.addAttribute("userName",authInfo.getNickName());
         model.addAttribute("userId",authInfo.getUserId());
     }
 
@@ -239,14 +263,45 @@ public class ChatController {
         return "";
     }
 
-    @GetMapping("/chatMemberEdit")
-    public String moveChatMemberEditPage(@RequestParam("userId") String userId,
-                                         @RequestParam("groupId") String groupId) {
+    @PostMapping("/updateChatMemberAdmin")
+    @ResponseBody
+    public Map<String, Object> updateChatMemberAdmin(@RequestParam("roomUserId") String roomUserId,
+                                                     @RequestParam("admin") int admin,
+                                                     @RequestParam("chatRoomId") String chatRoomId,
+                                                    @RequestParam("userId") String userId,
+                                                     @RequestParam("changeAdmin") int changeAdmin,
+                                                     HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+        boolean success = false;
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("loginMember");
 
-        ChatRoomMembers chatRoomMembers = chatService.selectChatMemberByUserIdWithGroupId(userId,groupId);
+        String groupId = chatService.selectGroupIdWhereChatRoomByChatRoomId(chatRoomId);
+        System.out.println("1.groupId = " + groupId);
+        System.out.println("admin = " + admin);
 
+        if(changeAdmin == 1 && admin == 0) { // 현재 일반 회원인데 관리자로 바꾸려고 하는 경우
+            // 그룹의 오너, 채팅방의 오너 변경
+            meetingService.updateGroupOwnerIdByUserIdAndGroupId(groupId,userId);
+            // 채팅 멤버의 권한을 1로 교체
+            chatService.updateChatRoomMemberAdminByRoomUserId(roomUserId,changeAdmin);
 
+            // 채팅 본인의 권한을 0으로 교체
+            ChatRoomMembers chatRoomMember = chatService.selectChatRoomMemberByUserIdAndChatRoomId(authInfo.getUserId(),chatRoomId);
 
-        return "";
+            chatService.updateChatRoomMemberAdminByRoomUserId(chatRoomMember.getRoomUserId(),0);
+            System.out.println("chatRoomMember = " + chatRoomMember);
+
+            success = true;
+        }
+
+        if (success) { // 방장의 권한이 변경된 경우
+            response.put("success", true);
+            response.put("message", "방장의 권한이 변경되었습니다.");
+        } else { // 일반 회원을 일반 회원으로 바꾸려고 하는 경우나 관리자 자신을 일반 회원으로 바꾸려는 경우
+            response.put("success", false);
+            response.put("message", "수정 내용을 확인 바랍니다. 관리자일 경우 일반 회원으로 바꿀수 없습니다. 권한을 넘겨주세요.");
+        }
+
+        return response;
     }
 }

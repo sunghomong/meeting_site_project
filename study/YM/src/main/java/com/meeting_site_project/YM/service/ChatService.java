@@ -125,11 +125,20 @@ public class ChatService {
         return chatRepository.selectChatOwnerIdByChatRoomId(chatRoomId);
     }
 
-    public List<ChatRoomMembers> selectChatRoomMemberListByGroupId(String groupId) {
-        return chatRepository.selectChatRoomMemberListByGroupId(groupId);
+    public List<ChatRoomMembers> selectChatRoomMemberListByChatRoomId(String chatRoomId) {
+        return chatRepository.selectChatRoomMemberListByChatRoomId(chatRoomId);
     }
 
-    public ChatRoomMembers selectChatMemberByUserIdWithGroupId(String userId, String groupId) {
-        return chatRepository.selectChatMemberByUserIdWithGroupId(userId,groupId);
+
+    public void updateChatRoomMemberAdminByRoomUserId(String roomUserId, int admin) {
+        chatRepository.updateChatRoomMemberAdminByRoomUserId(roomUserId,admin);
+    }
+
+    public String selectGroupIdWhereChatRoomByChatRoomId(String chatRoomId) {
+        return chatRepository.selectGroupIdWhereChatRoomByChatRoomId(chatRoomId);
+    }
+
+    public ChatRoomMembers selectChatRoomMemberByUserIdAndChatRoomId(String userId, String chatRoomId) {
+        return chatRepository.selectChatRoomMemberByUserIdAndChatRoomId(userId,chatRoomId);
     }
 }

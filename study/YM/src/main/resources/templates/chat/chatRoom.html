@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!-- 스타일시트 연결 -->
+    <script src="https://kit.fontawesome.com/c434805577.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/chat.css" />
 </head>
 <body>
@@ -11,9 +12,11 @@
 <div id="chat-page">
     <div class="chat-container">
         <div class="chat-header">
-            <a th:href="@{/chat/chatRoomList(userId=${session.loginMember.userId})}"> 뒤로 가기</a>
+            <a th:href="@{/chat/chatRoomList(userId=${session.loginMember.userId})}" class="imgIcon">
+                <i class="fa-solid fa-arrow-left fa-xl" style="color: #000000;"></i>
+            </a>
             <h2 th:text="${chatRoom.chatRoomName}"> </h2>
-            <button type="button" id="exitChatRoom">채팅방 나가기</button>
+            <button type="button" id="exitChatRoom">나가기</button>
         </div>
         <div class="connecting">연결중...</div>
         <ul id="messageArea">
@@ -161,6 +164,9 @@ $(document).ready(function(){
         } else if(message.type === 'DATE'){
                 messageElement.classList.add('event-message');
                 message.content = message.content;
+        } else if(message.type === 'DELETE') {
+                messageElement.classList.add('event-message');
+                message.content = message.content;
         } else {
             // 일반 채팅 메시지
             messageElement.classList.add('chat-message');
@@ -272,6 +278,9 @@ $(document).ready(function(){
                 messageElement.classList.add('event-message');
                 message.content = message.sender + ' 님이 채팅방을 나가셨습니다.';
             } else if(message.type === 'DATE'){
+                messageElement.classList.add('event-message');
+                message.content = message.content;
+            } else if(message.type === 'DELETE') {
                 messageElement.classList.add('event-message');
                 message.content = message.content;
             } else {
