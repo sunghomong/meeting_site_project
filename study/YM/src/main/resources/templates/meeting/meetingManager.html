@@ -3,7 +3,6 @@
 
 <head>
     <title>회원 조회 페이지</title>
-    <link href="/modalWindow.css" rel="stylesheet" type="text/css" />
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
     <link th:href="@{/css/sidebar.css}" rel="stylesheet">
@@ -91,7 +90,66 @@
             line-height: 40px;
             border: 1px solid #c3c3c3;
         }
+        #modalContainer.hidden {
+            display: none;
+        }
 
+        #memberListMenu {
+            background-color: #639eeb;
+            color: white;
+        }
+
+        #modalContainer {
+            z-index: 1000;
+            position: fixed;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #modalContent {
+            z-index: 1001;
+            background-color: white;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Pretendard-Regular';
+            width: 500px;
+            height: 150px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .delete-words {
+            color: #8e8e8e;
+            font-size: 20px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #8e8e8e;
+            line-height: 50px;
+            padding: 20px 30px;
+        }
+
+        .confirm-delete {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 60px;
+            padding-right: 20px;
+            color: #4e90f7;
+        }
+
+        .confirm-delete>button {
+            border: none;
+            background-color: white;
+            color: #4e90f7;
+            cursor: pointer;
+            margin-left: 30px;
+            font-family: 'Pretendard-Regular';
+            font-size: 16px;
+        }
     </style>
 </head>
 
@@ -145,9 +203,11 @@
 </div>
 <div id="modalContainer" class="hidden">
     <div id="modalContent">
-        <p style="color: red; font-size: 24px; text-align: center;">정말 추방 시키겠습니까?</p>
-        <button onclick="confirmDelete()">네</button>
-        <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
+        <div class="delete-words">정말 삭제하시겠습니까?</div>
+        <div class="confirm-delete">
+            <button id="modalCloseButton" onclick="cancelDelete()">취소</button>
+            <button onclick="confirmDelete()">확인</button>
+        </div>
         <input type="hidden" id="deleteUserId" name="userid" >
         <input type="hidden" id="deleteChatRoomId" name="chatRoomId" >
     </div>
@@ -287,7 +347,7 @@
                 data: { userId: userId, chatRoomId: chatRoomId ,messageTime:messageTime},
                 success: function (response) {
                     alert('사용자가 추방되었습니다.');
-                    window.location = '/'; // 성공한 경우 메인 페이지로 이동
+                    window.location = '/';
                 },
                 error: function (error) {
                     alert('오류가 발생했습니다.');

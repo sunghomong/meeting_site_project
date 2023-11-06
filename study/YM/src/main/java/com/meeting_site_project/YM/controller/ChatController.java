@@ -158,7 +158,8 @@ public class ChatController {
     }
 
     @PostMapping("/chat/deleteChatMember")
-    public void delteChatMemeber(@RequestParam("chatRoomId") String chatRoomId,
+    @ResponseBody
+    public String delteChatMemeber(@RequestParam("chatRoomId") String chatRoomId,
                                  @RequestParam("userId") String userId,
                                  @RequestParam("messageTime") Date messageTime) { // 필요한 데이터 userId,chatRoomId
 
@@ -185,6 +186,7 @@ public class ChatController {
         // 회원 정보 삭제
         chatService.deleteChatMemeberByChatMessage(chatMessage); // userId,chatRoomId 이용
 
+        return "success";
     }
 
     // 채팅 폼을 보여주는 페이지로 이동
