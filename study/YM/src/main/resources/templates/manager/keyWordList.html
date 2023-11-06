@@ -368,31 +368,6 @@
                     button.style.display = "block";
                 });
             </script>
-            <!-- h2 태그 id = subKeywordsList "보조 키워드"-->
-            <form id="keywordForm" style="display:none;">
-                <ul>
-                    <li th:each="firstKeyWord : ${firstKeyWords}">
-                        <label>
-                            <input type="radio" name="firstKeyword" class="radio-firstKeyword"
-                                th:value="${firstKeyWord}" th:text="${firstKeyWord}">
-                        </label>
-                    </li>
-                </ul>
-                <input type="text" id="secondKeyword" name="secondKeyword" placeholder="보조 키워드 입력" required>
-                <button type="submit" id="submitButton">추가</button>
-                <button type="button" id="cancelFormButton">취소</button>
-            </form>
-            <!-- <button type="button" id="addFormButton">보조 키워드 추가</button> -->
-
-            <div id="modalContainer" class="hidden">
-                <div id="modalContent">
-                    <p style="color: red; font-size: 24px; text-align: center;">부 키워드가 존재한다면 같이 삭제될 수 있습니다. 정말 삭제하시겠습니까?
-                    </p>
-                    <button onclick="confirmDelete()">네</button>
-                    <button id="modalCloseButton" onclick="cancelDelete()">아니요</button>
-                    <input type="hidden" id="deleteFirstKeyWord" name="firstKeyWord" value="">
-                </div>
-            </div>
         </div>
     </div>
     <footer th:replace="/home.html :: footer"></footer>

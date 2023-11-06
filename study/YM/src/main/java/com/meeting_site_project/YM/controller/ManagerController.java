@@ -78,7 +78,6 @@ public class ManagerController {
         if(authInfo == null || authInfo.getUserAdmin() == 0) {
             return "redirect:/";
         }
-        // 특정 회원을 삭제하는 로직을 구현
 
         deleteService.deleteMemberById(userId);
 
