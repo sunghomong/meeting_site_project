@@ -18,12 +18,16 @@ CONSTRAINT member_pk PRIMARY KEY (userId)
 
 -- 모임 테이블 ------------------------------------
 CREATE TABLE groupInfo (
+<<<<<<< HEAD
+
+=======
+>>>>>>> ea26de701f2c66cbe839705e07bee3e7c5a61a92
 groupId NVARCHAR2(50),
 ownerUserId VARCHAR(20),
 sidoName NVARCHAR2(30),
 sigoonName NVARCHAR2(30),
 groupName NVARCHAR2(30),
-groupInfo NVARCHAR2(100),
+groupInfo NVARCHAR2(2000),
 groupNumberOfPeople NUMBER, -- 제한수
 groupPicture NVARCHAR2(100),
 groupPicturePath NVARCHAR2(500),
@@ -32,13 +36,17 @@ regDate DATE DEFAULT sysdate,
 CONSTRAINT groupInfo_Pk PRIMARY KEY (groupId),
 CONSTRAINT groupInfo_FK_PK_ownerUserId FOREIGN KEY(ownerUserId) REFERENCES member(userId)
 ON DELETE CASCADE
+<<<<<<< HEAD
+
+=======
+>>>>>>> ea26de701f2c66cbe839705e07bee3e7c5a61a92
 );
 
 -- 고객 문의를 위한 테이블
 CREATE TABLE askList (
     askId NVARCHAR2(40),  -- 고유한 문의 ID (기본키)
     userId VARCHAR(20),  -- 외래 키로 member 테이블의 user_id 참조
-    subject NVARCHAR2(30),  -- 문의 주제
+    subject NVARCHAR2(50),  -- 문의 주제
     content NVARCHAR2(500),  -- 문의 내용
     createDate DATE DEFAULT sysdate,  -- 문의 생성 일자
     status NVARCHAR2(20) DEFAULT '미해결',  -- 문의 상태 (예: 미해결, 처리 중, 완료)
@@ -71,8 +79,13 @@ CONSTRAINT keyword_Pk PRIMARY KEY (secondKeyword)
 CREATE TABLE notices (
 noticeId NVARCHAR2(40),  -- 고유한 공지 사항 ID (기본키)
 userId VARCHAR(20),  -- 외래 키로 member 테이블의 userId 참조
+<<<<<<< HEAD
+title nvarchar2(50), -- 공지 사항의 제목
+content nvarchar2(500), -- 공지 사항의 내용
+=======
 title NVARCHAR2(30), -- 공지 사항의 제목
 content NVARCHAR2(500), -- 공지 사항의 내용
+>>>>>>> ea26de701f2c66cbe839705e07bee3e7c5a61a92
 createDate DATE DEFAULT sysdate, -- 생성 일자
 attachmentName NVARCHAR2(100) DEFAULT NULL, -- 첨부 파일 이름
 attachmentPath NVARCHAR2(300) DEFAULT NULL, -- 첨부 파일 경로

@@ -30,8 +30,15 @@ public class MeetingController {
 
     ChatService chatService;
 
+<<<<<<< HEAD
+
+@Autowired
+    public MeetingController(MeetingService meetingService, CheckService checkService,ChatService chatService) {
+
+=======
     @Autowired
     public MeetingController(MeetingService meetingService, CheckService checkService,ChatService chatService) {
+>>>>>>> ea26de701f2c66cbe839705e07bee3e7c5a61a92
         this.meetingService = meetingService;
         this.checkService = checkService;
         this.chatService = chatService;
@@ -99,7 +106,6 @@ public class MeetingController {
         chatRoom.setUserCount(1); // 채팅방 인원수 1 자동적으로 증가 (방장)
 
         chatService.insertChatRoom(chatRoom); // 채팅방 생성
-        System.out.println("authInfo.getNickName() = " + authInfo.getNickName());
         chatService.insertChatRoomOwnerMember(chatRoom,authInfo.getNickName()); // chatRoom 데이터 가지고 멤버 생성
 
         return "redirect:/chat/chatRoom?chatRoomId=" + uniqueChatRoomId;

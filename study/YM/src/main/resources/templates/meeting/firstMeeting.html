@@ -298,7 +298,7 @@
 
                 </ul>
                 <div class="button-box">
-                    <button type="submit">전송</button>
+                    <button type="submit">모임 생성</button>
                 </div>
             </form>
         </div>
@@ -328,23 +328,19 @@
                 data.response.result.featureCollection.features.forEach(function (f) {
                     let 행정구역코드 = f.properties.ctprvn_cd;
                     let 행정구역명 = f.properties.ctp_kor_nm;
-
                     // 옵션 태그를 생성하여 추가합니다.
                     html += `<option value="${행정구역명}">${행정구역명}</option>`
                 })
-
                 // 생성된 옵션 태그를 첫 번째 셀렉트 박스에 추가합니다.
                 $('#sidoName').html(html);
             },
             error: function (xhr, stat, err) { }
         });
-
         // 첫 번째 셀렉트 박스에서 값이 변경될 때 실행됩니다.
         $(document).on("change", "#sidoName", function () {
             // 선택된 값(시/도 코드)을 가져옵니다.
             let thisVal = $(this).val();
             console.log(thisVal);
-
 
             // 두 번째 AJAX 요청으로 시/군 목록을 가져옵니다.
             $.ajax({
@@ -399,8 +395,6 @@
             // form 데이터에 값을 추가
             form.append("<input type='hidden' name='firstKeyword' value='" + firstKeyword + "'>");
 
-
-
             // Ajax 요청
             $.ajax({
                 type: "POST",
@@ -408,37 +402,38 @@
                 data: { firstKeyword: firstKeyword },
                 success: function (response) {
                     console.log("서버 응답:", response);
-
                     var ulElement = $("#secondKeyword");
-
-                    // 첫 번째 li 클릭 시 #secondKeyword 내부의 li 요소를 모두 제거
                     ulElement.empty();
-
                     response.forEach(function (keyword) {
                         ulElement
                             .append("<li class='secondKeyword'>" + keyword.secondKeyword + "</li>");
                     });
                 },
                 error: function (xhr, status, error) {
-                    // 오류 발생 시 실행되는 함수
                     console.error("오류 발생:", error);
                 }
             });
         });
-
         // 두 번째 li 클릭 이벤트 핸들러
         $(document).on("click", "#secondKeyword li", function () {
 
-            var secondKeyword = $(this).text(); // 두 번째 li의 텍스트 값을 가져옵니다.
-
-
+            var secondKeyword = $(this).text();
             // 기존 hidden input 삭제
             form.find("input[name='secondKeyword']").remove();
-
             // form 데이터에 값을 추가
             form.append("<input type='hidden' name='secondKeyword' value='" + secondKeyword + "'>");
 
+        });
+    });
+    $(document).ready(function () {
+        $(document).on("click", ".clickable-li", function () {
+            $(".clickable-li").removeClass("clicked");
+            $(this).addClass("clicked");
+        });
 
+        $(document).on("click", ".secondKeyword", function () {
+            $(".secondKeyword").removeClass("clicked");
+            $(this).addClass("clicked");
         });
     });
 
@@ -456,17 +451,6 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-    $(document).ready(function () {
-        $(document).on("click", ".clickable-li", function () {
-            $(".clickable-li").removeClass("clicked"); // 모든 clickable 요소의 clicked 클래스를 제거
-            $(this).addClass("clicked"); // 클릭된 요소에 clicked 클래스를 추가
-        });
-
-        $(document).on("click", ".secondKeyword", function () {
-            $(".secondKeyword").removeClass("clicked"); // 모든 clickable 요소의 clicked 클래스를 제거
-            $(this).addClass("clicked"); // 클릭된 요소에 clicked 클래스를 추가
-        });
-    });
 
 
 

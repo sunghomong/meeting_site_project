@@ -33,8 +33,7 @@ public class AjaxController {
 
     @PostMapping("keywordByGroupRequest")
     public List<GroupInfo> keywordByGroupRequest (@RequestParam("firstKeyword") String firstKeyword, @RequestParam("groupType") int groupType) {
-        System.out.println(firstKeyword);
-        System.out.println(groupType);
+
         List<GroupInfo> groupList = meetingService.selectOnedayKeywordByGroupList(firstKeyword, groupType);
 
         return groupList;

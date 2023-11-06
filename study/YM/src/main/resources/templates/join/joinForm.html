@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <script src=https://code.jquery.com/jquery-3.7.1.min.js></script>
     <title>회원가입</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link th:href="@{/css/header.css}" rel="stylesheet">
-    <link th:href="@{/css/footer.css}" rel="stylesheet">
-
     <style>
-
-    @font-face {
+        @font-face {
             font-family: 'GmarketSansMedium';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
             font-weight: normal;
@@ -20,147 +18,161 @@
         }
 
         @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
-        @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
 
-.notosanskr * { 
- font-family: 'Noto Sans KR', sans-serif;
-}
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .notosanskr * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
 
         }
+
         .box {
-        margin: 0 auto 50px;
-        width: 170px;
-        height: 170px;
-        border-radius: 70%;
-        overflow: hidden;
-    }
-    .profile {
-        width: 100%;    
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .wrapper {
-
-        background-color: #eeeeee99;
-      min-height: calc(100vh - 80px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .container {
-        margin: 60px 0;
-        width: 670px;
-        background: #FFFFFF;
-        box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
-font-family: 'Noto Sans KR', sans-serif ;
-        border-radius: 20px;
-        padding: 60px 100px;
-        box-sizing: border-box;
-        align-content: center;
-        
+            margin: 0 auto 50px;
+            width: 170px;
+            height: 170px;
+            border-radius: 70%;
+            overflow: hidden;
         }
-        
-    .content {
-        margin: auto;
-    }
-    
 
-    h2 {
-    width: 466px;
-    height: 94px;
-    left: 725px;
-    top: 132px;
-    margin-bottom: 40px;
+        .profile {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    font-family: 'GmarketSansMedium';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 47px;
+        .wrapper {
 
-    color: #0068FF;
-    justify-content: space-evenly;
+            background-color: #eeeeee99;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        .container {
+            margin: 60px 0;
+            width: 670px;
+            background: #FFFFFF;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            font-family: 'Noto Sans KR', sans-serif;
+            border-radius: 20px;
+            padding: 60px 100px;
+            box-sizing: border-box;
+            align-content: center;
 
-}
+        }
 
-button {
-    position: relative;
-    width: 80px;
-    height: 30px;
-    background-color: #ffffff;
-    color: #000000;
-    border-radius: 8px;
-    border: #91bdff solid 1px;
-    cursor: pointer;
-
-}
-
-button:hover {
-    background-color: #ececec;
-}
-.join-button {
-    width: 468px;
-    height: 50px;
-    text-align: center;
-    background-color: #2372ea;
-    color: #FFFFFF;
-    border-radius: 8px;
-    border: #0068FF solid 1px;
-    cursor: pointer;
-    font-size: 14pt;
-    margin-top: 20px;
-
-}
-label {
-    width: 466px;
-}
-
-.join-button:hover {
-      background-color: #1c57b0;
-    }
-
-    input {
-        font-family: 'Pretendard-Regular';
-    padding-left: 5px;
-    border: none;
-    border-bottom: 1px solid #CFCFCF;
-    width: 466px;
-    height: 30px;
-    font-size: 20px;
-    margin-top: 5px;
-}
-#picture{
-    font-size: 14px;
-}
-.form_w200 {
-    width: 165px;
-}
-.error_box {
-    padding-left: 7px;
-    margin: 5px 0;
-    height: 14px;
-    line-height: 14px;
-    text-align: left;
-    font-size: 10px;
-    color: red;
-}
+        .content {
+            margin: auto;
+        }
 
 
-label {
-    color: rgb(141, 139, 139);
-}
-        input:focus {outline: none;} /* outline 테두리 없애기 */
+        h2 {
+            width: 466px;
+            height: 94px;
+            left: 725px;
+            top: 132px;
+            margin-bottom: 40px;
+
+            font-family: 'GmarketSansMedium';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 32px;
+            line-height: 47px;
+
+            color: #0068FF;
+            justify-content: space-evenly;
+
+
+        }
+
+        button {
+            position: relative;
+            width: 80px;
+            height: 30px;
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 8px;
+            border: #91bdff solid 1px;
+            cursor: pointer;
+
+        }
+
+        button:hover {
+            background-color: #ececec;
+        }
+
+        .join-button {
+            width: 468px;
+            height: 50px;
+            text-align: center;
+            background-color: #2372ea;
+            color: #FFFFFF;
+            border-radius: 8px;
+            border: #0068FF solid 1px;
+            cursor: pointer;
+            font-size: 14pt;
+            margin-top: 20px;
+
+        }
+
+        label {
+            width: 466px;
+        }
+
+        .join-button:hover {
+            background-color: #1c57b0;
+        }
+
+        input {
+            font-family: 'Pretendard-Regular';
+            padding-left: 5px;
+            border: none;
+            border-bottom: 1px solid #CFCFCF;
+            width: 466px;
+            height: 30px;
+            font-size: 20px;
+            margin-top: 5px;
+        }
+
+        #picture {
+            font-size: 14px;
+        }
+
+        .form_w200 {
+            width: 163px;
+        }
+
+        .error_box {
+            padding-left: 7px;
+            margin: 5px 0;
+            height: 14px;
+            line-height: 14px;
+            text-align: left;
+            font-size: 10px;
+            color: red;
+        }
+
+
+        label {
+            color: rgb(141, 139, 139);
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        /* outline 테두리 없애기 */
 
         textarea {
             font-family: 'Pretendard-Regular';
@@ -179,111 +191,145 @@ label {
         }
     </style>
 </head>
-<body>
-<header th:replace="/home.html :: header"></header>
 
+<body>
+<header>
+    <div class="MainHeader_header__WXxwu">
+        <div class="MainHeader_header__top__gspE8">
+            <div class="MainHeader_header__content__WRkIy">
+                <a class="logo-link" href="/"><img th:src="@{/images/KakaoTalk_20231024_193657045.png}"></a>
+                <a class="LinkOnClick_title__0WSZ9" href="/onedayMtForm?number=0">원데이</a>
+                <a class="LinkOnClick_title__0WSZ9" href="/regulardayMtForm?number=1">정기</a>
+                <a class="LinkOnClick_title__0WSZ9" href="/#">내 모임</a>
+                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember == null}"
+                   th:href="@{/login}">로그인</a>
+                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember == null}"
+                   th:href="@{/join}">회원가입</a>
+
+                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
+                   th:href="@{/logout}">로그아웃</a>
+                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
+                   th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
+                <a class="LinkOnClick_title__0WSZ9" th:href="@{/chat}">채팅하기</a>
+                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
+                   th:href="@{/manager(userId=${session.loginMember.userId})}">관리자 페이지</a>
+            </div>
+            <div class="box" style="background: #BDBDBD;" th:if="${session.loginMember != null}">
+                <a th:href="@{/profile(userId=${session.loginMember.userId})}"><img class="profile"
+                                                                                    th:src="@{${session.loginMember.picturePath}}"></a>
+            </div>
+        </div>
+    </div>
+</header>
 <div class="wrapper">
     <div class="container">
         <div class="img-content">
-        <div class="box" style="background: #BDBDBD;" >
-            <img src="" id="preview" class="profile"/>
-        </div>
+            <div class="box" style="background: #BDBDBD;">
+                <img src="" id="preview" class="profile"/>
+            </div>
         </div>
         <div class="content">
-        <form th:action="@{/joinSuccess}" method="post" th:object="${joinMember}"  enctype="multipart/form-data">
-        <h2>회원가입을 위해<br>정보를 입력해주세요.</h2>
-            <label for="userId">* 아이디</label>
-            <input type="text" id="userId" th:field="*{userId}"  oninput="isIdChecked = false;" >
-            <div class="error_box">
-                <div id="checkIdMessage"></div>
-            </div>
-
-            <button type="button" onclick="checkId()">중복 확인</button><br><br>
-            
-
-            <label for="picture">* 프로필 사진 업로드</label>
-            <input type="file" id="picture" name="picture" required style="margin-top: 12px;">
-            <br><br>
-
-            <label for="userPassword">* 비밀번호 </label>
-            <input type="password" id="userPassword" th:field="*{userPassword}" th:errorclass="field-error">
-            <div class="error_box">
-                <div class="field-error" th:errors="*{userPassword}"></div>
-            </div>
-            <br><br>
-
-            <label for="confirmUserPassword">* 비밀번호 확인</label>
-            <input type="password" id="confirmUserPassword" th:field="*{confirmUserPassword}" th:errorclass="field-error">
-            <div class="error_box">
-                <div class="field-error" th:errors="*{confirmUserPassword}"></div>
-                <div th:if="${#fields.hasGlobalErrors()}">
-                <p class="global_field_error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
+            <form th:action="@{/joinSuccess}" method="post" th:object="${joinMember}" enctype="multipart/form-data">
+                <h2>회원가입을 위해<br>정보를 입력해주세요.</h2>
+                <label for="userId">* 아이디</label>
+                <input type="text" id="userId" th:field="*{userId}" oninput="isIdChecked = false;">
+                <div class="error_box">
+                    <div id="checkIdMessage"></div>
                 </div>
-            </div><br><br>
+
+                <button type="button" onclick="checkId()">중복 확인</button>
+                <br><br>
 
 
-            <label for="userName">* 이름</label>
-            <input type="text" id="userName" th:field="*{userName}" th:errorclass="field-error">
-            <div class="error_box">
-                <div class="field-error" th:errors="*{userName}"></div>
-            </div><br><br>
+                <label for="picture">* 프로필 사진 업로드</label>
+                <input type="file" id="picture" name="picture" required style="margin-top: 12px;">
+                <br><br>
 
-            <label for="nickName">* 닉네임</label>
-            <input type="text" id="nickName" th:field="*{nickName}"  oninput="isNickNameChecked = false;" >
-            <div class="error_box">
-                <div id="checkNickNameMessage"></div>
-            </div>
+                <label for="userPassword">* 비밀번호 </label>
+                <input type="password" id="userPassword" th:field="*{userPassword}" th:errorclass="field-error">
+                <div class="error_box">
+                    <div class="field-error" th:errors="*{userPassword}"></div>
+                </div>
+                <br><br>
 
-            <button type="button" onclick="checkNickName()">중복 확인</button>
-            <br><br>
-            <div>
-            <label for="emailId">* 이메일</label>
-              </div>
-            <input type="text" id="emailId" th:field="*{emailId}"  class="form_w200" title="이메일 아이디" maxlength="18" oninput="isEmailChecked = false;"/>
-            @
-            <input type="text" th:field="*{emailDomain}"  class="form_w200" title="이메일 도메인" maxlength="18"/>
-            <select class="select" title="이메일 도메인 주소 선택" th:onchange="setEmailDomain(this.value)">
-                <option value="">-선택-</option>
-                <option value="naver.com">naver.com</option>
-                <option value="gmail.com">gmail.com</option>
-                <option value="hanmail.net">hanmail.net</option>
-                <option value="nate.com">nate.com</option>
-                <option value="yahoo.com">yahoo.com</option>
-            </select>
-            <div class="error_box">
-                <div id="checkEmailMessage"></div>
-            </div>
+                <label for="confirmUserPassword">* 비밀번호 확인</label>
+                <input type="password" id="confirmUserPassword" th:field="*{confirmUserPassword}"
+                       th:errorclass="field-error">
+                <div class="error_box">
+                    <div class="field-error" th:errors="*{confirmUserPassword}"></div>
+                    <div th:if="${#fields.hasGlobalErrors()}">
+                        <p class="global_field_error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌
+                            오류 메시지</p>
+                    </div>
+                </div>
+                <br><br>
 
-            <button type="button" onclick="checkEmail()">중복 확인</button>
-            <br><br>
 
-            <label for="userMbti">* MBTI</label>
-            <input type="text" id="userMbti" th:field="*{userMbti}">
-            <div class="error_box">
-                <div id="checkMbtiMessage"></div>
-            </div><br><br>
+                <label for="userName">* 이름</label>
+                <input type="text" id="userName" th:field="*{userName}" th:errorclass="field-error">
+                <div class="error_box">
+                    <div class="field-error" th:errors="*{userName}"></div>
+                </div>
+                <br><br>
 
-            <label for="birthday">* 생일</label>
-            <input type="date" id="birthday" th:field="*{birthday}" th:errorclass="field-error">
-            <div class="error_box">
-                <div class="field-error" th:errors="*{birthday}"></div>
-            </div><br><br>
+                <label for="nickName">* 닉네임</label>
+                <input type="text" id="nickName" th:field="*{nickName}" oninput="isNickNameChecked = false;">
+                <div class="error_box">
+                    <div id="checkNickNameMessage"></div>
+                </div>
 
-            <label for="userInfo">* 자기소개</label>
-            <textarea id="userInfo"  th:field="*{userInfo}" th:errorclass="field-error"></textarea>
-            <div class="error_box">
-                <div class="field-error" th:errors="*{userInfo}"></div>
-            </div><br><br>
+                <button type="button" onclick="checkNickName()">중복 확인</button>
+                <br><br>
+                <div>
+                    <label for="emailId">* 이메일</label>
+                </div>
+                <input type="text" id="emailId" th:field="*{emailId}" class="form_w200" title="이메일 아이디"
+                       maxlength="18" oninput="isEmailChecked = false;"/>
+                @
+                <input type="text" th:field="*{emailDomain}" class="form_w200" title="이메일 도메인" maxlength="18"/>
+                <select class="select" title="이메일 도메인 주소 선택" th:onchange="setEmailDomain(this.value)">
+                    <option value="">-선택-</option>
+                    <option value="naver.com">naver.com</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="hanmail.net">hanmail.net</option>
+                    <option value="nate.com">nate.com</option>
+                    <option value="yahoo.com">yahoo.com</option>
+                </select>
+                <div class="error_box">
+                    <div id="checkEmailMessage"></div>
+                </div>
 
-            <button type="submit" class="join-button" onclick="return validateForm()">회원가입</button>
-        </form>
+                <button type="button" onclick="checkEmail()">중복 확인</button>
+                <br><br>
+
+                <label for="userMbti">* MBTI</label>
+                <input type="text" id="userMbti" th:field="*{userMbti}">
+                <div class="error_box">
+                    <div id="checkMbtiMessage"></div>
+                </div>
+                <br><br>
+
+                <label for="birthday">* 생일</label>
+                <input type="date" id="birthday" th:field="*{birthday}" th:errorclass="field-error">
+                <div class="error_box">
+                    <div class="field-error" th:errors="*{birthday}"></div>
+                </div>
+                <br><br>
+
+                <label for="userInfo">* 자기소개</label>
+                <textarea id="userInfo" th:field="*{userInfo}" th:errorclass="field-error"></textarea>
+                <div class="error_box">
+                    <div class="field-error" th:errors="*{userInfo}"></div>
+                </div>
+                <br><br>
+
+                <button type="submit" class="join-button" onclick="return validateForm()">회원가입</button>
+            </form>
         </div>
 
     </div>
 </div>
 
-
-<footer th:replace="/home.html :: footer"></footer>
 <script>
 
     $('#userInfo').val().replace(/\n/g, "<br>")
@@ -291,230 +337,215 @@ label {
     var isIdChecked = false;
     var isNickNameChecked = false;
     var isEmailChecked = false;
-   // 폼을 유효성 검사하는 함수
-function validateForm() {
-    // 이메일 아이디와 도메인을 가져옵니다.
-    var emailId = document.getElementById("emailId").value; // 이메일 아이디 입력란
-    var emailDomain = document.getElementById("emailDomain").value; // 이메일 도메인 입력란
-    var mail = emailId + "@" + emailDomain; // 조합된 이메일 주소
+    // 폼을 유효성 검사하는 함수
+    function validateForm() {
+        // 이메일 아이디와 도메인을 가져옵니다.
+        var emailId = document.getElementById("emailId").value; // 이메일 아이디 입력란
+        var emailDomain = document.getElementById("emailDomain").value; // 이메일 도메인 입력란
+        var mail = emailId + "@" + emailDomain; // 조합된 이메일 주소
 
-    // 이메일 형식을 검사하는 정규식입니다.
-    var email_rule = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    var checkEmail = document.getElementById(checkEmailMessage);
-    // 이메일 필드가 비어있거나 도메인이 비어있다면 알림을 띄우고 false를 반환합니다.
-    if (!emailId || !emailDomain) {
-        checkEmail.innerText = '';
-        checkEmail.innerText = '이메일을 형식에 맞게 입력해주세요.';
-        return false;
-    }
+        // 이메일 형식을 검사하는 정규식입니다.
+        var email_rule = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        var checkEmail = document.getElementById(checkEmailMessage);
+        // 이메일 필드가 비어있거나 도메인이 비어있다면 알림을 띄우고 false를 반환합니다.
+        if (!emailId || !emailDomain) {
+            checkEmail.innerText = '';
+            checkEmail.innerText = '이메일을 형식에 맞게 입력해주세요.';
+            return false;
+        }
 
-    // 정규식 패턴에 맞지 않으면 알림을 띄우고 false를 반환합니다.
-    if (!email_rule.test(mail)) {
-        checkEmail.innerText = '';
-        checkEmail.innerText = '이메일을 형식에 맞게 입력해주세요.';
-        return false;
-    }
+        // 정규식 패턴에 맞지 않으면 알림을 띄우고 false를 반환합니다.
+        if (!email_rule.test(mail)) {
+            checkEmail.innerText = '';
+            checkEmail.innerText = '이메일을 형식에 맞게 입력해주세요.';
+            return false;
+        }
 
-    // 비밀번호와 비밀번호 확인 필드를 가져옵니다.
+        // 비밀번호와 비밀번호 확인 필드를 가져옵니다.
 
-    // MBTI를 대문자로 변환합니다.
-    var inputElement = document.getElementById("userMbti"); // MBTI 입력란
-    var inputValue = inputElement.value.toUpperCase(); // 입력된 MBTI 값을 대문자로 변환
-    // MBTI의 유효성을 검사하는 정규식입니다.
-    var validPattern = /^[EI][NS][FT][PJ]$/;
+        // MBTI를 대문자로 변환합니다.
+        var inputElement = document.getElementById("userMbti"); // MBTI 입력란
+        var inputValue = inputElement.value.toUpperCase(); // 입력된 MBTI 값을 대문자로 변환
+        // MBTI의 유효성을 검사하는 정규식입니다.
+        var validPattern = /^[EI][NS][FT][PJ]$/;
 
-    // MBTI가 올바르지 않으면 알림을 띄우고 false를 반환합니다.
-    if (inputValue.length !== 4 || !validPattern.test(inputValue)) {
-        var checkMbti = document.getElementById(checkMbtiMessage);
-        checkMbti.innerText = 'MBTI를 형식에 맞게 입력해주세요.'
-        return false;
-    }
+        // MBTI가 올바르지 않으면 알림을 띄우고 false를 반환합니다.
+        if (inputValue.length !== 4 || !validPattern.test(inputValue)) {
+            var checkMbti = document.getElementById(checkMbtiMessage);
+            checkMbti.innerText = 'MBTI를 형식에 맞게 입력해주세요.'
+            return false;
+        }
 
 
-    // 모든 중복확인이 완료되어야만 회원가입 버튼이 활성화됨
 
-    if (isIdChecked && isNickNameChecked && isEmailChecked) {
+        if (isIdChecked && isNickNameChecked && isEmailChecked) {
             return true;
-        } else if(!isIdChecked) {
+        } else if (!isIdChecked) {
             alert("아이디 중복확인을 해주세요.");
             document.getElementById("userId").focus();
             return false;
-        } else if(!isNickNameChecked) {
+        } else if (!isNickNameChecked) {
             alert("닉네임 중복확인을 해주세요.");
             document.getElementById("nickName").focus();
             return false;
-        } else if(!isEmailChecked) {
+        } else if (!isEmailChecked) {
             alert("이메일 중복확인을 해주세요.");
             document.getElementById("emailId").focus();
             return false;
         }
-
-
-    // 모든 검사를 통과하면 true를 반환합니다.
-    return true;
-}
-
-// 이메일 도메인 선택 시 호출되는 함수
-function setEmailDomain(domain) {
-    document.getElementById("emailDomain").value = domain; // 이메일 도메인 입력란에 선택된 도메인 값을 설정합니다.
-}
-
-
-
-
-// 아이디 중복 체크 함수
-function checkId() {
-
-    // 입력된 아이디를 가져옵니다.
-    var userId = document.getElementById("userId").value;
-
-    // 만약 아이디가 비어있다면 알림을 띄우고 함수를 종료합니다.
-    if (!userId) {
-        var checkIdMessage = document.getElementById('checkIdMessage'); // 아이디 중복 메시지를 표시하는 엘리먼트
-        checkIdMessage.innerText = '아이디를 입력해주세요';
-
-        // 아이디 입력란에 포커스를 줍니다.
-        document.getElementById("userId").focus();
-        return;
+        return true;
     }
 
-    // 서버로 POST 요청을 보냅니다.
-    fetch('/idCheck', {
-        method: 'POST', // 요청 방식은 POST입니다.
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded', // 요청 헤더의 Content-Type을 설정합니다.
-        },
-        body: 'userId=' + encodeURIComponent(userId), // 요청 본문에 아이디를 포함시켜 전송합니다.
-    })
-    .then(response => response.json()) // 서버로부터 받은 응답을 JSON 형식으로 변환합니다.
-    .then(data => {
-        // 중복 여부에 대한 처리
-        var checkIdMessage = document.getElementById('checkIdMessage'); // 아이디 중복 메시지를 표시하는 엘리먼트
-        if (checkIdMessage) {
-            // 서버로부터 받은 데이터를 메시지로 표시합니다.
-            if (data) {
-
-                checkIdMessage.innerText = '사용 가능한 아이디입니다.';
-                isIdChecked = true;
-            } else {
-
-                checkIdMessage.innerText = '이미 존재하는 아이디입니다.';
-            }
-        }
-    })
-    .catch((error) => {
-        console.error('Error:', error); // 오류가 발생하면 콘솔에 오류 메시지를 출력합니다.
-    });
-}
-
-// 닉네임 중복 체크 함수
-function checkNickName() {
-    // 입력된 닉네임을 가져옵니다.
-    var nickName = document.getElementById("nickName").value;
-
-    // 만약 닉네임이 비어있다면 알림을 띄우고 함수를 종료합니다.
-    if (!nickName) {
-        var checkNickNameMessage = document.getElementById('checkNickNameMessage'); // 아이디 중복 메시지를 표시하는 엘리먼트
-        checkNickNameMessage.innerText = '닉네임을 입력해주세요';
-
-        // 닉네임 입력란에 포커스를 줍니다.
-        document.getElementById("nickName").focus();
-        return;
-    }
-
-    // 서버로 POST 요청을 보냅니다.
-    fetch('/nickNameCheck', {
-        method: 'POST', // 요청 방식은 POST입니다.
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded', // 요청 헤더의 Content-Type을 설정합니다.
-        },
-        body: 'nickName=' + encodeURIComponent(nickName), // 요청 본문에 닉네임을 포함시켜 전송합니다.
-    })
-    .then(response => response.json()) // 서버로부터 받은 응답을 JSON 형식으로 변환합니다.
-    .then(data => {
-        // 중복 여부에 대한 처리
-        var checkNickNameMessage = document.getElementById('checkNickNameMessage'); // 닉네임 중복 메시지를 표시하는 엘리먼트
-        if (checkNickNameMessage) {
-            // 서버로부터 받은 데이터를 메시지로 표시합니다.
-            if (data) {
-
-                checkNickNameMessage.innerText = '사용 가능한 닉네임입니다.';
-                isNickNameChecked = true;
-            } else {
-
-                checkNickNameMessage.innerText = '이미 존재하는 닉네임입니다.';
-            }
-        }
-    })
-    .catch((error) => {
-        console.error('Error:', error); // 오류가 발생하면 콘솔에 오류 메시지를 출력합니다.
-    });
-}
-
-// 이메일 중복 체크 함수
-function checkEmail() {
-    // 입력된 이메일 아이디와 도메인을 가져옵니다.
-    var emailId = document.getElementById("emailId").value; // 이메일 아이디 입력란
-    var emailDomain = document.getElementById("emailDomain").value; // 이메일 도메인 입력란
-
-    // 만약 이메일이 비어있다면 알림을 띄우고 함수를 종료합니다.
-    if (!emailId || !emailDomain) {
-        var checkEmailMessage = document.getElementById('checkEmailMessage'); // 아이디 중복 메시지를 표시하는 엘리먼트
-        checkEmailMessage.innerText = '이메일을 입력해주세요';
-
-        // 이메일 입력란에 포커스를 줍니다.
-        document.getElementById("emailId").focus();
-        return;
+    // 이메일 도메인 선택 시 호출되는 함수
+    function setEmailDomain(domain) {
+        document.getElementById("emailDomain").value = domain; // 이메일 도메인 입력란에 선택된 도메인 값을 설정합니다.
     }
 
 
-    // 서버로 POST 요청을 보냅니다.
-    fetch('/emailCheck', {
-        method: 'POST', // 요청 방식은 POST입니다.
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded', // 요청 헤더의 Content-Type을 설정합니다.
-        },
-        body: 'emailId=' + encodeURIComponent(emailId) + '&emailDomain=' + encodeURIComponent(emailDomain), // 이메일 아이디와 도메인을 포함시켜 전송합니다.
-    })
-    .then(response => response.json()) // 서버로부터 받은 응답을 JSON 형식으로 변환합니다.
-    .then(data => {
-        // 중복 여부에 대한 처리
-        var checkEmailMessage = document.getElementById('checkEmailMessage'); // 이메일 중복 메시지를 표시하는 엘리먼트
-        if (checkEmailMessage) {
-            // 서버로부터 받은 데이터를 메시지로 표시합니다.
-            if (data) {
 
-                checkEmailMessage.innerText = '사용 가능한 이메일입니다.';
-                isEmailChecked = true;
-            } else {
 
-                checkEmailMessage.innerText = '이미 존재하는 이메일입니다.';
-            }
+    // 아이디 중복 체크 함수
+    function checkId() {
+        var userId = document.getElementById("userId").value;
+        if (!userId) {
+            var checkIdMessage = document.getElementById('checkIdMessage');
+            checkIdMessage.innerText = '아이디를 입력해주세요';
+            document.getElementById("userId").focus();
+            return;
         }
-    })
-    .catch((error) => {
-        console.error('Error:', error); // 오류가 발생하면 콘솔에 오류 메시지를 출력합니다.
+        fetch('/idCheck', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'userId=' + encodeURIComponent(userId),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 중복 여부에 대한 처리
+                var checkIdMessage = document.getElementById('checkIdMessage');
+                if (checkIdMessage) {
+                    if (data) {
+                        checkIdMessage.innerText = '사용 가능한 아이디입니다.';
+                        isIdChecked = true;
+                    } else {
+                        checkIdMessage.innerText = '이미 존재하는 아이디입니다.';
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+    // 닉네임 중복 체크 함수
+    function checkNickName() {
+        // 입력된 닉네임을 가져옵니다.
+        var nickName = document.getElementById("nickName").value;
+
+        // 만약 닉네임이 비어있다면 알림을 띄우고 함수를 종료합니다.
+        if (!nickName) {
+            var checkNickNameMessage = document.getElementById('checkNickNameMessage'); // 아이디 중복 메시지를 표시하는 엘리먼트
+            checkNickNameMessage.innerText = '닉네임을 입력해주세요';
+
+            // 닉네임 입력란에 포커스를 줍니다.
+            document.getElementById("nickName").focus();
+            return;
+        }
+
+        // 서버로 POST 요청을 보냅니다.
+        fetch('/nickNameCheck', {
+            method: 'POST', // 요청 방식은 POST입니다.
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded', // 요청 헤더의 Content-Type을 설정합니다.
+            },
+            body: 'nickName=' + encodeURIComponent(nickName), // 요청 본문에 닉네임을 포함시켜 전송합니다.
+        })
+            .then(response => response.json()) // 서버로부터 받은 응답을 JSON 형식으로 변환합니다.
+            .then(data => {
+                // 중복 여부에 대한 처리
+                var checkNickNameMessage = document.getElementById('checkNickNameMessage'); // 닉네임 중복 메시지를 표시하는 엘리먼트
+                if (checkNickNameMessage) {
+                    // 서버로부터 받은 데이터를 메시지로 표시합니다.
+                    if (data) {
+
+                        checkNickNameMessage.innerText = '사용 가능한 닉네임입니다.';
+                        isNickNameChecked = true;
+                    } else {
+
+                        checkNickNameMessage.innerText = '이미 존재하는 닉네임입니다.';
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error); // 오류가 발생하면 콘솔에 오류 메시지를 출력합니다.
+            });
+    }
+
+    // 이메일 중복 체크 함수
+    function checkEmail() {
+        // 입력된 이메일 아이디와 도메인을 가져옵니다.
+        var emailId = document.getElementById("emailId").value; // 이메일 아이디 입력란
+        var emailDomain = document.getElementById("emailDomain").value; // 이메일 도메인 입력란
+
+        // 만약 이메일이 비어있다면 알림을 띄우고 함수를 종료합니다.
+        if (!emailId || !emailDomain) {
+            var checkEmailMessage = document.getElementById('checkEmailMessage'); // 아이디 중복 메시지를 표시하는 엘리먼트
+            checkEmailMessage.innerText = '이메일을 입력해주세요';
+
+            // 이메일 입력란에 포커스를 줍니다.
+            document.getElementById("emailId").focus();
+            return;
+        }
+
+
+        // 서버로 POST 요청을 보냅니다.
+        fetch('/emailCheck', {
+            method: 'POST', // 요청 방식은 POST입니다.
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded', // 요청 헤더의 Content-Type을 설정합니다.
+            },
+            body: 'emailId=' + encodeURIComponent(emailId) + '&emailDomain=' + encodeURIComponent(emailDomain), // 이메일 아이디와 도메인을 포함시켜 전송합니다.
+        })
+            .then(response => response.json()) // 서버로부터 받은 응답을 JSON 형식으로 변환합니다.
+            .then(data => {
+                // 중복 여부에 대한 처리
+                var checkEmailMessage = document.getElementById('checkEmailMessage'); // 이메일 중복 메시지를 표시하는 엘리먼트
+                if (checkEmailMessage) {
+                    // 서버로부터 받은 데이터를 메시지로 표시합니다.
+                    if (data) {
+
+                        checkEmailMessage.innerText = '사용 가능한 이메일입니다.';
+                        isEmailChecked = true;
+                    } else {
+
+                        checkEmailMessage.innerText = '이미 존재하는 이메일입니다.';
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error); // 오류가 발생하면 콘솔에 오류 메시지를 출력합니다.
+            });
+    }
+
+
+
+    $('#picture').change(function () {
+        setImageFromFile(this, '#preview');
     });
-}
 
-
-
-    $('#picture').change(function(){
-setImageFromFile(this, '#preview');
-});
-
-function setImageFromFile(input, expression) {
-    if (input.files && input.files[0])
-    {
-        var reader = new FileReader();
+    function setImageFromFile(input, expression) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
             reader.onload = function (e) {
                 $(expression).attr('src', e.target.result);
-           }
-           reader.readAsDataURL(input.files[0]);
-     }
-}
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 </script>
 
 </body>
+
 </html>
