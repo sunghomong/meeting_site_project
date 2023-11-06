@@ -100,7 +100,7 @@ public class KeyWordController {
     @DeleteMapping("/manager/deleteSecondKeyWord")
     public ResponseEntity<String> deleteSecondKeyWord(@RequestBody Map<String, String> request) {
         String secondKeyword = request.get("subKeyword");
-        System.out.println("secondKeyword = " + secondKeyword);
+
         boolean result = keyWordService.deleteKeyWordBySecondKeyWord(secondKeyword);
 
         // 서버에서 해당 데이터를 삭제하고 성공 여부를 클라이언트에 반환

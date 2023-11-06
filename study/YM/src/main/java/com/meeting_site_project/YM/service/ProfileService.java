@@ -28,25 +28,22 @@ public class ProfileService {
         return mybatisRepository.selectById(userId);
     }
 
-    public void ProfileUpdate(ProfileUpdate profileUpdate, MultipartFile picture, HttpSession session) throws Exception{
+    public void ProfileUpdate(ProfileUpdate profileUpdate, MultipartFile picture, HttpSession session) throws Exception {
 
-       if (!picture.isEmpty()) {
-           AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
-           // 만약 프로필 이미지가 존재한다면 기존 파일을 삭제합니다.
-           if (authInfo.getPicturePath() != null) {
-               // 프로필 이미지 파일의 전체 경로를 구성합니다.
-               String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static" + authInfo.getPicturePath();
+        if (!picture.isEmpty()) {
+            AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
+            if (authInfo.getPicturePath() != null) {
+                String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static" + authInfo.getPicturePath();
 
-               // File 객체를 생성하여 파일을 나타냅니다.
-               File oldFile = new File(filePath);
+                // File 객체를 생성하여 파일을 나타냄
+                File oldFile = new File(filePath);
 
-               // 파일이 실제로 존재하는지 확인합니다.
-               if (oldFile.exists()) {
-                   // 파일을 삭제합니다.
-                   oldFile.delete();
-               }
-           }
-
+                if (oldFile.exists()) {
+                    // 기존 이미지 파일을 삭제
+                    oldFile.delete();
+                }
+            }
+            // 이미지 저장 경로
             String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
             UUID uuid = UUID.randomUUID();
@@ -55,17 +52,16 @@ public class ProfileService {
 
             File saveFile = new File(projectPath, fileName);
 
-           picture.transferTo(saveFile);
+            picture.transferTo(saveFile);
 
             profileUpdate.setUserPicture(fileName);
             profileUpdate.setPicturePath("/files/" + fileName);
 
+        } else if (picture.isEmpty()) {
+            profileUpdate.setUserPicture(null);
+            profileUpdate.setPicturePath(null);
         }
-       else if (picture.isEmpty()) {
-           profileUpdate.setUserPicture(null);
-           profileUpdate.setPicturePath(null);
-       }
-       mybatisRepository.profileUpdate(profileUpdate);
+        mybatisRepository.profileUpdate(profileUpdate);
     }
 
 

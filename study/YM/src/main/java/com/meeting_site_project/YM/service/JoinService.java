@@ -29,11 +29,6 @@ public class JoinService {
 
             UUID uuid = UUID.randomUUID();
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> e2e95671750987846a00f4547513e8a272e01742
             String fileName = uuid + "_" + picture.getOriginalFilename();
 
             File saveFile = new File(projectPath, fileName);

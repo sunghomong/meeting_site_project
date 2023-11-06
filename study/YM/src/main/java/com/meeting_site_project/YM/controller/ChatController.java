@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -48,7 +47,6 @@ public class ChatController {
 
         // 새로운 사용자의 세션 정보에 사용자 이름 저장
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        System.out.println("chatMessage.getSender() = " + chatMessage.getSender());
 
         chatService.insertChatMessage(chatMessage); // 메시지 저장
 
@@ -91,7 +89,6 @@ public class ChatController {
                 // 현재 메시지에서 년, 월, 일을 추출하여 "00년 00월 00일" 문자열 생성
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yy년 MM월 dd일");
                 String dateStr = dateFormat.format(chatMessage.getMessageTime());
-                System.out.println("dateStr = " + dateStr);
                 newChatMessage.setContent(dateStr);
 
                 // UUID를 사용하여 고유한 messageId 생성
@@ -164,7 +161,7 @@ public class ChatController {
     public void delteChatMemeber(@RequestParam("chatRoomId") String chatRoomId,
                                  @RequestParam("userId") String userId,
                                  @RequestParam("messageTime") Date messageTime) { // 필요한 데이터 userId,chatRoomId
-        System.out.println("chatRoomId = " + chatRoomId);
+
         ChatMessage chatMessage = new ChatMessage();
 
         ChatRoomMembers chatRoomMember = chatService.selectChatRoomMemberByUserIdAndChatRoomId(userId,chatRoomId);
@@ -276,8 +273,7 @@ public class ChatController {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("loginMember");
 
         String groupId = chatService.selectGroupIdWhereChatRoomByChatRoomId(chatRoomId);
-        System.out.println("1.groupId = " + groupId);
-        System.out.println("admin = " + admin);
+
 
         if(changeAdmin == 1 && admin == 0) { // 현재 일반 회원인데 관리자로 바꾸려고 하는 경우
             // 그룹의 오너, 채팅방의 오너 변경
@@ -289,7 +285,7 @@ public class ChatController {
             ChatRoomMembers chatRoomMember = chatService.selectChatRoomMemberByUserIdAndChatRoomId(authInfo.getUserId(),chatRoomId);
 
             chatService.updateChatRoomMemberAdminByRoomUserId(chatRoomMember.getRoomUserId(),0);
-            System.out.println("chatRoomMember = " + chatRoomMember);
+
 
             success = true;
         }

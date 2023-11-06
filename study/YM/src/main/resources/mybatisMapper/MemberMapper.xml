@@ -10,7 +10,7 @@
     </select>
 
     <insert id="insertMember" parameterType="JoinMember">
-        INSERT INTO member VALUES (#{userId}, #{userName}, #{userPicture}, #{picturePath} ,#{userMbti}, #{userPassword}, #{userInfo}, 0, #{birthday}, #{nickName}, #{emailId}, #{emailDomain}, sysdate, 0)
+        INSERT INTO member VALUES (#{userId}, #{userName}, #{userPicture}, #{picturePath} ,#{userMbti}, #{userPassword}, #{userInfo}, 0, #{birthday}, #{nickName}, #{emailId}, #{emailDomain}, sysdate)
     </insert>
 
     <select id="selectByIdPassword" resultType="member" parameterType="LoginCommand">
