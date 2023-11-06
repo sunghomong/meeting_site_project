@@ -31,8 +31,16 @@ public class MeetingController {
     ChatService chatService;
 
 
+<<<<<<< HEAD
+
+
     @Autowired
     public MeetingController(MeetingService meetingService, CheckService checkService,ChatService chatService) {
+
+=======
+    @Autowired
+    public MeetingController(MeetingService meetingService, CheckService checkService,ChatService chatService) {
+>>>>>>> 17aca252236b94d4e6c802bcf3f173038c4eecdf
         this.meetingService = meetingService;
         this.checkService = checkService;
         this.chatService = chatService;
@@ -126,9 +134,7 @@ public class MeetingController {
 
         GroupInfo groupInfo = meetingService.selectGroupInfoById(groupId);
         AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
-        if (authInfo == null || authInfo.getUserId() != groupInfo.getOwnerUserId()) {
-            return "redirect:/login";
-        }
+
         List<Keyword> keywords = meetingService.selectFirstKeywordList();
         List<Keyword> secondKeywords = meetingService.selectSecondKeywordList(groupInfo.getFirstKeyword());
         model.addAttribute("groupInfo", groupInfo);

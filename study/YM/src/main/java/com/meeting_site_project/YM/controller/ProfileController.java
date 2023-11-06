@@ -66,7 +66,7 @@ public class ProfileController {
     @GetMapping("/confirmPassword")
     public String confirmPassword(@ModelAttribute("password") ConfirmUserPassword confirmUserPassword, HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
-        if (authInfo != null) {
+        if (authInfo == null) {
             return "redirect:/login";
         }
         return "profile/confirmPasswordForm";
