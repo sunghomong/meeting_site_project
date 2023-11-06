@@ -31,11 +31,16 @@ public class MeetingController {
     ChatService chatService;
 
 
+<<<<<<< HEAD
 
 
     @Autowired
     public MeetingController(MeetingService meetingService, CheckService checkService,ChatService chatService) {
 
+=======
+    @Autowired
+    public MeetingController(MeetingService meetingService, CheckService checkService,ChatService chatService) {
+>>>>>>> 17aca252236b94d4e6c802bcf3f173038c4eecdf
         this.meetingService = meetingService;
         this.checkService = checkService;
         this.chatService = chatService;
