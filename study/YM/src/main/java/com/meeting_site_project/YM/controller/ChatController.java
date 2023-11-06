@@ -96,14 +96,14 @@ public class ChatController {
 
                 newChatMessage.setMessageId(uniqueMessageId);
                 newChatMessage.setChatRoomId(chatRoomId);
-                newChatMessage.setType(ChatMessage.MessageType.valueOf("DATE"));
+                newChatMessage.setType(ChatMessage.MessageType.DATE);
 
                 // 방장 userId 값 가져오기
                 String userId = chatService.selectChatOwnerIdByChatRoomId(chatRoomId);
 
                 newChatMessage.setUserId(userId);
 
-                chatService.insertChatDateMessageByChatMessage(chatMessage);
+                chatService.insertChatDateMessageByChatMessage(newChatMessage);
 
                 simpMessagingTemplate.convertAndSend("/topic/chatRoom/" + chatRoomId, newChatMessage);
             }

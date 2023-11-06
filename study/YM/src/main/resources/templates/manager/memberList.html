@@ -338,11 +338,10 @@
                 var userAdmin = $(this).val(); // 라디오 버튼의 value 값 가져오기
 
                 $.ajax({
-                    type: 'POST', // 또는 GET, 필요에 따라 변경
-                    url: '/manager/memberEdit', // 컨트롤러 URL 수정 필요
+                    type: 'POST',
+                    url: '/manager/memberEdit',
                     data: { userId: userId, userAdmin: userAdmin },
                     success: function (result) {
-                        // AJAX 요청이 성공했을 때의 처리
                         console.log(result); // 서버에서 받은 응답을 로그에 출력 (디버깅용)
                     },
                     error: function (error) {

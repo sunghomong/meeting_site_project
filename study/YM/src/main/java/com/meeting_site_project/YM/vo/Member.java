@@ -28,6 +28,4 @@ public class Member {
     private String emailDomain;
     @DateTimeFormat(pattern = "yyyy년-MM월-dd일")
     private Date signDate;
-    private int avgScore;
-
 }
