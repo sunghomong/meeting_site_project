@@ -55,7 +55,7 @@ public class ManagerController {
 
 
     @GetMapping("memberList")
-    public String getMemberList(Criteria cri, Model model, HttpSession session) { // 전체 회원을 조회하기 위한 컨트롤러
+    public String getMemberList(Criteria cri, Model model, HttpSession session) {
 
         AuthInfo authInfo = (AuthInfo) session.getAttribute(LoginController.SessionConst.LOGIN_MEMBER);
         if(authInfo == null || authInfo.getUserAdmin() == 0) {
@@ -63,9 +63,9 @@ public class ManagerController {
         }
 
         int totalMember = checkService.getTotal();
-        List<Member> memberList = checkService.getMemberListWithPaging(cri); // service에서 멤버를 불러옴
+        List<Member> memberList = checkService.getMemberListWithPaging(cri);
 
-        model.addAttribute("memberList", memberList); // model 객체로 memberList를 보내줌
+        model.addAttribute("memberList", memberList);
         model.addAttribute("pageMaker", new PageDTO(cri, totalMember));
 
         return "manager/memberList";
