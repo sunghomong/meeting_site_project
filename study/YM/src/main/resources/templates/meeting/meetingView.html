@@ -181,15 +181,6 @@
             margin: 0 20px;
         }
 
-<<<<<<< HEAD
-
-
-=======
-        button:hover {
-            background-color: #cd262b;
-        }
-
->>>>>>> 17aca252236b94d4e6c802bcf3f173038c4eecdf
         .footer {
             background-color: white;
             position: fixed;
@@ -260,7 +251,7 @@
         <button th:if="${session.loginMember == null}" th:onclick="|location.href='@{/login}'|" style="width: 200px;">로그인 후 모임 참여하기</button>
         <button id="joinButton" th:if="${session.loginMember != null} and ${session.loginMember.userId != groupInfo.ownerUserId}" th:onclick="joinChatRoom()">모임 참여하기</button>
         <button th:if="${session.loginMember != null} and ${session.loginMember.userId == groupInfo.ownerUserId}" th:onclick="|location.href='@{/meetingUpdateForm(groupId=${groupInfo.groupId})}'|">모임 정보 수정</button>
-        <button th:if="${session.loginMember != null} and ${session.loginMember.userId == groupInfo.ownerUserId or session.loginMemberuserAdmin != 0}" th:onclick="|location.href='@{/deleteGroup(groupId=${groupInfo.groupId})}'|">모임 삭제</button>
+        <button th:if="${session.loginMember != null} and ${session.loginMember.userId == groupInfo.ownerUserId or session.loginMember.userAdmin != 0}" th:onclick="|location.href='@{/deleteGroup(groupId=${groupInfo.groupId})}'|">모임 삭제</button>
     </div>
 </body>
 <script th:inline="javascript">

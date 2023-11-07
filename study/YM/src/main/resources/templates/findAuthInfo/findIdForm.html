@@ -2,218 +2,200 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>아이디 찾기</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport"
-          content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
-    <link th:href="@{/css/header.css}" rel="stylesheet">
-    <style>
-        * {
-        margin: 0;
-        padding : 0;
-        }
-        .wrapper {
-          background-color: #eeeeee99;
-          min-height: calc(100vh - 80px);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
+  <title>아이디 찾기</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
+  <link th:href="@{/css/header.css}" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrapper {
+      background-color: #eeeeee99;
+      min-height: calc(100vh - 80px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
 
 
-        #container {
-          background-color: white;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-sizing: border-box;
-          width: 440px;
-          height: 400px;
-          text-align: center;
-          border-radius: 5px;
-          box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    #container {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      width: 440px;
+      height: 400px;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
 
-        }
+    }
 
 
 
-        form {
-            position: relative;
-          padding: 40px 30px;
-          width: 380px;
-          height: 320px;
-        }
+    form {
+      position: relative;
+      padding: 40px 30px;
+      width: 380px;
+      height: 320px;
+    }
 
-        .input-box {
-          position: relative;
-          margin: 15px 10px 10px;
-        }
+    .input-box {
+      position: relative;
+      margin: 15px 10px 10px;
+    }
 
-        .input-box>input {
-          background: transparent;
-          border: none;
-          border-bottom: solid 1px #ccc;
-          padding: 20px 0px 5px 3px;
-          font-size: 14pt;
-          width: 100%;
-        }
-        
-        .input-box>.email-input {
-          width: 110px;
-        }
+    .input-box>input {
+      background: transparent;
+      border: none;
+      border-bottom: solid 1px #ccc;
+      padding: 20px 0px 5px 3px;
+      font-size: 14pt;
+      width: 100%;
+    }
 
-        input::placeholder {
-          color: transparent;
-        }
+    .input-box>.email-input {
+      width: 110px;
+    }
 
-        input:placeholder-shown+label {
-          color: #aaa;
-          font-size: 14pt;
-          top: 15px;
+    input::placeholder {
+      color: transparent;
+    }
 
-        }
+    input:placeholder-shown+label {
+      color: #aaa;
+      font-size: 14pt;
+      top: 15px;
 
-        input:focus+label,
-        label {
-          color: #8aa1a1;
-          font-size: 10pt;
-          pointer-events: none;
-          position: absolute;
-          left: 0px;
-          top: 0px;
-          transition: all 0.2s ease;
-          -webkit-transition: all 0.2s ease;
-          -moz-transition: all 0.2s ease;
-          -o-transition: all 0.2s ease;
-        }
+    }
 
-        .domain-label {
-          left: 147px;
-        }
-        input:focus,
-        input:not(:placeholder-shown) {
-          border-bottom: solid 1px #8aa1a1;
-          outline: none;
-        }
+    input:focus+label,
+    label {
+      color: #8aa1a1;
+      font-size: 10pt;
+      pointer-events: none;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      transition: all 0.2s ease;
+      -webkit-transition: all 0.2s ease;
+      -moz-transition: all 0.2s ease;
+      -o-transition: all 0.2s ease;
+    }
 
-        input[type=submit] {
-          background-color: #2372ea;
-          border: none;
-          color: white;
-          border-radius: 5px;
-          width: 100%;
-          box-sizing: border-box;
-          line-height: 45px;
-          height: 45px;
-          font-size: 14pt;
-          margin-top: 40px;
-          cursor: pointer;
-        }
+    .domain-label {
+      left: 147px;
+    }
 
-        input[type=submit]:hover {
-          background-color: #1c57b0;
-        }
-        .error_box {
-            height: 14px;
-        }
-        .field-error {
-          padding-left: 15px;
-          text-align: left;
-          font-size: 10px;
-          color: red;
-        }
-        .global_error {
-            height: 20px;
-        }
-        .global_field_error {
-            padding-top: 10px;
-            font-size: 12px;
-          color: red;
-        }
-    </style>
+    input:focus,
+    input:not(:placeholder-shown) {
+      border-bottom: solid 1px #8aa1a1;
+      outline: none;
+    }
+
+    input[type=submit] {
+      background-color: #2372ea;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      width: 100%;
+      box-sizing: border-box;
+      line-height: 45px;
+      height: 45px;
+      font-size: 14pt;
+      margin-top: 40px;
+      cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+      background-color: #1c57b0;
+    }
+
+    .error_box {
+      height: 14px;
+    }
+
+    .field-error {
+      padding-left: 15px;
+      text-align: left;
+      font-size: 10px;
+      color: red;
+    }
+
+    .global_error {
+      height: 20px;
+    }
+
+    .global_field_error {
+      padding-top: 10px;
+      font-size: 12px;
+      color: red;
+    }
+  </style>
 </head>
 
 <body>
-<header>
-    <div class="MainHeader_header__WXxwu">
-        <div class="MainHeader_header__top__gspE8">
-            <div class="MainHeader_header__content__WRkIy">
-                <a class="logo-link" href="/"><img th:src="@{/images/KakaoTalk_20231024_193657045.png}"></a>
-                <a class="LinkOnClick_title__0WSZ9" href="/onedayMtForm?number=0">원데이</a>
-                <a class="LinkOnClick_title__0WSZ9" href="/regulardayMtForm?number=1">정기</a>
-                <a class="LinkOnClick_title__0WSZ9" href="/#">내 모임</a>
-                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember == null}"
-                   th:href="@{/login}">로그인</a>
-                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember == null}"
-                   th:href="@{/join}">회원가입</a>
-
-                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
-                   th:href="@{/logout}">로그아웃</a>
-                <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
-                   th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
-                <a class="LinkOnClick_title__0WSZ9"
-                   th:href="@{/chat}">채팅하기</a>
-                <a class="LinkOnClick_title__0WSZ9"
-                   th:if="${session.loginMember != null}"
-                   th:href="@{/manager(userId=${session.loginMember.userId})}">관리자 페이지</a>
-            </div>
-            <div class="box" style="background: #BDBDBD;" th:if="${session.loginMember != null}">
-                <a th:href="@{/profile(userId=${session.loginMember.userId})}"><img class="profile"
-                                                                                    th:src="@{${session.loginMember.picturePath}}"></a>
-            </div>
-        </div>
-    </div>
-</header>
+  <header>
+    <header th:replace="/home.html :: header"></header>
+  </header>
 
 
-<div class="wrapper">
+  <div class="wrapper">
     <div id="container">
-        <form th:action th:object="${findId}"  method="post">
-            <h2>아이디 찾기</h2>
-            <div class="global_error">
-                <div th:if="${#fields.hasGlobalErrors()}">
-                    <p class="global_field_error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
-                </div>
-            </div>
-            <div class="input-box">
-                <input id="userName" type="text" th:field="*{userName}" th:errorclass="field-error" placeholder="이름" style="color: black;">
-                <label for="userName">이름</label>
-            </div>
-            <div class="error_box">
-                <div class="field-error" th:errors="*{userName}"></div>
-            </div>
-
-            <div class="input-box">
-                <input id="emailId" class="email-input" type="text" th:field="*{emailId}" th:errorclass="field-error" placeholder="이메일" style="color: black;">
-                <label for="emailId">이메일</label>
-            @
-            <input id="emailDomain" class="email-input" type="text" th:field="*{emailDomain}" th:errorclass="field-error" placeholder="도메인" style="color: black;"/>
-            <label class="domain-label" for="emailDomain">도메인</label>
-            <select class="select" title="이메일 도메인 주소 선택" th:onchange="setEmailDomain(this.value)">
-                <option value="">-선택-</option>
-                <option value="naver.com">naver.com</option>
-                <option value="gmail.com">gmail.com</option>
-                <option value="hanmail.net">hanmail.net</option>
-                <option value="nate.com">nate.com</option>
-                <option value="yahoo.com">yahoo.com</option>
-            </select>
+      <form th:action th:object="${findId}" method="post">
+        <h2>아이디 찾기</h2>
+        <div class="global_error">
+          <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="global_field_error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
           </div>
-            <div class="error_box">
-                <div class="field-error" th:errors="*{emailId}"></div>
-                <div class="field-error" th:errors="*{emailDomain}"></div><br>
-            </div>
+        </div>
+        <div class="input-box">
+          <input id="userName" type="text" th:field="*{userName}" th:errorclass="field-error" placeholder="이름"
+            style="color: black;">
+          <label for="userName">이름</label>
+        </div>
+        <div class="error_box">
+          <div class="field-error" th:errors="*{userName}"></div>
+        </div>
 
-            <input type="submit" value="아이디 찾기" >
+        <div class="input-box">
+          <input id="emailId" class="email-input" type="text" th:field="*{emailId}" th:errorclass="field-error"
+            placeholder="이메일" style="color: black;">
+          <label for="emailId">이메일</label>
+          @
+          <input id="emailDomain" class="email-input" type="text" th:field="*{emailDomain}" th:errorclass="field-error"
+            placeholder="도메인" style="color: black;" />
+          <label class="domain-label" for="emailDomain">도메인</label>
+          <select class="select" title="이메일 도메인 주소 선택" th:onchange="setEmailDomain(this.value)">
+            <option value="">-선택-</option>
+            <option value="naver.com">naver.com</option>
+            <option value="gmail.com">gmail.com</option>
+            <option value="hanmail.net">hanmail.net</option>
+            <option value="nate.com">nate.com</option>
+            <option value="yahoo.com">yahoo.com</option>
+          </select>
+        </div>
+        <div class="error_box">
+          <div class="field-error" th:errors="*{emailId}"></div>
+          <div class="field-error" th:errors="*{emailDomain}"></div><br>
+        </div>
 
-        </form>
+        <input type="submit" value="아이디 찾기">
+
+      </form>
     </div>
-</div>
-<script>
+  </div>
+  <script>
     function setEmailDomain(domain) {
-    document.getElementById("emailDomain").value = domain; // 이메일 도메인 입력란에 선택된 도메인 값을 설정합니다.
-}
-</script>
+      document.getElementById("emailDomain").value = domain; // 이메일 도메인 입력란에 선택된 도메인 값을 설정합니다.
+    }
+  </script>
 
 </body>
 
