@@ -195,20 +195,17 @@
                     <a class="logo-link" href="/"><img th:src="@{/images/KakaoTalk_20231024_193657045.png}"></a>
                     <a class="LinkOnClick_title__0WSZ9" href="/onedayMtForm?number=0">원데이</a>
                     <a class="LinkOnClick_title__0WSZ9" href="/regulardayMtForm?number=1">정기</a>
-                    <a class="LinkOnClick_title__0WSZ9" href="/#">내 모임</a>
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember == null}"
                         th:href="@{/login}">로그인</a>
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember == null}"
                         th:href="@{/join}">회원가입</a>
 
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
-                        th:href="@{/logout}">로그아웃</a>
-                    <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
-                        th:href="@{/profile(userId=${session.loginMember.userId})}">프로필</a>
-                    <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
                         th:href="@{/chat/chatRoomList(userId=${session.loginMember.userId})}">채팅 리스트</a>
                     <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null} AND ${session.loginMember.userAdmin != 0}"
                         th:href="@{/manager(userId=${session.loginMember.userId})}">관리자 페이지</a>
+                    <a class="LinkOnClick_title__0WSZ9" th:if="${session.loginMember != null}"
+                       th:href="@{/logout}">로그아웃</a>
                 </div>
                 <div class="box" style="background: #BDBDBD;" th:if="${session.loginMember != null}">
                     <a th:href="@{/profile(userId=${session.loginMember.userId})}"><img class="profile"
