@@ -287,7 +287,7 @@
                     <div class="userId">[[${askContent.nickName}]]</div>
                     <div class="createDate" th:text="${#dates.format(askContent.createDate, 'yyyy-MM-dd')}"></div>
                     <div class="status"
-                        th:style="${askContent.status == '미해결' ? 'color:  #a0a0a0;' : (askContent.status == '해결완료' ? 'color: #e15358 ;' : 'color: #5778d1;')}">
+                        th:style="${askContent.status == '미해결' ? 'color:  #a0a0a0;' : (askContent.status == '완료' ? 'color: #e15358 ;' : 'color: #5778d1;')}">
                         [[${askContent.status}]]</div>
                 </div>
             </div>
@@ -331,7 +331,7 @@
                         <div id="status-words">상태 선택 : </div>
                         <select id="status" name="status">
                             <option value="미해결">미해결</option>
-                            <option value="해결완료">해결완료</option>
+                            <option value="완료">완료</option>
                             <option value="처리중">처리중</option>
                         </select>
                         <div>

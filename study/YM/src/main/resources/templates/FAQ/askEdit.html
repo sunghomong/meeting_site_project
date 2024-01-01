@@ -207,7 +207,7 @@
         <div class="container">
             <div class="title"><span style="border-bottom: 2px solid black; padding-bottom: 20px;">문의사항 등록</span></div>
             <form id="askForm" enctype="multipart/form-data" th:if="${askContent != null}">
-                <input type="hidden" id="userId" name="userId" th:value="${userId}">
+                <input type="hidden" id="askId" name="askId" th:value="${askContent.askId}">
                 <div class="form-box">
                     <div>
                         <div class="input-text">작성자</div>
