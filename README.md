@@ -14,9 +14,52 @@
 
 ## 📖 Introduction
 
+### 🔑 ERD
+
+<img src="https://i.ibb.co/7bTyr91/meeting-project-image24.png" alt="meeting-project-image24">
+
 ### 🛠️ Skills
 
-<img src="https://i.ibb.co/n0P3w7Z/meeting-project-image12.png" alt="meeting-project-image12">
+<div>
+  <!-- Frontend -->
+  <p><strong>Language / Server / Deployment</strong></p>
+  <div>
+      <img src="https://img.shields.io/badge/Java ver.11-007396?style=flat-squar&logo=Java&logoColor=white"> 
+      <img src="https://img.shields.io/badge/html5-E34F26?style=flat-square&logo=html5&logoColor=white"> 
+      <img src="https://img.shields.io/badge/css-1572B6?style=flat-square&logo=css3&logoColor=white"> 
+      <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=black">
+      <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=flat-squar&logo=apachetomcat&logoColor=black">
+      <img src="https://img.shields.io/badge/gradle-02303A?style=flat-squar&logo=gradle&logoColor=white">
+  </div>
+  <!-- Database -->
+  <p><strong>Database</strong></p>
+  <div>
+      <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> 
+  </div>
+  <!-- Framework -->
+  <p><strong>Framework & Library</strong></p>
+  <div>
+      <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=spring&logoColor=white">
+      <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=spring-boot&logoColor=white">
+      <img src="https://img.shields.io/badge/MyBatis-red?style=flat-square">
+      <img src="https://img.shields.io/badge/Web Socket-010101?style=flat-square&logo=socketdotio&logoColor=white">
+      <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=flat-square&logo=thymeleaf&logoColor=white">
+      <img src="https://img.shields.io/badge/JQuery-0769AD?style=flat-square&logo=jquery&logoColor=white">
+      <img src="https://img.shields.io/badge/Ajax-00758F?style=flat-square&logo=ajax&logoColor=white">
+  </div>
+  <!-- Version Control -->
+  <p><strong>tools</strong></p>
+  <div>
+      <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white">
+      <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white">
+      <img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=notion&logoColor=white">
+      <img src="https://img.shields.io/badge/ERD Cloud-gray?style=flat-square&logo=staruml&logoColor=white">
+      <img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=flat-square&logo=intellij-idea&logoColor=white">
+      <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-square&logo=visual-studio-code&logoColor=white">
+  </div>
+</div>
+
+<br>
 
 ##  💻 주요 기능
 
