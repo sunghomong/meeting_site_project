@@ -67,7 +67,7 @@
 <table>
   <tr>
     <td max-width="500px">
-      <img src="https://i.ibb.co/HPjrVK4/meeting-project-image32.png" alt="meeting-project-image32">
+      <img src="https://i.ibb.co/gFqPw16/meeting-project-image25.png" alt="meeting-project-image25">
     </td>
     <td>
       <b>회원가입</b> - 프로필 사진,MBTI 등 다양한 정보와 함께 회원가입 할 수 있습니다.<br>
