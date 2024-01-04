@@ -67,7 +67,7 @@
 <table>
   <tr>
     <td max-width="500px">
-      <img src="https://i.ibb.co/DbQwcJg/meeting-project-image14.png" alt="meeting-project-image14">
+      <img src="https://i.ibb.co/HPjrVK4/meeting-project-image32.png" alt="meeting-project-image32">
     </td>
     <td>
       <b>회원가입</b> - 프로필 사진,MBTI 등 다양한 정보와 함께 회원가입 할 수 있습니다.<br>
@@ -83,7 +83,7 @@
 <table>
   <tr>
     <td max-width="500px">
-      <img src="https://i.ibb.co/swP4KVx/meeting-project-image15.png" alt="meeting-project-image15">
+      <img src="https://i.ibb.co/w6sgFbf/meeting-project-image29.png" alt="meeting-project-image29">
     </td>
     <td>
       <b>프로필</b> - 유저의 정보(프로필 이미지, 이름, 닉네임, 자기소개, MBTI)를 볼 수 있습니다.<br>
@@ -98,7 +98,7 @@
 <table>
   <tr>
     <td max-width="500px">
-      <img src="https://i.ibb.co/XCrd1xy/meeting-project-image16.png" alt="meeting-project-image16">
+      <img src="https://i.ibb.co/dQbNtth/meeting-project-image26.png" alt="meeting-project-image26">
     </td>
     <td>
       <b>원데이 모임</b> - 원데이 형식의 모임 활동 참여가 가능합니다.<br>
@@ -115,7 +115,7 @@
 <table>
   <tr>
     <td max-width="500px">
-      <img src="https://i.ibb.co/cXccCy5/meeting-project-image18.png" alt="meeting-project-image18">
+      <img src="https://i.ibb.co/rsgT8B6/meeting-project-image27.png" alt="meeting-project-image27">
     </td>
     <td>
       <b>채팅방 생성</b> - 모임을 참여/생성과 동시에 채팅방에 참여 및 생성됩니다. <b>(모임 인원으로 채팅방 수 제한)</b> <br>
@@ -129,7 +129,7 @@
 <table>
   <tr>
     <td max-width="500px">
-      <img src="https://i.ibb.co/Wg8WVrw/meeting-project-image20.png" alt="meeting-project-image20">
+      <img src="https://i.ibb.co/xhSsBWP/meeting-project-image28.png" alt="meeting-project-image28">
     </td>
     <td>
       <b>채팅</b> - 실시간으로 채팅이 가능하고 채팅방에서 나가기를 누르지 않았다면 참여한 시점부터 이전 대화 내용들을 볼 수 있습니다.<br>
@@ -147,7 +147,7 @@
 <table>
   <tr>
     <td max-width="500px">
-      <img src="https://i.ibb.co/LdGVPdL/meeting-project-image22.png" alt="meeting-project-image22">
+      <img src="https://i.ibb.co/XZ5dRj1/meeting-project-image30.png" alt="meeting-project-image30">
     </td>
     <td>
       <b>회원 관리</b> - 가입된 회원의 간단 정보 조회 가능하고 가입된 회원을 탈퇴,권한 변경이 가능합니다. (회원 검색 가능)<br>
@@ -162,7 +162,7 @@
 <table>
   <tr>
     <td max-width="500px">
-      <img src="https://i.ibb.co/QkPhJbb/meeting-project-image23.png" alt="meeting-project-image23">
+      <img src="https://i.ibb.co/F0ZwGR2/meeting-project-image31.png" alt="meeting-project-image31">
     </td>
     <td>
       <b>문의 하기</b> - 관리자에게 문의 사항(제목,내용,이미지)을 등록 가능합니다.<br>
