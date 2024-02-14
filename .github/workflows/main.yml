@@ -1,0 +1,29 @@
+name: CI/CD Docker
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  DOCKER_IMAGE: ghcr.io/${{ github.actor }}/your-image-name:${{ github.sha }}
+  CONTAINER_NAME: your-container-name
+
+jobs:
+  build:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t $DOCKER_IMAGE .
+          docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GHCR_TOCKEN }}
+          docker push $DOCKER_IMAGE
+
+      - name: Run Docker container
+        run: |
+          docker stop $CONTAINER_NAME || true
+          docker rm $CONTAINER_NAME || true
+          docker run -d -p 8080:8080 --name $CONTAINER_NAME $DOCKER_IMAGE
