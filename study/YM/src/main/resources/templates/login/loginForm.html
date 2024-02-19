@@ -140,7 +140,7 @@
 
 <body>
 
-<header th:replace="/home.html :: header"></header>
+<header th:replace="home.html :: header"></header>
 
   <div class="wrapper">
   <div id="container">
@@ -167,9 +167,9 @@
       <div class="field-error" th:errors="*{userPassword}"></div>
     </div>
       <div id="forgot">
-      <a th:href="@{/join}" class="form_a">회원가입</a> /
-      <a th:href="@{/findId}" class="form_a">아이디 찾기</a> /
-      <a th:href="@{/findPassword}" class="form_a">비밀번호 찾기</a>
+      <a th:href="@{join}" class="form_a">회원가입</a> /
+      <a th:href="@{findId}" class="form_a">아이디 찾기</a> /
+      <a th:href="@{findPassword}" class="form_a">비밀번호 찾기</a>
       </div>
       <input type="submit" value="로그인" >
 
@@ -177,7 +177,7 @@
   </div>
   </div>
 
-<footer th:replace="/home.html :: footer"></footer>
+<footer th:replace="home.html :: footer"></footer>
 </body>
 
 
