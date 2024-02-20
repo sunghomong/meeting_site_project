@@ -315,7 +315,7 @@
         </div>
     </div>
 
-    <header th:replace="/home.html :: header"></header>
+    <header th:replace="home.html :: header"></header>
     <div class="wrapper">
         <div th:replace="/manager/main.html :: sidebar"></div>
         <div class="container">
@@ -370,7 +370,7 @@
             </script>
         </div>
     </div>
-    <footer th:replace="/home.html :: footer"></footer>
+    <footer th:replace="home.html :: footer"></footer>
 </body>
 <script>
     const modal = document.getElementById('modalContainer');

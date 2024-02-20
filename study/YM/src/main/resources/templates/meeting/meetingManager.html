@@ -154,7 +154,7 @@
 </head>
 
 <body>
-<header th:replace="/home.html :: header"></header>
+<header th:replace="home.html :: header"></header>
 
 <div class="wrapper">
 
@@ -212,7 +212,7 @@
         <input type="hidden" id="deleteChatRoomId" name="chatRoomId" >
     </div>
 </div>
-<footer th:replace="/home.html :: footer"></footer>
+<footer th:replace="home.html :: footer"></footer>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
     let currentEditingRow = null; // 현재 수정 중인 행을 추적

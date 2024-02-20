@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<header th:replace="/home.html :: header"></header>
+<header th:replace="home.html :: header"></header>
 <h1>회원 조회 페이지</h1>
 <hr>
 <form method="post" th:action="@{/manager/memberEdit}" th:object="${member}">
@@ -43,6 +43,6 @@
 </form>
 <a th:href="@{/}">메인</a>
 
-<footer th:replace="/home.html :: footer"></footer>
+<footer th:replace="home.html :: footer"></footer>
 </body>
 </html>

@@ -176,7 +176,7 @@
 
 <body>
 
-    <header th:replace="/home.html :: header"></header>
+    <header th:replace="home.html :: header"></header>
 
     <div class="wrapper">
         <div th:if="${session.loginMember != null and session.loginMember.userAdmin == 1}">
@@ -214,7 +214,7 @@
         </div>
 
     </div>
-    <footer th:replace="/home.html :: footer"></footer>
+    <footer th:replace="home.html :: footer"></footer>
     <script>
         document.getElementById("statusFilter").addEventListener("change", function () {
             var selectedStatus = this.value;
